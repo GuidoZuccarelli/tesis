@@ -1,0 +1,36 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage[utf8]{inputenc}
+
+%opening
+\title{La Web Semántica como plataforma para sistemas de recomendación}
+\author{Guido Zuccarelli}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}1
+
+\end{abstract}
+
+\include{introduccion}
+
+\include{estudio}
+
+\include{estrategia}
+
+\include{recoleccion}
+
+\include{evaluacion}
+
+\include{curado}
+
+\include{integracion}
+
+\include{explotacion}
+
+\include{conclusiones}
+
+\include{referencias}
+
+\end{document}
