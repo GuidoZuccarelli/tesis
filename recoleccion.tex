@@ -1,0 +1,39 @@
+Recolección de los datos\\
+\\
+Objetivo\\
+Como se indicó anteriormente la información semántica que va a ser necesaria para construir se encuentra en la web en forma de documentos 
+HTML que tienen la particularidad de ser muy efímeros, de manera tal que un documento que poseía datos relevantes a la fecha,
+puede al día siguiente, o dejar de estar disponible on-line, o haber cambiado de forma tal que la información de éste ya no es 
+relevante, o ya no la posee.\\
+En [] sección 4.2 Challenges for the selection of data sources se generó una estadística de este caso, donde se estableció que 
+en promedio 62\% de los documentos entoncontrados, continuaban on-line luego de un año, y de estos, sólo un 56\% aún poseían 
+datos relevantes.\\
+Si bien armar un dataset con sólo información extraída de los documentos sin descargar estos últimos es posible, la situación anterior 
+genera la necesidad de mantenerlos en una copia local para evitar una posible pérdida de los mismos.\\
+El objetivo entonces será armar un repositorio local con los documentos on-line descargados que se cree que tienen la información 
+necesaria.\\
+\\
+Estrategia\\
+La forma de llevar a cabo este objetivo no es única, y dependerá de varios aspectos:\\
+Recursos de hardware disponibles\\
+Cantidad y calidad de la información requerida\\
+El grado de atemporalidad mínima tolerable en los datos\\
+El primer paso para realizar la recolección es intentar responder la siguiente pregunta: ¿Dónde encuentro la informanción?\\
+Una vez seleccionados los vocabularios, se necesitará obtener fuentes de datos que contengan sus datos publicados en esos vocabularios.\\ 
+Para lograrlo se podrá utilizar como punto de partida:\\
+Sitios indexadores: Son algunos sitios que disponen de un dataset muy grande procesado con documentos indexados, que ofrecen consultar dicho 
+dataset mediante servicios web. Generalmente proveen una API donde se pueden consutlar los datos mediante distintos grados de flexibilidad.\\
+Sindice, LOD cloud cache y UriBurner son algunos ejemplos de estos sitios. Se puede utilizar entocnes, los servicios web a fin
+de obtener una lista de URL que se cree que tendrán la información necesaria.\\
+Sitios autoritativos: Son sitios conocidos que generan información relevante y la publican en las ontologías y vocabularios 
+seleccionados. Ejemplos aplicados al caso de estudio podrían ser IMDB (que publica reviews de películas bajo el vocabulario schema), o Rottentomatoes
+(que hace lo mismo pero no solo con películas). Se podrán utilizar entonces estos sitios como punto base para un posible crawling.\\
+Catálogos de enpoints: Son catálogos provistos por algunos sitios que mantienen una lista actualizada de SPARQL endpoints 
+junto con el estado de disponibilidad en el que se encuentran. Por ejemplo los sitios http://labs.mondeca.com/sparqlendpointsstatus/ y 
+http://www.w3.org/wiki/SparqlEndpoints que este último además provee detalles sobre la información de los mismos.\\
+Consultar estos sitios entonces generará una lista de endpoints SPARQL que se podrá utilizar para consultar la información necesaria.\\
+Volcados de datos: Son datasets muy grandes que fueron el resultado de un web crawling, los cuales están disponibles para su descarga 
+y se pueden utilizar para procesarlos y obtener los datos requeridos. El más importante es http://challenge.semanticweb.org/2014/ .\\
+\\
+
+
