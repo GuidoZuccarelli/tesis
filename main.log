@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2013.11.11)  22 SEP 2014 14:04
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2013.11.11)  1 OCT 2014 15:29
 entering extended mode
  %&-line parsing enabled.
 **main.tex
@@ -268,25 +268,83 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 
 
 (./introduccion.tex (./evaEntrecruz.tex (./itemDefinicion.tex)
-(./reviewDefinicion.tex))) [2
+(./reviewDefinicion.tex))
+Overfull \hbox (4.72275pt too wide) in paragraph at lines 1--4
+\OT1/cmr/m/n/10 que ser'an que si bien no son in-dis-pens-ables, en-rique-cen n
+o s^^Solo su valor intr^^S^^Pnseco,
+ []
 
-] (./main.aux (./introduccion.aux)) ) 
+
+Overfull \hbox (4.30617pt too wide) in paragraph at lines 1--4
+\OT1/cmr/m/n/10 Este ^^Sultimo de-ber^^S^^Pa poder ser iden-ti-fi-ca-ble, para 
+ello, ser^^Sa nece-sario como m'inimo
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1--4
+
+ []
+
+(./laWebSemantica.tex)) [2
+
+]
+\openout2 = `estudio.aux'.
+
+ (./estudio.tex)
+\openout2 = `estrategia.aux'.
+
+ (./estrategia.tex (./estraReco.tex) (./estraEva.tex) (./estraCur.tex) (./estra
+Int.tex)) [3
+
+
+
+
+] [4]
+\openout2 = `recoleccion.aux'.
+
+ (./recoleccion.tex)
+\openout2 = `evaluacion.aux'.
+
+ (./evaluacion.tex)
+\openout2 = `curado.aux'.
+
+ (./curado.tex)
+\openout2 = `integracion.aux'.
+
+ (./integracion.tex)
+\openout2 = `publicacion.aux'.
+
+ (./publicacion.tex)
+\openout2 = `explotacion.aux'.
+
+
+(./explotacion.tex)
+\openout2 = `conclusiones.aux'.
+
+ (./conclusiones.tex)
+\openout2 = `referencias.aux'.
+
+ (./referencias.tex) (./main.aux
+(./introduccion.aux) (./estudio.aux) (./estrategia.aux) (./recoleccion.aux)
+(./evaluacion.aux) (./curado.aux) (./integracion.aux) (./publicacion.aux)
+(./explotacion.aux) (./conclusiones.aux) (./referencias.aux)) ) 
 Here is how much of TeX's memory you used:
- 458 strings out of 495061
- 4552 string characters out of 1182620
- 51542 words of memory out of 3000000
- 3677 multiletter control sequences out of 15000+50000
+ 527 strings out of 495061
+ 5476 string characters out of 1182620
+ 55542 words of memory out of 3000000
+ 3681 multiletter control sequences out of 15000+50000
  8194 words of font info for 29 fonts, out of 3000000 for 9000
  28 hyphenation exceptions out of 8191
- 23i,6n,19p,564b,187s stack positions out of 5000i,500n,10000p,200000b,50000s
-</usr/share/texmf-texlive/fonts/type1/publ
-ic/amsfonts/cm/cmbx12.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts
-/cm/cmbx9.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr10.pf
-b></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/shar
-e/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr17.pfb>
-Output written on main.pdf (2 pages, 68096 bytes).
+ 23i,6n,19p,567b,187s stack positions out of 5000i,500n,10000p,200000b,50000s
+</usr/share/texm
+f-texlive/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texmf-texlive/f
+onts/type1/public/amsfonts/cm/cmbx9.pfb></usr/share/texmf-texlive/fonts/type1/p
+ublic/amsfonts/cm/cmr10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfon
+ts/cm/cmr12.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr17.
+pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr9.pfb>
+Output written on main.pdf (4 pages, 81913 bytes).
 PDF statistics:
- 29 PDF objects out of 1000 (max. 8388607)
+ 39 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

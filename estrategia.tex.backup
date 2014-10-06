@@ -2,4 +2,7 @@ Con el fin de crear una aplicación que satisfaga los requerimientos mensionados
 un procedimiento que incluya desde obtener los datos relevantes de la web hasta llevarlos a un estado que permita una 
 explotación satisfactoria. \\
 El procedimiento debería incluir los siguientes pasos \\
-\input{extraReco}
+\input{estraReco}
+\input{estraEva}
+\input{estraCur}
+\input{estraInt}
