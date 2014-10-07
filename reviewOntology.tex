@@ -1,0 +1,47 @@
+RDF Review Vocabulary\\
+También conocido como Review Ontology, es una de las ontologías más antiguas de review, que fue pensada para uso del lenguaje 
+RDF y está definido bajo el namespace http://purl.org/stuff/rev# .\\
+Fue utilizado para la construcción Revyu , y sirvió como guía para otras ontologías.\\
+Consta de tres clases y trece propiedades.\\
+Clases\\
+Comment: Un comentario sobre el review. \\
+Feedback: Expresa la utilidad del review. \\
+Review: El review mismo. \\
+Propiedades\\
+commenter: Especifica el usuario que realizó el comentario del review. Tiene dominio Feedback o Comment y rango foaf:Agent.\\
+Actualmente se encuentra en desuso.\\
+\\
+hasReview: Enlaza el ítem evaluado con el review. Su dominio es rdfs:Resource (siendo ésta la clase del ítem evaluado) y su rango es Review. Es una de 
+las propiedades principales. \\
+\\
+hasComment: Idem anterior pero con el comentario en lugar del review.\\
+Se encuentra actualmente en desuso.\\
+\\
+hasFeedback: Idem anterior pero con feedback en lugar de comentario.\\
+Se encuentra actualmente en desuso.\\
+\\
+maxRating: Establece el puntaje máximo que es posible otorgar por un usuario a travez de la propiedad rating. Tiene como dominio 
+Review y como rango Literal siendo este último un número positivo. Su ausencia en un review asume su valor por defecto (5). Por lo que 
+si bien no es indispensable que esté, se deberá respetar la convención ala hora de generar el rating.\\
+\\
+minRating: De la misma forma que el anterior, sólo que establece el puntaje mínimo y su valor por defecto es (1).\\
+\\
+positiveVotes: Se refiere a la cantidad de votos positivos que tuvo el review, otorgados por usuarios que lo leyeron y lo encontraron 
+útil. SU domino es Review y su rango Literal siendo este último un número positivo.\\
+Se encuentra actualmente en desuso.\\
+\\
+rating: Una de las propiedades principales, indica el valor numérico otorgado por el creador del review sobre el ítem evaluado. 
+Su domino es Review y su rango es Literal siendo este último un número entre los valores de minRating y maxRating.\\
+\\
+reviewer: Especifica el usuario que realizó el review. Tiene dominio Review y rango foaf:Person. \\
+\\
+text: Otra de las propiedades principales, define el texto que describe el sentimento del usuario hacia el ítem. Tiene como 
+domino Review y como rango Literal.\\
+\\
+totalVotes: Exactamente igual a positiveVotes.\\
+\\
+type: Enuncia el tipo de ítem que clasifica taxonómicamente al ítem evaluado. Su domino es rdfs:Resource (siendo ésta la clase del ítem evaluado)  
+y su rango no se encuentra especificado. \\
+Es una propiedad muy útil pero actualmente se encuentra en desuso.\\
+\\
+
