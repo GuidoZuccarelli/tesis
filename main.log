@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2013.11.11)  1 OCT 2014 15:29
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2013.11.11)  9 OCT 2014 14:44
 entering extended mode
  %&-line parsing enabled.
 **main.tex
@@ -240,7 +240,9 @@ Now handling font encoding U ...
    defining Unicode char U+2122 (decimal 8482)
    defining Unicode char U+2423 (decimal 9251)
 )) (./main.aux
-(./introduccion.aux))
+(./introduccion.aux) (./estudio.aux) (./estrategia.aux) (./recoleccion.aux)
+(./evaluacion.aux) (./curado.aux) (./integracion.aux) (./publicacion.aux)
+(./explotacion.aux) (./conclusiones.aux) (./referencias.aux))
 \openout1 = `main.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 8.
@@ -266,9 +268,8 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
 \openout2 = `introduccion.aux'.
 
-
-(./introduccion.tex (./evaEntrecruz.tex (./itemDefinicion.tex)
-(./reviewDefinicion.tex))
+ (./introduccion.tex (./evaEntrecruz.tex
+(./itemDefinicion.tex) (./reviewDefinicion.tex))
 Overfull \hbox (4.72275pt too wide) in paragraph at lines 1--4
 \OT1/cmr/m/n/10 que ser'an que si bien no son in-dis-pens-ables, en-rique-cen n
 o s^^Solo su valor intr^^S^^Pnseco,
@@ -293,16 +294,303 @@ Underfull \hbox (badness 10000) in paragraph at lines 1--4
  (./estudio.tex)
 \openout2 = `estrategia.aux'.
 
- (./estrategia.tex (./estraReco.tex) (./estraEva.tex) (./estraCur.tex) (./estra
-Int.tex)) [3
+ (./estrategia.tex
+(./estraVocaSel.tex (./explicacionVocaSel.tex (./vocabcc.tex
+Underfull \hbox (badness 10000) in paragraph at lines 1--1
+
+ []
+
+) (./lov.tex))
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.4 \input
+          {opcionesVocaSel}
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+(./opcionesVocaSel.tex (./reviewOntology.tex
+! You can't use `macro parameter character #' in horizontal mode.
+l.3 ...ajo el namespace http://purl.org/stuff/rev#
+                                                   .\\
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1--53
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1--53
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1--53
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1--53
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1--53
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1--53
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1--53
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1--53
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1--53
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1--53
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1--53
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1--53
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1--53
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1--53
+
+ []
+
+
+Overfull \hbox (99.77863pt too wide) in paragraph at lines 1--53
+\OT1/cmr/m/n/10 date: Si bien no est^^Sa definida den-tro del vo-cab-u-lario, e
+s cor-recto uti-lizar http://purl.org/dc/terms/date,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1--53
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1--53
+
+ []
+
+[3
 
 
 
 
-] [4]
+] [4])
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.5 \input
+          {hReview}
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+(./hReview.tex) (./dataVocabulary.tex) (./schema.tex))) (./estraReco.tex
+(./explicacionReco.tex) (./opcionesReco.tex)) (./estraEva.tex) (./estraCur.tex)
+(./estraInt.tex))
+Underfull \hbox (badness 10000) in paragraph at lines 1--20
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1--20
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1--20
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1--20
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1--20
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1--20
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1--20
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1--20
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1--20
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1--20
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1--20
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1--20
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1--20
+
+ []
+
+
+Overfull \hbox (49.2137pt too wide) in paragraph at lines 1--20
+\OT1/cmr/m/n/10 travez de un for-mu-la-rio. Como es el caso de http://microform
+ats.org/code/hreview/creator.
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1--20
+
+ []
+
+
+Overfull \hbox (26.91736pt too wide) in paragraph at lines 1--20
+\OT1/cmr/m/n/10 La clase Re-view, qued^^So definida bajo el names-pace http://d
+ata-vocabulary.org/Review
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1--20
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1--20
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1--20
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1--20
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1--20
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1--20
+
+ []
+
+
+Overfull \hbox (0.13937pt too wide) in paragraph at lines 1--20
+\OT1/cmr/m/n/10 Vale aclarar que lim-i-tar las clases y propiedades posi-bles e
+n RDFa es b^^Sasicamente
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1--20
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1--20
+
+ []
+
+
+Overfull \hbox (85.35265pt too wide) in paragraph at lines 1--20
+\OT1/cmr/m/n/10 dad en el que se en-cuen-tran. Por ejem-plo los sitios http://l
+abs.mondeca.com/sparqlendpointsstatus/
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1--20
+
+ []
+
+[5] [6] [7] [8] [9]
 \openout2 = `recoleccion.aux'.
 
- (./recoleccion.tex)
+ (./recoleccion.tex
+Underfull \hbox (badness 10000) in paragraph at lines 1--17
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1--17
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1--17
+
+ []
+
+) [10
+
+
+]
 \openout2 = `evaluacion.aux'.
 
  (./evaluacion.tex)
@@ -317,8 +605,7 @@ Int.tex)) [3
  (./publicacion.tex)
 \openout2 = `explotacion.aux'.
 
-
-(./explotacion.tex)
+ (./explotacion.tex)
 \openout2 = `conclusiones.aux'.
 
  (./conclusiones.tex)
@@ -329,10 +616,10 @@ Int.tex)) [3
 (./evaluacion.aux) (./curado.aux) (./integracion.aux) (./publicacion.aux)
 (./explotacion.aux) (./conclusiones.aux) (./referencias.aux)) ) 
 Here is how much of TeX's memory you used:
- 527 strings out of 495061
- 5476 string characters out of 1182620
- 55542 words of memory out of 3000000
- 3681 multiletter control sequences out of 15000+50000
+ 590 strings out of 495061
+ 6385 string characters out of 1182620
+ 72353 words of memory out of 3000000
+ 3691 multiletter control sequences out of 15000+50000
  8194 words of font info for 29 fonts, out of 3000000 for 9000
  28 hyphenation exceptions out of 8191
  23i,6n,19p,567b,187s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -342,9 +629,9 @@ onts/type1/public/amsfonts/cm/cmbx9.pfb></usr/share/texmf-texlive/fonts/type1/p
 ublic/amsfonts/cm/cmr10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfon
 ts/cm/cmr12.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr17.
 pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr9.pfb>
-Output written on main.pdf (4 pages, 81913 bytes).
+Output written on main.pdf (10 pages, 100596 bytes).
 PDF statistics:
- 39 PDF objects out of 1000 (max. 8388607)
+ 59 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
