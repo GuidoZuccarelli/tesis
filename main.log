@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2013.11.11)  9 OCT 2014 14:44
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2013.11.11)  10 OCT 2014 10:51
 entering extended mode
  %&-line parsing enabled.
 **main.tex
@@ -240,9 +240,7 @@ Now handling font encoding U ...
    defining Unicode char U+2122 (decimal 8482)
    defining Unicode char U+2423 (decimal 9251)
 )) (./main.aux
-(./introduccion.aux) (./estudio.aux) (./estrategia.aux) (./recoleccion.aux)
-(./evaluacion.aux) (./curado.aux) (./integracion.aux) (./publicacion.aux)
-(./explotacion.aux) (./conclusiones.aux) (./referencias.aux))
+(./introduccion.aux) (./estudio.aux) (./estrategia.aux))
 \openout1 = `main.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 8.
@@ -554,6 +552,86 @@ Underfull \hbox (badness 10000) in paragraph at lines 1--20
  []
 
 
+Overfull \hbox (10.7785pt too wide) in paragraph at lines 1--20
+\OT1/cmr/m/n/10 Luego de los frag-men-tos en-rique-ci-dos y el im-pro-visado vo
+-cab-u-lario data-vocabulary
+ []
+
+
+Overfull \hbox (12.69528pt too wide) in paragraph at lines 1--20
+\OT1/cmr/m/n/10 http://www.data-vocabulary.org/Organization -> http://schema.or
+g/Organization 
+ []
+
+
+Overfull \hbox (16.27841pt too wide) in paragraph at lines 1--20
+\OT1/cmr/m/n/10 En par-tic-u-lar, la clase re-view, definida bajo el names-pace
+ http://schema.org/Review
+ []
+
+
+Overfull \hbox (16.77843pt too wide) in paragraph at lines 1--20
+\OT1/cmr/m/n/10 reviewBody El valor tex-tual del re-view de la eval-u-aci^^Son,
+ que tiene rango schema:Text 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1--20
+
+ []
+
+
+Overfull \hbox (4.65805pt too wide) in paragraph at lines 1--20
+\OT1/cmr/m/n/10 author El au-tor del con-tenido. Tiene rango schema:Person o sc
+hema:Organization 
+ []
+
+
+Overfull \hbox (67.71364pt too wide) in paragraph at lines 1--20
+\OT1/cmr/m/n/10 comment Co-men-tar-ios so-bre el con-tenido. De rango schema:Co
+mment o schema:UserComments. 
+ []
+
+
+Overfull \hbox (6.35246pt too wide) in paragraph at lines 1--20
+\OT1/cmr/m/n/10 creator El au-tor del con-tenido. Tiene rango schema:Person o s
+chema:Organization 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1--20
+
+ []
+
+
+Overfull \hbox (15.96251pt too wide) in paragraph at lines 1--20
+\OT1/cmr/m/n/10 como podr^^S^^Pa ser una URL de wikipedia, db-pe-dia, free-base
+, etc . Rango schema:URL. 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1--20
+
+ []
+
+
+Overfull \hbox (3.02843pt too wide) in paragraph at lines 1--20
+\OT1/cmr/m/n/10 =Las propiedades Cre-ative-Work:author y Cre-ative-Work:creator
+ son ex-ac-ta-mente
+ []
+
+
+Overfull \hbox (1.00064pt too wide) in paragraph at lines 1--20
+\OT1/cmr/m/n/10 =Los val-ores Cre-ative-Work:dateCreated Cre-ative-Work:dateMod
+ified y Cre-ative-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1--20
+
+ []
+
+
 Underfull \hbox (badness 10000) in paragraph at lines 1--20
 
  []
@@ -569,7 +647,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 1--20
 
  []
 
-[5] [6] [7] [8] [9]
+[5] [6] [7] [8] [9] [10]
 \openout2 = `recoleccion.aux'.
 
  (./recoleccion.tex
@@ -587,7 +665,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 1--17
 
  []
 
-) [10
+) [11
 
 
 ]
@@ -616,10 +694,10 @@ Underfull \hbox (badness 10000) in paragraph at lines 1--17
 (./evaluacion.aux) (./curado.aux) (./integracion.aux) (./publicacion.aux)
 (./explotacion.aux) (./conclusiones.aux) (./referencias.aux)) ) 
 Here is how much of TeX's memory you used:
- 590 strings out of 495061
- 6385 string characters out of 1182620
- 72353 words of memory out of 3000000
- 3691 multiletter control sequences out of 15000+50000
+ 565 strings out of 495061
+ 6019 string characters out of 1182620
+ 79808 words of memory out of 3000000
+ 3682 multiletter control sequences out of 15000+50000
  8194 words of font info for 29 fonts, out of 3000000 for 9000
  28 hyphenation exceptions out of 8191
  23i,6n,19p,567b,187s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -629,9 +707,9 @@ onts/type1/public/amsfonts/cm/cmbx9.pfb></usr/share/texmf-texlive/fonts/type1/p
 ublic/amsfonts/cm/cmr10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfon
 ts/cm/cmr12.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr17.
 pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr9.pfb>
-Output written on main.pdf (10 pages, 100596 bytes).
+Output written on main.pdf (11 pages, 103807 bytes).
 PDF statistics:
- 59 PDF objects out of 1000 (max. 8388607)
+ 62 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

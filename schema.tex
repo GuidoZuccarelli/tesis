@@ -16,7 +16,7 @@ Este nuevo vocabulario, recibe constantes actualizaciones, al punto que, al día
 En particular, la clase review, definida bajo el namespace http://schema.org/Review y es subclase de schema:CreativeWork 
 que a su vez es subclase de schema:Thing .\\
 Propiedades de Review\\
-itemReviewed 	El ítem que está siendo evaluado, tiene rango schema:Thing \\
+itemReviewed	El ítem que está siendo evaluado, tiene rango schema:Thing \\
 reviewBody 	El valor textual del review de la evaluación, que tiene rango schema:Text \\
 reviewRating 	El valor numérico del review de la evaluación, que tiene rango schema:Rating \\
 \\Propiedades de CreativeWork \\
@@ -42,10 +42,10 @@ url 		URL del ítem. Rango schema:URL\\
 \\
 Unas 60 propiedades de CreativeWork fueron omitidas por no iban al caso ya que sólo tienen razón de ser para otras clases que 
 también heredan de CreativeWork. Lo importante aquí es remarcar un par de situaciones interesantes:\\
-_Las propiedades Review:reviewBody, CreativeWork:text y Thing:description podrían contener el valor textual de la evaluación del review semánticamente correcta por la definición de cada una.\\
-_Las propiedades CreativeWork:author y CreativeWork:creator son exactamente iguales. \\
-_Los valores CreativeWork:dateCreated CreativeWork:dateModified y CreativeWork:datePublished podrían generar confusión. \\
-_Sería sintácticamente correcto que un Review utilice la propiedad Review .\\
+=Las propiedades Review:reviewBody, CreativeWork:text y Thing:description podrían contener el valor textual de la evaluación del review semánticamente correcta por la definición de cada una.\\
+=Las propiedades CreativeWork:author y CreativeWork:creator son exactamente iguales. \\
+=Los valores CreativeWork:dateCreated CreativeWork:dateModified y CreativeWork:datePublished podrían generar confusión. \\
+=Sería sintácticamente correcto que un Review utilice la propiedad Review .\\
 \\
 Más adelante se mostrarán y enumerarán los problemas que estas cuestiones (causadas por el afán de hacer uso de la herencia
 lo más posible)  generan. \\
