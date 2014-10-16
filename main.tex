@@ -1,20 +1,33 @@
-\documentclass[a4paper,10pt]{report}
+
+\documentclass[10pt]{report}
+\pagestyle{plain}
+\usepackage[spanish]{babel}
+\selectlanguage{spanish}
 \usepackage[utf8]{inputenc}
-\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{color}
+\usepackage[table]{xcolor}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{appendix}
+\usepackage[colorlinks=true, pdfstartview=FitV, linkcolor=blue, 
+            citecolor=blue, urlcolor=blue]{hyperref}
+\usepackage{framed}
 
 
 %opening
 \title{La Web Semántica como plataforma para sistemas de recomendación}
 \author{Guido Zuccarelli}
 
+
 \begin{document}
+
 
 \maketitle
 
-\begin{abstract}
+\tableofcontents
 
-\end{abstract} 
-
+%Cada uno de los que siguen a continuación es un chapter
 \include{introduccion}
 
 \include{estudio}
@@ -29,12 +42,24 @@
 
 \include{integracion}
 
+	
 \include{publicacion}
+
 
 \include{explotacion}
 
 \include{conclusiones}
 
-\include{referencias}
+%la bilbiografia se pone en el archivo bibliografia.bib en un formato que se llama bibtex - luego lo vemos juntos. Puse un ejemplo. 
+\chapter{Bibliografía}
+\bibliographystyle{plain}
+\bibliography{bibliografia}
+
+\appendix
+\label{anexo}
+
+\chapter{Publicaciones}
+
+
 
 \end{document}

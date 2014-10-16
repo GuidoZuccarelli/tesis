@@ -3,35 +3,42 @@
 
 \section{Evaluaciones entrecruzadas}
 \label{section:evaluaciones-cruzadas}
-Definiremos a una reseña (de aquí en adelante review) como la forma que tiene un usuario de transmitir mediante el uso de la computadora, su grado de satisfacción con respecto a un ítem. 
+Definiremos a una reseña (de aquí en adelante review) como la forma que tiene un usuario de transmitir mediante el uso de la computadora, su grado de satisfacción con respecto a un ítem. Estará conformado por una serie de atributos mínimos necesarios y otros que que si bien no serán indispensables, enriquecerán no sólo su valor intrínseco, sino también su utilidad para el contexto que será planteado.
 
-Estará conformado mediante una serie de atributos mínimos necesarios y otros que que si bien no serán indispensables, enriquecerán no sólo su valor intrínseco, sino también su utilidad para el contexto que será planteado.
+Llamaremos ítem, a un elemento que es aprovechado por las personas, dicho ítem puede ser, un objeto, un servicio, una idea, un programa, etc.  Por ejemplo, una película. Este último debería poder ser identificable, para ello, será necesario como mínimo un atributo (o un conjunto) que cumpla esa función,  si tomamos como ejemplo un libro, sólo disponer del atributo ISBN, será suficiente para identificarlo.
 
+El review es una expresión de la persona que utilizó el ítem que refleja su grado de conformidad con el mismo, con el objetivo de informarlo a otras personas. Por lo que entonces, el atributo mínimo será aquel que refleje este sentimiento del usuario hacia el ítem, el mismo puede ser un texto explicativo (por ejemplo ``Una película hermosa, pero me parecieron flojos los actores'') o un valor numérico dentro de un rango determinado (7 en escala de 1 a 10). A partir del atributo base, existen muchos otros atributos que, bien construidos, aportan mucha riqueza al aprovechamiento del review. Por ejemplo, el autor, que identifica a la persona creadora del review. Otro caso es el de la fecha.
 
-%Item definition
-Llamaremos ítem, a un elemento que es aprovechado por las personas, dicho ítem puede ser, un objeto, un servicio, una idea, un programa, etc.  Por ejemplo, una película.
-
-Este último debería poder ser identificable, para ello, será necesario como mínimo un atributo (o un conjunto) que cumpla esa función,  si tomamos como ejemplo un libro, sólo disponer del atributo ISBN, será suficiente para identificarlo.
-
-
-%Review definition
-El review es una expresión de la persona que utilizó el ítem que refleja su grado de conformidad con el mismo, con el objetivo de informarlo a otras personas. Por lo que entonces, el atributo mínimo será aquel que refleje este sentimiento del usuario hacia el ítem, el mismo puede ser un texto explicativo (por ejemplo ``Una película hermosa, pero me parecieron flojos los actores'') o un valor numérico dentro de un rango determinado (7 en escala de 1 a 10).
-A partir del atributo base, existen muchos otros atributos que, bien construidos, aportan mucha riqueza al aprovechamiento del review. Por ejemplo, el autor, que identifica a la persona creadora del review. Otro caso es el de la fecha.
-
+\begin{framed}
+\textcolor{red}{Al terminar de leer esta sección, el lector debe entender a que te referís con reviews (en términos generales), que muchas de ellas son publicadas en la web en redes sociales, en sitios de productos etc, y que sirven para ??. Podés agregar algunos ejemplos e incluso imágenes. No queda claro por que en el titulo de la sección dice ``entrecruzadas'', ¿es importante o fue solo una elección al azar?. Para que este se conecte con el que sigue, podés dejar picando algo como ``muchos han intentado procesar automáticamente las opiniones de los usuarios para ... pero eso es muy difícil porque...'' }
+\end{framed}
 
 \section{La web semántica}
 \label{section:la-web-semantica}
-
-% laWebSemantica
 En sus comienzos en los 90, la web podía verse como un conjunto de sitios web que ofrecían una colección de documentos web, con el objetivo de comunicar información a los usuarios.
 
-Con el correr de los años, múltiples tecnologías se fueron implementando y permitieron el desarrollo de una web mucho más grande y aprovechable
+Con el correr de los años, múltiples tecnologías se fueron implementando y permitieron el desarrollo de una web mucho más grande y aprovechable...  y esto es unaa referencia a un libro sobre web semantica \cite{Antoniou2004}
 
-\section{RDF y OWL} 
-\label{section:rdf-owl}
+\begin{framed}
+\textcolor{red}{Al terminar de leer esta sección, el lector debe entender que es la web semántica y a que apunta. Si dejaste picando el tema de automatización en el párrafo anterior, acá se va a imaginar porque hablás de ws. Habla muy bremente de tripletas y meciona RDF. También mencioná linked open data para darle una idea de que la web semantica es una web de datos interconectada. Podés tomar lo que ya escribiste en la propuesta. Ejemplifica con dbpedia o algo asi... En un capitulo mas adelante vas a entrar en detalle en web semantica, rdf, etc. Acá contás solo lo suficiente para que se entienda lo que vas a proponer en la próxima sección}
+\end{framed}
 
 \section{Reviews en la web semántica}
 \label{section:reviews-en-la-web}
 
-\section{Linked data cloud}
-\label{section:linked-data-cloud}
+\begin{framed}
+\textcolor{red}{Acá es donde presentas el problema a resolver. Ya contaste que son los reviews y por que alguien querría integrarlos. Ya contaste que es la web semántica y linked open data. Ahora tenés que contar que ha habido iniciativas para darle semántica a los reviews y que existen datos; ahora hay una posibilidad de aprovechar esa información. Y ahí decís algo como lo que dijiste al final de la propuesta: \textit{El objetivo principal de esta tesis es evaluar la viabilidad, y entender los desafíos de la utilización de la información contenida en la web semántica en la construcción de sistemas de recomendación. Para eso, y con foco en el caso particular de opiniones de usuarios sobre distintos tipos de recursos se buscará: capturar, extraer, validar calidad, curar, integrar, publicar y explotar los datos disponibles}.}
+\end{framed}
+
+\section{Organización}
+\label{section:organizacion}
+
+\begin{framed}
+\textcolor{red}{ya saben lo que vas a contar; acá les das una idea de como te vas a organizar para contarlo - puede ser algo como lo que está a continuación. Para el caso de estudio podés tomar el texto que escribimos en el articulo}
+\end{framed}
+
+El capítulo \ref{chapter:estudio} presenta una aplicación de ejemplo que muestra claramente el problema que se quiere resolver y que servirá como referencia a lo largo de esta tesis. El capítulo \ref{chapter:estrategia} y presenta la estrategia de solución en términos generales. Los capítulos \ref{chapter:recoleccion} a \ref{chapter:explotacion} discuten en detalle cada uno de pasos de la estrategia elegida. Finalmente, el capítulo \ref{chapter:conclusiones} presenta los resultados observados, saca conclusiones al respecto, y plantea trabajo futuro. El anexo \ref{anexo} presenta una publicación que fue resultado del trabajo efectuado en este trabajo de tesis. 
+
+
+
+
