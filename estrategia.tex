@@ -5,17 +5,27 @@ Con el fin de crear una aplicación que satisfaga los requerimientos mensionados
 un procedimiento que incluya desde obtener los datos relevantes de la web hasta llevarlos a un estado que permita una 
 explotación satisfactoria. 
 
-El procedimiento debería incluir los siguientes pasos 
+El procedimiento debería incluir los siguientes pasos  
 
-%\input{estraVocaSel}
-Selección de vocabularios
+\begin{description}
+\item[Selección de vocabularios ] Tanto la recolección como la publicación de datos en la web semántica involucra la elección del o de los vocabulario/s que mejor modelen el dominio de problema, con la excepción que para su publicación existe la posibilidad de desarrollar uno propio que se ajuste correctamente en caso de que no se encuentre uno existente. 
+\item[Recolección y extracción de los datos ] .... ?
+\item[Evaluación de Calidad de los Datos] ???
+\item[Curado de los Datos] ???
+\item[Integración de los datos] ?? 
+\item[Publicación del Dataset Curado] ?? 
+\item[Explotación del Dataset] ?? 
+\end{description}
 
-%\input{explicacionVocaSel}
-Tanto la recolección como la publicación de datos en la web semántica involucra la elección del o de los vocabulario/s que 
-mejor modelen el dominio de problema, con la excepción que para su publicación existe la posibilidad de desarrollar uno propio que se ajuste correctamente en caso de que no se encuentre uno existente. 
+\begin{framed}
+\textcolor{red}{acá sería bueno incluir un diagrama que muestre el pipeline. En la lista de arriba con un párrafo se explica cada paso. Luego, en las secciones que sigue se analiza mas cada paso, pero se lo plantea como un problema.. se analizan los retos; entonces los capítulos 4 a 9, explican como los resolviste. Alternativamente, se puede hablar menos acá, solo lo suficiente para que se entienda la estrategia general, y luego en los capítulos 4 a 9 se analiza el problema en detalle y se propone la solución. Con esta ultima forma, todo lo que se refiere a los vocabularios quedaría en el capitulo 4 y no acá. Puede ser mejor.}
+\end{framed}
+
+
+\section{Selección de vocabularios}
 
 Seleccionar un vocabulario implica analizar varios aspectos del mismo, no sólo su definición e implementación, sino también el uso práctico dado por sus usuarios. 
-En primer lugar se debe comprobar que los nombres de las propiedades que posee sean correctamente autoexplicativas. Supongamos por ejemplo que existe un ítem con un rating agregado modelado por una ontología que posee las siguientes propiedades:
+En primer lugar se debe comprobar que los nombres de las propiedades que posee sean correctamente auto-explicativas. Supongamos por ejemplo que existe un ítem con un rating agregado modelado por una ontología que posee las siguientes propiedades:
 
 \begin{enumerate}
 \item minrating
@@ -35,18 +45,12 @@ Y por último se debería intentar buscar ejemplos reales que muestren el uso qu
 determinar qué propiedades están incorrectamente interpretadas o también para los casos donde las propiedades que se encuentren 
 en desuso.
 
-
 Con estas precauciones en mente se puede emprender la búsqueda, que podría tener como comienzo búsquedas en  search engines. 
 Existen dos buscadores específicos para esta tarea.
 
-%\input{vocabcc} vacio
-
-%\input{lov} vaciog
-
-%\input{opcionesVocaSel}
 En la actualidad existen cuatro vocabularios que cumplen los requerimientos mínimos para modelar el dominio de problema planteado.
 
-\section{Review Ontology}
+\subsection{Review Ontology}
 
 RDF Review Vocabulary
 
@@ -138,7 +142,7 @@ date: Si bien no está definida dentro del vocabulario, es correcto utilizar htt
 que se realizó el review.
 
 
-\section{hReview}
+\subsection{hReview}
 
 Como se mencionó anteriormente, está establecido por convención, que los microformatos son una forma de publicar información en la 
 web semántica, pero al no disponer de namespaces, no pueden ser representados por ninguna ontología o ningún otro lenguaje de la misma. 
@@ -202,7 +206,7 @@ sin problemas un hReview, teniendo además herramientas online como opción, que
 Como es el caso de http://microformats.org/code/hreview/creator. 
 
 
-\section{dataVocabulary}
+\subsection{dataVocabulary}
 RDF Data Vocabulary
 
 En Mayo de 2009 Google anuncia la introdución de los llamados ``Google Rich Snippets'', estos fragmentos enriquecidos son una convención 
@@ -242,7 +246,7 @@ de RDFa.
 Más adelante los Google Rich Snippets incluyeron también soporte para microformatos (lo que incluía hReview). 
 
 
-\section{Schema.org}
+\subsection{Schema.org}
 Schema.org
 
 Luego de los fragmentos enriquecidos y el improvisado vocabulario data-vocabulary creado para soportar los fragmentos, Google 
@@ -338,7 +342,6 @@ Más adelante se mostrarán y enumerarán los problemas que estas cuestiones (ca
 lo más posible)  generan. 
 
 
-
 \section{Recolección y extracción de los datos}
 
 %\input{explicacionReco}
@@ -402,10 +405,10 @@ y se pueden utilizar para procesarlos y obtener los datos requeridos. El más im
 %\input{opcionesDescarga}
 %input{opcionesTransformación}
 %input{opcionesAlmacenaje}
-ESTO ESTABA EN EL ARCHIVO balmacenaje.tex
-esto estaba en el 
 
-%\input{estraEva} 
+ 
+
+\section{estraEva} 
 Como sabemos los reviews son creados por usuarios que en su mayoría no están familiarizados con el desarrollo de una 
 aplicación, esto causa que una parte muy significativa del contenido publicado no esté de la forma adecuada para ser procesado. 
 La falta de calidad en el contenido publicado puede deberse tanto a errores por parte del usuario como por parte del publicador.
