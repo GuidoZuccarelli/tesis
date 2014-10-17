@@ -364,7 +364,7 @@ posee distintas alternativas para su realización, algunas se describirán a con
 
 %\input{opcionesReco} vacio
 
-\section{Búsqueda}
+\subsection{Búsqueda}
 %\input{opcionesBusqueda}
 \textcolor{red}{OJO: ESTO ESTABA EN EL ARCHIVO busqueda.tex no en el opcionesBusqueda}
 
@@ -408,7 +408,7 @@ y se pueden utilizar para procesarlos y obtener los datos requeridos. El más im
 
  
 
-\section{estraEva} 
+\section{Evaluación de Calidad de los Datos} 
 Como sabemos los reviews son creados por usuarios que en su mayoría no están familiarizados con el desarrollo de una 
 aplicación, esto causa que una parte muy significativa del contenido publicado no esté de la forma adecuada para ser procesado. 
 La falta de calidad en el contenido publicado puede deberse tanto a errores por parte del usuario como por parte del publicador.
@@ -428,7 +428,7 @@ Este paso entonces tiene por objetivo encontrar todos los problemas de calidad q
 ser descargado y extraído y que generen inconvenientes para una posterior integración/explotación.
 
 %\input{estraCur}
-Curado de los Datos
+\section{Curado de los Datos}
 
 En el paso anterior se describieron los problemas en la calidad del dataset que tendrán un impacto en la aplicación resultante, 
 o que, podrían limitar o imposibilitar la realización de la misma. Dichos problemas pueden ser muchos, y algunos muy difíciles
@@ -440,7 +440,11 @@ una mejora puede conllevar a nuevos problemas.
 
 %\input{estraInt}
 
-Integración de los datos
+\section{Integración de los datos}
+\begin{framed}
+\textcolor{red}{Esto va acá o es parte de Explotación?}
+\end{framed}
+
 
 Los datos recolectados fueron generados por distintos usuarios, en múltiples sitios y bajo distintas ontologías y estándares.
 Estos aún curados, necesitan un último paso para poder realizar una explotación, y es la integración.
@@ -451,3 +455,12 @@ en una nueva ontología de review, o bien en una ya existente, para lograr tener
 que este proceso puede ser muy dificultoso, habrá que ver en base a los requerimientos, qué aspectos de los datos se integrarán.
 
 Una vez realizada la integración mínima necesaria par also requerimientos, el dataset ya estará listo para su explotación.
+
+\section{Publicación del Dataset Curado}
+???
+
+\section{Explotación del Dataset}
+\begin{framed}
+\textcolor{red}{Acá es donde efectivamente se discute que implica cubrir los requerimientos de la aplicación . Puede ser que acá tambien te refieras a como la forma en la que querés explotar los datos impacta en las fases anteriores. Incluso, habría que pensarlo, en este capitulo tal vez conviene primero hablar de explotación y luego de las otras fases - porque explotación determina mucho que es lo que vas a mirar en las fases anteriores, ¿no?}
+\end{framed}
+
