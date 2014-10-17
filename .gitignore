@@ -31,4 +31,7 @@ Thumbs.db
 *.tex~
 *.backup
 *.log
+*.bib~
+.gitignore~
+
 
