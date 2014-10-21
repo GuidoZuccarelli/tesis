@@ -3,12 +3,70 @@
 
 \section{Evaluaciones entrecruzadas}
 \label{section:evaluaciones-cruzadas}
-Definiremos a una reseña (de aquí en adelante review) como la forma que tiene un usuario de transmitir mediante el uso de la computadora, su grado de satisfacción con respecto a un ítem. Estará conformado por una serie de atributos mínimos necesarios y otros que que si bien no serán indispensables, enriquecerán no sólo su valor intrínseco, sino también su utilidad para el contexto que será planteado.
+Llamaremos ítem, a un elemento del mundo real que es aprovechado por las personas, dicho ítem puede ser, un objeto, un servicio, una idea, un programa, etc. Además, debería poder ser abstraído a un modelo representado por una computadora, de manera tal, que esa representación describa con precisamente a qué se referie ante la interpretación del lector. 
 
-Llamaremos ítem, a un elemento que es aprovechado por las personas, dicho ítem puede ser, un objeto, un servicio, una idea, un programa, etc.  Por ejemplo, una película. Este último debería poder ser identificable, para ello, será necesario como mínimo un atributo (o un conjunto) que cumpla esa función,  si tomamos como ejemplo un libro, sólo disponer del atributo ISBN, será suficiente para identificarlo.
+Para ello, el modelo del ítem contendrá un conjunto de atributos que lo describen. Algunos más importantes que otros.
 
-El review es una expresión de la persona que utilizó el ítem que refleja su grado de conformidad con el mismo, con el objetivo de informarlo a otras personas. Por lo que entonces, el atributo mínimo será aquel que refleje este sentimiento del usuario hacia el ítem, el mismo puede ser un texto explicativo (por ejemplo ``Una película hermosa, pero me parecieron flojos los actores'') o un valor numérico dentro de un rango determinado (7 en escala de 1 a 10). A partir del atributo base, existen muchos otros atributos que, bien construidos, aportan mucha riqueza al aprovechamiento del review. Por ejemplo, el autor, que identifica a la persona creadora del review. Otro caso es el de la fecha.
+Por ejemplo, imaginemos que se debe representar una bicicleta mediante un conjunto de pares atributo;valor, tendríamos algo como esto.
 
+Tipo: Bicicleta
+
+Sexo: Unisex
+
+Talle: 51
+
+Cuadro-Material: Aluminio
+
+Cuadro-color: Rojo
+
+Cuadro-Tipo: Ruta
+
+Horquilla-Material: Fibra de carbono
+
+Horquilla-Color: Rojo
+
+Asiento-tipo: Adamo 
+
+Asiento-Color: Blanco
+
+La cantidad de atributos que pueden utilizarse para describir el ítem puede ampliarse prácticamente hasta el cansancio. 
+
+Se pueden optar también por una representación como ésta
+
+Tipo: Bicicleta
+
+Talle: 51 
+
+Marca: Merida
+
+Modelo: Reacto 500
+
+Puede aprovecharse el hecho de que es muy probable que ya existan definiciones del ítem que intentamos describir, por lo que si se utilizan sólo los atributos que identifican al ítem, será suficiente para que el lector tenga la interpretación correcta del mismo. 
+
+Cada ítem es de alguna manera utilizado por uno o más usuarios. Y cada usuario puede de la misma manera ser representado en la computadora mediante pares de atributo;valor. Y al igual que los ítems algunos atributos servirán para identificar al usuario. 
+
+Esta relación de uso entre usuario e ítem, contiene un grado de conformidad entre el primero y el segundo, si el ítem cumplió o no con las expectativas del usuario debería poder modelarse también para ser representado computacionalmente.
+
+Definiremos a una reseña (de aquí en adelante review) representación mediante la computadora, de la medida de conformidad con respecto a dicha relación entre usuario e ítem. 
+
+El objetivo de un review, es que un usuario pueda reflejar el sentimiento que le generó utilizar el ítem e informarlo a otros usuarios. 
+
+También los reviews dispondrán de un conjunto de atributos de los cuales algunos serán indispensables y otros que enriquecerán no sólo su valor intrínseco, sino también su utilidad para el contexto que será planteado.
+
+Imaginemos un usuario que realiza un review sobre la bicicleta, podría generar el siguiente review:
+
+Puntuación: 4 
+
+Titulo: ``Buena opción''
+
+Texto: ``Liviana y cómoda, pero un poco rígida para doblar.''
+
+Fecha: 15/10/2012
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth,natwidth=610,natheight=642]{biciReview.png}
+\end{figure}
 \begin{framed}
 \textcolor{red}{Al terminar de leer esta sección, el lector debe entender a que te referís con reviews (en términos generales), que muchas de ellas son publicadas en la web en redes sociales, en sitios de productos etc, y que sirven para ??. Podés agregar algunos ejemplos e incluso imágenes. No queda claro por que en el titulo de la sección dice ``entrecruzadas'', ¿es importante o fue solo una elección al azar?. Para que este se conecte con el que sigue, podés dejar picando algo como ``muchos han intentado procesar automáticamente las opiniones de los usuarios para ... pero eso es muy difícil porque...'' }
 \end{framed}
