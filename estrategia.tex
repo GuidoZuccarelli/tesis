@@ -57,301 +57,30 @@ determinar qué propiedades están incorrectamente interpretadas o también para
 en desuso.
 
 Con estas precauciones en mente se puede emprender la búsqueda, que podría tener como comienzo búsquedas en  search engines. 
-Existen dos buscadores específicos para esta tarea.
+Existen dos buscadores específicos para esta tarea:
 
-En la actualidad existen cuatro vocabularios que cumplen los requerimientos mínimos para modelar el dominio de problema planteado.
+\subsection{lov}
 
-\subsection{Review Ontology}
+Linked Open Vocabulary (LOV)
 
-RDF Review Vocabulary
+Proporciona una plataforma técnica de búsqueda y evaluación de calidad sobre un dataset extraído de linked data cloud que contiene descripciones de vocabularios RDFS 
+y ontologías OWL. Esas descripciones están en forma de metadatos y pueden ser generados tanto por los autores de los vocabularios como por curadores de LOV.
+Posee además de la búsqueda las funciones de estadística o sugerencia.
 
-También conocido como Review Ontology, es una de las ontologías más antiguas de review, que fue pensada para uso del lenguaje 
+Actualmente el dataset está integrado por 475 namespaces distintos que contienen una media de 10 clases y 20 propiedades, siendo schema.org el más grande de ellos.
 
-RDF y está definido bajo el namespace http://purl.org/stuff/rev\# .
+\subsection{vocabcc}
 
-Fue utilizado para la construcción Revyu , y sirvió como guía para otras ontologías.
+Vocab.cc
 
-Consta de tres clases y trece propiedades.
+Vocabcc es un proyecto opensource que permite a los desarolladores de RDF realizar búsquedas de vocabularios de Linked Data.
 
-Clases
+Para facilitar la decisión de seleccionar un vocabulario deseado, proporciona además información estadística de cada uno sobre el dataset Billon Triple Challenge (BTCD). 
+ Esta información incluye el número de apariciones globales de la URI dada en el BTCD, así como el número de documentos dentro de la BTCD, que contiene el URI dado. Estos números permiten una clasificación de propiedades y clases, respectivamente, con respecto a su uso. También se proporciona información acerca de la posición de una URI dada en estos rankings.
 
-Comment: Un comentario sobre el review. 
+Los desarrolladores pueden buscar las URIs con queries arbitrarias o búsquedas de URIs específicos (prefijos comunes se resuelven automáticamente con datos de prefix.cc).
 
-Feedback: Expresa la utilidad del review. 
-
-
-Review: El review mismo. 
-
-
-Propiedades
-
-
-commenter: Especifica el usuario que realizó el comentario del review. Tiene dominio Feedback o Comment y rango foaf:Agent.
-
-
-Actualmente se encuentra en desuso.
-
-
-hasReview: Enlaza el ítem evaluado con el review. Su dominio es rdfs:Resource (siendo ésta la clase del ítem evaluado) y su rango es Review. Es una de 
-las propiedades principales. 
-
-
-hasComment: Idem anterior pero con el comentario en lugar del review.
-
-Se encuentra actualmente en desuso.
-
-hasFeedback: Idem anterior pero con feedback en lugar de comentario.
-
-Se encuentra actualmente en desuso.
-
-
-maxRating: Establece el puntaje máximo que es posible otorgar por un usuario a travez de la propiedad rating. Tiene como dominio 
-Review y como rango Literal siendo este último un número positivo. Su ausencia en un review asume su valor por defecto (5). Por lo que 
-si bien no es indispensable que esté, se deberá respetar la convención ala hora de generar el rating.
-
-
-
-minRating: De la misma forma que el anterior, sólo que establece el puntaje mínimo y su valor por defecto es (1).
-
-
-positiveVotes: Se refiere a la cantidad de votos positivos que tuvo el review, otorgados por usuarios que lo leyeron y lo encontraron 
-útil. SU domino es Review y su rango Literal siendo este último un número positivo.
-
-
-Se encuentra actualmente en desuso.
-
-
-rating: Una de las propiedades principales, indica el valor numérico otorgado por el creador del review sobre el ítem evaluado. 
-Su domino es Review y su rango es Literal siendo este último un número entre los valores de minRating y maxRating.
-
-
-reviewer: Especifica el usuario que realizó el review. Tiene dominio Review y rango foaf:Person. 
-
-
-
-text: Otra de las propiedades principales, define el texto que describe el sentimento del usuario hacia el ítem. Tiene como 
-domino Review y como rango Literal.
-
-
-totalVotes: Exactamente igual a positiveVotes.
-
-
-title: El título del review . Tiene dominio Review y rango Literal. Subclase de dc:title
-
-
-No tiene demasiada utilidad para el caso de estudio y además se encuentra en desuso.
-
-
-type: Enuncia el tipo de ítem que clasifica taxonómicamente al ítem evaluado. Su domino es rdfs:Resource (siendo ésta la clase del ítem evaluado)  
-y su rango no se encuentra especificado. 
-
-
-Es una propiedad muy útil pero actualmente se encuentra en desuso.
-
-
-date: Si bien no está definida dentro del vocabulario, es correcto utilizar http://purl.org/dc/terms/date, implica la fecha en la 
-que se realizó el review.
-
-
-\subsection{hReview}
-
-Como se mencionó anteriormente, está establecido por convención, que los microformatos son una forma de publicar información en la 
-web semántica, pero al no disponer de namespaces, no pueden ser representados por ninguna ontología o ningún otro lenguaje de la misma. 
-
-
-Al no poder utilizar ontologías que modelen reviews surgió la necesidad de crear un estándar específico para embeberlos dentro de HTML 
-utilizando microformatos.
-
-Dicho estándar se encuentra actualmente en la versión 0.4 y propone el uso de 10 propiedades, que se supone, deberían ser 
-suficientes para cubrir todas las necesidades a la hora de generar un review.
-
-summary (opcional): Puede ser el título o nombre del review, o es posible también hacer una pequeña sinopsis del mismo. Se encuentra en desuso.
-
-type (opcional): Representa el tipo de ítem evaluado, pero se encuentra acotado a alguno de estos  product | business | event | person | place | website | url .
-
-
-También está en desuso.
-
-item: Esta propiedad enuncia toda la información que se crea necesaria para identificar al ítem, mínimamente los atributos nombre, url y foto.
-
-
-Para lograr bajo una propiedad cubrir todos los atributos, el rango de la misma debería ser un hCard, que luego contendrá las propiedades mínimas necesarias: 
-fn, url, photo y cualquier otra que se quiera adicional.
-
-reviewer (opcional): Al igual que ítem, indica todo lo necesario para identificar a la persona autora del review, para lo cual también deberá representarse 
-con un hCard. 
-
-dtreviewed (opcional): Se refiere a la fecha en la que fue creado el review. 
-
-rating: El valor numérico con el cual el usuario expresa su satisfacción con el ítem, y está formado por un entero con un solo decimal 
-de precisión, que se encuentra dentro del rango 1.0 a 5.0. Dicho rango puede ser alterado con la presencia de las propiedades worst y best 
-que restringen el valor mínimo y máximo respectivamente.
-
-descripción (opcional): Establece el valor textual con el cual el usuario expresa su satisfacción con el ítem, creando una 
-sinopsis detallada del mismo. 
-
-tags (opcional): Una etiqueta intenta establecer una idea acerque de qué se trata el contenido en una sola palabra para una rápida identificación 
-o para mejorar las búsquedas. 
-
-permalink (opcional): Genera una URI que identificará al review creándole una especie de ID, que será útil para los casos donde 
-se podría repetir la publicación del mismo. 
-
-license (opcional): Expresa la licencia del review.
-
-El indicador ``(opcional)'' se refiere a si es indispensable para conformar un hReview o no, de manera tal que si no se encuentra una 
-propiedad que no está marcada como opcional no podrá ser considerado un hReview.
-
-Cabe destacar que muchas de las propiedades opcionales, podrían ser necesarias para el caso de estudio.
-
-El problema con este vocabulario surge a la hora de trabajar con la información obtenida, que no puede ser representada por ningún otro 
-lenguaje de la web semántica, por lo que se vió la necesidad de mapear las propiedades de hReview, a otro vocabulario que sí pueda.
-
-Esto llevó a que en la web donde definen hReview lo consideren compatible con RDF Review Vocabulary, por lo que en Noviembre de 2007 
-se creó una herramienta que transforma de uno al otro hreview2rdfxml.xsl,  pero existe un problema con el rango de algunas 
-propiedades, por ejemplo reviewer (propiedad homónima en ambos vocabularios, pero una con rango hCard y otra con rango foaf:Person).
-
-En general si bien este vocabulario bien utilizado puede ser efectivo, resulta poco flexible y complciado de manejar por parte 
-de quien quiera explotarlos, el motivo por el cual se ha vuelto muy popular es su facilidad para generarlos, dado que 
-microformatos es un lenguaje muy sencillo y cualquier persona con un relativamente mínimo ocnocimiento de HTML puede generar 
-sin problemas un hReview, teniendo además herramientas online como opción, que generan el código a travez de un formulario. 
-Como es el caso de http://microformats.org/code/hreview/creator. 
-
-
-\subsection{dataVocabulary}
-RDF Data Vocabulary
-
-En Mayo de 2009 Google anuncia la introdución de los llamados ``Google Rich Snippets'', estos fragmentos enriquecidos son una convención 
-de etiquetas (con soporte para RDFa-lite y microdata) que permitían agregar información útil a los SERP del buscador de Google. De manera tal 
-que los datos que contenían estos fragmentos, recibían un tratamento especial.
-
-Sin embargo en el anuncio, Google revela que el soporte se limitó al uso de las clases y propiedades del vocabulario definido en una página 
-notoriamente improvisada llamada http://rdf.datavocabulary.org/ . 
-
-En ella se establecían modelos de clases para varios tipos de ítems, tales como Persona, Organización o Producto y también para los Reviews.
-
-La clase Review, quedó definida bajo el namespace http://data-vocabulary.org/Review e incluía las siguientes propiedades:
-
-itemreviewed: Enlace al ítem que está siendo evaluado.
-
-rating: El valor numérico con el cual el usuario expresa su satisfacción con el ítem, tiene como rango un valor numérico bajo la clase 
-xsd:string o Rating, y los valores posibles se encuentran en escala de 1 a 5, pudiendo la misma ser alterada con la presencia de las 
-propiedades worst y best que restringen el valor mínimo y máximo respectivamente.
-
-reviewer: El autor del review, su rango es dvocab:Person o xsd:string.
-
-dtreviewed: La fecha en la que se realizó el review, no contiene un rango específico pero aclara que debe respetar el formato 
-ISO para las fechas.
-
-description: El cuerpo del review que representa el valor textual de satisfacción del usuario con el ítem.
-
-summary: Un resumen corto del review.
-
-Se puede notar la excesiva similitud de este vocabulario con hReview, queda claro que no hubo una intención de innovar algo, 
-sino de representar el hReview en microdatos, probablemente por el apuro en la que data vocabulary fue creado.
-
-Vale aclarar que limitar las clases y propiedades posibles en RDFa es básicamente hacerle perder el sentido al lenguaje 
-(la decentralización de los vocabularios sobre los términos) haciendo que el lenguaje se utilice como si fuese microformatos, 
-pero perdiendo su valor más improtante (la simplicidad) de manera tal que tomó la inflexibilidad de microformatos y la complejidad 
-de RDFa.
-
-Más adelante los Google Rich Snippets incluyeron también soporte para microformatos (lo que incluía hReview). 
-
-
-\subsection{Schema.org}
-Schema.org
-
-Luego de los fragmentos enriquecidos y el improvisado vocabulario data-vocabulary creado para soportar los fragmentos, Google 
-en conjunto con Bing y Yahoo crearon en el 2011 Schema.org, con el objetivo de obtener un vocabulario más completo y 
-organizado para la implementación de los snippets con RDFa y microdata.
-
-Su lanzamiento provocó la inmediata obsoletización de data-vocabulary cuyas clases fueron todas reemplazadas por equivalentes 
-dentro de la nueva ontología:
-
-http://www.data-vocabulary.org/Address -> http://schema.org/PostalAddress
-
-http://www.data-vocabulary.org/Geo -> http://schema.org/GeoCoordinates
-
-http://www.data-vocabulary.org/Organization -> http://schema.org/Organization
-
-http://www.data-vocabulary.org/Person -> http://schema.org/Person
-
-http://www.data-vocabulary.org/Event -> http://schema.org/Event
-
-http://www.data-vocabulary.org/Product -> http://schema.org/Product
-
-http://www.data-vocabulary.org/Review -> http://schema.org/Review
-
-http://www.data-vocabulary.org/Offer -> http://schema.org/Offer
-
-Este nuevo vocabulario, recibe constantes actualizaciones, al punto que, al día de la fecha, la ontología cuenta con 946 clases. 
-
-En particular, la clase review, definida bajo el namespace http://schema.org/Review y es subclase de schema:CreativeWork 
-que a su vez es subclase de schema:Thing .
-
-Propiedades de Review
-
-itemReviewed	El ítem que está siendo evaluado, tiene rango schema:Thing 
-
-reviewBody 	El valor textual del review de la evaluación, que tiene rango schema:Text 
-
-reviewRating 	El valor numérico del review de la evaluación, que tiene rango schema:Rating 
-
-
-Propiedades de CreativeWork 
-
-about 	El tema del contenido. Rango schema:Thing. 
-
-aggregateRating 	El promedio de la acumulación de uno o más ratings dentro de un review. Tiene rango schema:AggregateRating 
-
-author 	El autor del contenido. Tiene rango schema:Person o schema:Organization
-
-comment 	Comentarios sobre el contenido. De rango schema:Comment o schema:UserComments.
-
-commentCount 	Cantidad de comentarios. Rango schema:Integer . 
-
-creator 	El autor del contenido. Tiene rango schema:Person o schema:Organization
-
-dateCreated 	Fecha en la que fue creado. Rango schema:Date .
-
-dateModified 	Fecha en la que fue modificado por última vez. Rango schema:Date .
-
-datePublished 	Fecha en de la primer publicación. Rango schema:Date .
-
-publisher 	El publicador. Tiene rango schema:Organization
-
-review 	 	El review sobre el contenido. Tiene rango schema:Review .
-
-text 		Contenido textual. Tiene rango schema:Text .
-
-
-Properties de Thing
-
-additionalType 	 Tipos adicionales para el ítem que en general son utilizados para especificar tipos externos, como podría ser por ejemplo una película de clase http://schema.org/Movie con el tipo adicional  http://dbpedia.org/ontology/ . Tiene rango schema:URL .
-
-alternateName 	 Especifica un alias. Rango schema:Text .
-
-description 	Una descripción corta del ítem. Rango schema:Text 
-
-name 		Establece el nombre. Rango schema:Text .
-
-sameAs 		Una referencia a una url que desambiguadamente represente al ítem, como podría ser una URL de wikipedia, dbpedia, freebase, etc . Rango schema:URL.
-
-url 		URL del ítem. Rango schema:URL
-
-Unas 60 propiedades de CreativeWork fueron omitidas por no iban al caso ya que sólo tienen razón de ser para otras clases que 
-también heredan de CreativeWork. Lo importante aquí es remarcar un par de situaciones interesantes:
-
-=Las propiedades Review:reviewBody, CreativeWork:text y Thing:description podrían contener el valor textual de la evaluación del review semánticamente correcta por la definición de cada una.
-
-=Las propiedades CreativeWork:author y CreativeWork:creator son exactamente iguales. 
-
-=Los valores CreativeWork:dateCreated CreativeWork:dateModified y CreativeWork:datePublished podrían generar confusión. 
-
-=Sería sintácticamente correcto que un Review utilice la propiedad Review .
-
-Más adelante se mostrarán y enumerarán los problemas que estas cuestiones (causadas por el afán de hacer uso de la herencia
-lo más posible)  generan. 
-
+Para permitir una fácil integración de la funcionalidad vocab.cc, toda la información está disponible como RDF y se puede acceder como Servicio Vinculado.
 
 \section{Recolección y extracción de los datos}
 
@@ -400,6 +129,12 @@ dataset mediante servicios web. Generalmente proveen una API donde se pueden con
 Sindice, LOD cloud cache y UriBurner son algunos ejemplos de estos sitios. Se puede utilizar entocnes, los servicios web a fin
 de obtener una lista de URL que se cree que tendrán la información necesaria.
 
+Sindice: Es una herramienta creada en conjunto por la Universidad de Deri,  Fondazione Bruno Kessler y Openlink Software que propociona múltiples tipos de API ofreciendo acceso a su dataset de la web de datos. Este dataset contiene información recolectada de la web en múltiples formatos de la web semántica y puede ser accedido a travez de un search engine, una API restful o un SPARQL endpoint.  
+En la actualidad posee indexados 708.26 millones de documentos.
+
+Link Open Data Cloud Cache (LOD): Al igual que sindice proporciona acceso a un dataset recolectado de la web de datos pero de una manera mucho más acotada. Se dispone de un text search (funciona como un search engine) o de un SPARQL Endpoint bastante restringido. Sólo se puede acceder al dataset entero mediante federated queries, en caso de querer buscar sobre todo el dataset, el endpoint limita la consulta sólo a una parte del mismo. Tambien posee muchas restricciones respecto a los time outs, por lo que las consultas no pueden ser muy flexibles.
+Para poder disponer de la funcionalidad completa del endpoint y así poder aprovechar tanto el dataset como las consultas SPARQL deberá comrprarse una licencia.
+
 Sitios autoritativos: Son sitios conocidos que generan información relevante y la publican en las ontologías y vocabularios 
 seleccionados. Ejemplos aplicados al caso de estudio podrían ser IMDB (que publica reviews de películas bajo el vocabulario schema), o Rottentomatoes
 (que hace lo mismo pero no solo con películas). Se podrán utilizar entonces estos sitios como punto base para un posible crawling.
@@ -412,6 +147,8 @@ Consultar estos sitios entonces generará una lista de endpoints SPARQL que se p
 
 Volcados de datos: Son datasets muy grandes que fueron el resultado de un web crawling, los cuales están disponibles para su descarga 
 y se pueden utilizar para procesarlos y obtener los datos requeridos. El más importante es http://challenge.semanticweb.org/2014/ .
+
+
 
 %\input{opcionesDescarga}
 %input{opcionesTransformación}
