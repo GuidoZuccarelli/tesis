@@ -8,6 +8,37 @@ Lo que vamos a construir es un caso de aplicación de la web semantica....
 Dar historia (muy breve), definiciones  (RDF, tripletas, owl, inferencia, ..)
 Escribir a medida que lo necesitas-.
 
+Resource Description Framework (RDF)
+Es una familia de especificaciones de WC3 diseñada para modelar datos intercambiables en la web. 
+Consta de expresiones hechas por tripletas. 
+Una tripleta es un conjunto de un valor de cada uno de los siguientes tipos:
+
+Recurso - Todo aquello descripto por RDF se lo denomina recurso, este último podría ser por ejemplo una página web entera (por ejemplo 
+un documento HTML "http://www.w3.org/Overview.html") o una parte de ella.  Un recurso puede ser también un objeto que no 
+se puede acceder directamente a través de la Web; por ejemplo un libro impreso. Los recursos son siempre nombrados por las 
+URIs más identificadores de anclaje opcionales (ver [URI]). Cualquier cosa puede tener un URI; la extensibilidad de URIs 
+permite la introducción de identificadores para cualquier entidad imaginable.
+
+Propiedad - Una propiedad es un aspecto específico, característica, atributo o relación se utiliza para describir un recurso. 
+Cada propiedad tiene un significado específico, define sus valores permitidos, los tipos de recursos que se puede describir, 
+y su relación con otras propiedades. 
+
+Objecto - puede ser otro recurso o puede ser un literal; es decir, un recurso (especificado por un URI) o una cadena simple o 
+de otro tipo de datos primitivo definido por XML. En términos RDF, un literal puede tener contenido que es el formato XML,
+pero no se evalúa aún más por el procesador de RDF.
+
+Esta estructura forma una vinculación dirigida de un gráfico etiquetado, donde las aristas representan el enlace entre dos 
+recursos (propiedad), representados por los nodos del grafo.
+
+Su representación puede ser asociada tanto a un modelo entidad-relación como a un diagrama de clases de objetos.
+Las Propiedades RDF pueden ser considerados como atributos de los recursos y en este sentido corresponden a pares 
+atributo-valor tradicionales. Las Propiedades RDF también representan las relaciones entre los recursos y un modelo RDF​​, 
+por tanto, pueden parecerse a los de un diagrama entidad-relación.
+En la terminología de diseño orientado a objetos, los recursos corresponden a los objetos y propiedades 
+corresponden a las variables de instancia.
+
+
+
 \section{Tecnologías}
 Triplestores, frameworks, extractores, crawlers, motores de busqueda semanticos...
 
@@ -175,6 +206,10 @@ redactado esta hecho de forma inconsistente o insuficiente.
 Este paso entonces tiene por objetivo encontrar todos los problemas de calidad que pueda haber en el dataset que acaba de 
 ser descargado y extraído y que generen inconvenientes para una posterior integración/explotación.
 
+Por lo general se utilizará la base de datos mediante consultas SPARQL estratégicamente generadas para lograr sacar estadísticas y detectar los problemas.
+
+Existen frameworks para realizar estas operaciones.
+
 %\input{estraCur}
 \section{Curado de los Datos}
 
@@ -184,7 +219,7 @@ de solucionar, será parte entonces del proceso, reconocer aquellos que su resol
 implementarla.
 
 Cabe destacar que el proceso de evaluar el dataset en búsqueda de problemas y implementar soluciones es iterativo, debido a que 
-una mejora puede conllevar a nuevos problemas.
+una mejora puede conllevar a la detección de nuevos problemas.
 
 %\input{estraInt}
 
@@ -202,7 +237,7 @@ proceso puede tener distintos niveles y aspectos a integrar, como podría ser po
 en una nueva ontología de review, o bien en una ya existente, para lograr tener información semánticamente más parecida. Ya 
 que este proceso puede ser muy dificultoso, habrá que ver en base a los requerimientos, qué aspectos de los datos se integrarán.
 
-Una vez realizada la integración mínima necesaria par also requerimientos, el dataset ya estará listo para su explotación.
+Una vez realizada la integración mínima necesaria para los requerimientos, el dataset ya estará listo para su explotación.
 
 \section{Publicación del Dataset Curado}
 ???
