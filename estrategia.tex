@@ -10,7 +10,7 @@ Escribir a medida que lo necesitas-.
 
 Resource Description Framework (RDF)
 Es una familia de especificaciones de WC3 diseñada para modelar datos intercambiables en la web. 
-Consta de expresiones hechas por tripletas. 
+Consta de expresiones hechas por tripletas. Cada tripleta es considerada una sentencia para este lenguaje.
 Una tripleta es un conjunto de un valor de cada uno de los siguientes tipos:
 
 Recurso - Todo aquello descripto por RDF se lo denomina recurso, este último podría ser por ejemplo una página web entera (por ejemplo 
@@ -36,6 +36,69 @@ atributo-valor tradicionales. Las Propiedades RDF también representan las relac
 por tanto, pueden parecerse a los de un diagrama entidad-relación.
 En la terminología de diseño orientado a objetos, los recursos corresponden a los objetos y propiedades 
 corresponden a las variables de instancia.
+
+RDF Schema (RDFS)
+
+Es una extensión semántica de RDF, que provee elementos básicos para la descripción de ontologías (también llamadas vocabularios RDF) con el objetivo
+de estructurar los recursos RDF. Proporciona la manera de definir udefinir las clases y las propiedades específicas de la aplicación en RDF.
+RDFS no proporciona las clases sino que proporciona el marco necesario para poder definirlas.
+
+Clases en RDFS se parecen mucho a las clases en lenguajes orientados a objetos. Esto permite que los recursos se definan como 
+instancias de clases y subclases de las clases.
+
+Elementos de RDFS
+
+Básicos
+
+    rdfs:Class permite declarar recursos como clases para otros recursos. 
+    
+    Atravez de la propiedad rdf:type, se puede asignar un tipo al recurso, un rucurso de tipo rdfs:Class puede entonces ser tipo de otro recurso. 
+    Por ejemplo, podemos definir el recurso Auto como un rdfs:Class, y a su vez podemos definir el recurso Volkswagen Gol con la propiedad rdf:type 
+    y siendo el objeto de esa propiedad el recurso Auto, entonces el tipo de Volkswagen Gol será auto.
+    
+    La defición de rdfs:Class es recursiva: rdfs:Class es la rdfs:Class de cualquier rdfs:Class.
+
+    rdfs:Resource es la clase a la que pertenecen todos los recursos.
+
+    rdfs:Literal es la clase de todos los valores literales, cadenas y enteros.
+
+    rdfs:Datatype es la clase que abarca los tipos de datos definidos en el modelo RDF.
+
+    rdfs:Property es la clase que abarca las propiedades.
+
+Definen relaciones
+
+    rdfs:subClassOf es una instancia de rdf:Property (osea una propiedad) que permite definir jerarquías. Relaciona una clase con sus superclases.
+
+    rdfs:subPropertyOf es una instancia de rdf:Property que permite definir jerarquías de propiedades.
+    
+Restricciones de Propiedades
+
+    rdfs:domain es una instancia de rdf:Property que especifica el dominio de una propiedad P. Esto es, la clase de los recursos que aparecen como sujetos en las tripletas donde P es predicado.
+
+    rdfs:range es una instancia de rdf:Property que especifica el rango de una propiedad P. Esto es, la clase de los recursos que aparecen como objetos en las tripletas donde P es predicado.
+    
+
+SPARQL
+Se trata de un lenguaje estandarizado de consula de grafos RDF.
+SPARQL se puede utilizar para expresar consultas que permiten interrogar diversas fuentes de datos, si los datos se almacenan de forma nativa 
+como RDF ​​o son definidos mediante vistas RDF ​​a través de algún sistema middleware. SPARQL contiene las capacidades para la 
+consulta de los patrones obligatorios y opcionales de grafo, junto con sus conjunciones y disyunciones. SPARQL también 
+soporta la ampliación o restricciones del ámbito de las consultas indicando los grafos sobre los que se opera. Los resultados 
+de las consultas SPARQL pueden ser conjuntos de resultados o grafos RDF.
+
+
+Términos de conjuntos de colecciones de datos semánticos
+
+Model: Colección de sentencias.
+
+DataSource: Colección de Modelos. Siendo uno de ellos el modelo por defecto y el resto modelos con nombre. El Datasource es de lectura y escritura, por lo que se pueden agregar tripletas.
+
+Dataset: Lo mismo que el DataSource pero estático, por lo que es de solo lectura.
+
+Graph: Colección de tripletas. Cualquier modelo puede ser transformado a un grafo, y así tener una representación más cercana de RDF.
+
+DatasetGraph: Un contenedor de Grafos, similar al DataSource (También de lectura y escritura) que provee una estructura para un grafo por defecto y grafos con nombre.
 
 
 
