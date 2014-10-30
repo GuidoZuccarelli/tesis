@@ -101,6 +101,43 @@ Graph: Colección de tripletas. Cualquier modelo puede ser transformado a un gra
 DatasetGraph: Un contenedor de Grafos, similar al DataSource (También de lectura y escritura) que provee una estructura para un grafo por defecto y grafos con nombre.
 
 
+HTML semántico
+
+El uso y participación en la Web Semántica a travez de documentos RDF no es atractivo para la mayoría, porque no parece proveer un beneficio 
+directo, ya que esto implica, aprender un lenguaje nuevo para generar documentos que sólo le será de utilidad a usuarios con un grado de conocimiento 
+muy alto. 
+
+Para resolver este problema, existen etiquetas de marcado en HTML que le proporcionan información semántica al documento, que copmo se verá más adelante 
+puede ser extraída para generar documentos RDF. Existen distintos tipos:
+
+Microdatos: Son un grupo de pares nombre-valor anidados dentro del documento, en paralelo con el contenido existente. Dichos grupo son 
+también llamados ítems y cada par nombre-valor es la propiedad. Los atributos más utilizados son:
+
+Para crear un ítem, se utiliza el atributo de HTML ``itemscope``. 
+
+Para crear una propiedad se utiliza el atributo ''itemprop``.
+
+Luego para definir los valores, se utilizan según sea una URL o un String los siguientes atributos:
+''a`` con ''href``, ''src`` o ''img`` para difinir un valor URL
+''value'' para un String.
+
+También se le puede establecer el tipo a un ítem mediante el atributo ''itemtype``
+
+
+Microformatos: Nacen con la intención acercar más personas al uso de la web semántica a travez de una forma sensilla de utilizar 
+una serie de atributos de las etiquetas de XHTML:
+
+class: especifica el nombre de la clase
+
+rel: Se utiliza en los enlaces para indicar relaciones en los documentos.
+
+rev: Igual al rev pero en sentido inverso.
+
+Con el uso del atributo class se puede entonces especificar un microformato a utilizar. Existen muchos tipos como por ejemplo: hCard (para describir 
+personas), hreview (para describir reviews), geo (para describir posiciones), etc. Cada uno de ellos con distintas propiedades.
+
+
+RDF-a: Permite directamente embeber tripletas (sujeto-predicado-objeto) 
 
 \section{Tecnologías}
 Triplestores, frameworks, extractores, crawlers, motores de busqueda semanticos...
