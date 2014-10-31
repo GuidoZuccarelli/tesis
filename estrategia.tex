@@ -8,18 +8,19 @@ Lo que vamos a construir es un caso de aplicación de la web semantica....
 Dar historia (muy breve), definiciones  (RDF, tripletas, owl, inferencia, ..)
 Escribir a medida que lo necesitas-.
 
+\subsection{rdf}
 Resource Description Framework (RDF)
 Es una familia de especificaciones de WC3 diseñada para modelar datos intercambiables en la web. 
 Consta de expresiones hechas por tripletas. Cada tripleta es considerada una sentencia para este lenguaje.
 Una tripleta es un conjunto de un valor de cada uno de los siguientes tipos:
 
-Recurso - Todo aquello descripto por RDF se lo denomina recurso, este último podría ser por ejemplo una página web entera (por ejemplo 
+Recurso (sujeto) - Todo aquello descripto por RDF se lo denomina recurso, este último podría ser por ejemplo una página web entera (por ejemplo 
 un documento HTML "http://www.w3.org/Overview.html") o una parte de ella.  Un recurso puede ser también un objeto que no 
 se puede acceder directamente a través de la Web; por ejemplo un libro impreso. Los recursos son siempre nombrados por las 
 URIs más identificadores de anclaje opcionales (ver [URI]). Cualquier cosa puede tener un URI; la extensibilidad de URIs 
 permite la introducción de identificadores para cualquier entidad imaginable.
 
-Propiedad - Una propiedad es un aspecto específico, característica, atributo o relación se utiliza para describir un recurso. 
+Propiedad (predicado) - Una propiedad es un aspecto específico, característica, atributo o relación se utiliza para describir un recurso. 
 Cada propiedad tiene un significado específico, define sus valores permitidos, los tipos de recursos que se puede describir, 
 y su relación con otras propiedades. 
 
@@ -32,11 +33,12 @@ recursos (propiedad), representados por los nodos del grafo.
 
 Su representación puede ser asociada tanto a un modelo entidad-relación como a un diagrama de clases de objetos.
 Las Propiedades RDF pueden ser considerados como atributos de los recursos y en este sentido corresponden a pares 
-atributo-valor tradicionales. Las Propiedades RDF también representan las relaciones entre los recursos y un modelo RDF​​, 
+atributo-valor tradicionales. Las Propiedades RDF también representan las relaciones entre los recursos y un modelo RDF,
 por tanto, pueden parecerse a los de un diagrama entidad-relación.
 En la terminología de diseño orientado a objetos, los recursos corresponden a los objetos y propiedades 
 corresponden a las variables de instancia.
 
+\subsection{rdfs}
 RDF Schema (RDFS)
 
 Es una extensión semántica de RDF, que provee elementos básicos para la descripción de ontologías (también llamadas vocabularios RDF) con el objetivo
@@ -78,14 +80,15 @@ Restricciones de Propiedades
 
     rdfs:range es una instancia de rdf:Property que especifica el rango de una propiedad P. Esto es, la clase de los recursos que aparecen como objetos en las tripletas donde P es predicado.
     
-
+\subsection{sparql}
 SPARQL
-Se trata de un lenguaje estandarizado de consula de grafos RDF.
-SPARQL se puede utilizar para expresar consultas que permiten interrogar diversas fuentes de datos, si los datos se almacenan de forma nativa 
-como RDF ​​o son definidos mediante vistas RDF ​​a través de algún sistema middleware. SPARQL contiene las capacidades para la 
-consulta de los patrones obligatorios y opcionales de grafo, junto con sus conjunciones y disyunciones. SPARQL también 
-soporta la ampliación o restricciones del ámbito de las consultas indicando los grafos sobre los que se opera. Los resultados 
-de las consultas SPARQL pueden ser conjuntos de resultados o grafos RDF.
+
+Se trata de un lenguaje estandarizado de consulta de grafos RDF.
+SPARQL se puede utilizar para expresar consultas que permiten interrogar diversas fuentes de datos (si es que los datos fueron almacenados 
+de forma nativa como RDF o fueron definidos mediante vistas a RDF a travez de algún middleware). Tiene capacidades para la consulta
+de los patrones obligatorios y opciones de grafo, junto con sus conjunciones y disyunciones. SPARQL también soporta 
+la ampliación o restricción del ámbito de las consultas indicando los grafos sobre los que opera (grafos con nombre). Los resultados de las consultas
+SPARQL pueden ser conjuntos de resultados o grafos RDF.
 
 
 Términos de conjuntos de colecciones de datos semánticos
@@ -100,7 +103,7 @@ Graph: Colección de tripletas. Cualquier modelo puede ser transformado a un gra
 
 DatasetGraph: Un contenedor de Grafos, similar al DataSource (También de lectura y escritura) que provee una estructura para un grafo por defecto y grafos con nombre.
 
-
+\subsection{semantichtml}
 HTML semántico
 
 El uso y participación en la Web Semántica a travez de documentos RDF no es atractivo para la mayoría, porque no parece proveer un beneficio 
@@ -137,7 +140,20 @@ Con el uso del atributo class se puede entonces especificar un microformato a ut
 personas), hreview (para describir reviews), geo (para describir posiciones), etc. Cada uno de ellos con distintas propiedades.
 
 
-RDF-a: Permite directamente embeber tripletas (sujeto-predicado-objeto) 
+RDF-a: Permite directamente embeber tripletas (sujeto-predicado-objeto) utilizando namespaces de XML. Modela la información en forma de grafo, 
+a diferencia de microdatos y microformatos que lo hacen en forma de árbol, lo que hace que el mapeo a RDF sea claro, ya que en los otros casos puede ser problemático.
+También tiene la opción de darle tipo a los literales. Como contrapartida tiene la desventaja de ser mucho más complejo de utilizar. 
+
+\subsection{extractores}
+
+Extratores
+
+Son herramientas que permiten extraer tripletas de los lenguajes de metadatos semánticos embebidos en HTML vistos anteriormente. 
+Utilizan estándares como GRDDL, parseando todo el documento HTML y buscan sentencias para traducir a RDF y generar un nuevo documento 
+que contiene sólo las tripletas de información semántica. 
+Muchas veces (sobre todo con microformatos) los extractores tienen que tomar decisiones sobre cómo traducir a RDF, por lo que 
+un mismo documento HTML puede ser extraído de distintas maneras según el extractor. Esto no ocurre con RDFa, ya que la equivalencia a RDF es mucho 
+más clara.
 
 \section{Tecnologías}
 Triplestores, frameworks, extractores, crawlers, motores de busqueda semanticos...

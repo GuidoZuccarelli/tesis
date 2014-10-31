@@ -22,18 +22,48 @@ necesaria.
 
 Estrategia
 
+Se optó por la utilización de Sindice como fuente de datos. Dado que contiene indexados suficiente cantidad de documentos de las 
+ontologías a utilizar para hacer una prueba del caso.
+La consulta arrojó: 10.216.632 documentos que contenían la clase purl:Review y 394.533 que contenían la clase schema:Review
+Luego en base a que a comienzos del año sindice limitó la paginación de sus consulas a 100. De manera que sólo se puede acceder a 5000 
+resultados se planificó la siguiente estrategia:
 
-Recolección y extracción de los datos
-Como se mencionó antes, la web contiene grandes cantidades de documentos publicados con información semántica. Pero la tarea
-de encontrarlos, con el agregado de que sólo una pequeña porción de ellos será relevante para los requerimientos no es trivial
-en lo absoluto debido a la inmensidad del universo en el que se encuentran. La forma de llevar a cabo este objetivo está 
-atada al hardware disponible, tanto para almacenar los datos, como para el tiempo que va a emplear la ejecución de esta 
-tarea. 
-Dado que las bases de datos semánticas sólo almacenan información en forma de tripletas o cuadrupletas, los documentos encontrados 
-deberán someterse a un proceso de extracción que seleccione las sentencias HTML y las convierta a alguno de los lenguajes que soportan  
-tripletas o cuadrupletas. Para esto existen múltiples herramientas.
-Una vez transformados los documentos HTML a documentos semánticos puede construirse la base de datos semántica con la información 
-recolectada.
+Primero se realizó una consulta de los documentos para cada ontología con los reusltados agrupados por dominio (el sitio dueño del documento) ordenada en orden descendiente por cantidad de docuemntos 
+
+Luego a mano se inspeccionaron y seleccionaron los cuarenta dominios con mayor cantidad de documentos para la ontología que aún conservaban intactos sus documentos
+
+Y luego se ejecutó una consulta para recuperar hasta 5000 URLs de documentos por cada uno de esos 40 dominios.
+
+Esto generó una lista de URLs a la cuál se le realizó un crawling, para descargar el documento actual de la web por cada uno. Para realizar la descarga se utilizó la librería flux.
+
+Como paso siguiente se utilizó any23 para extraer el contenido semántico  y generar por cada documento html, un documento en N-Quads.
+
+Luego se utilizó la herramienta RIOT para hacer un merge de todos los documentos nq y generar uno único.
+
+Y po rúltimo se utilizó la herramienta bulkloader para crear una base de datos TDB a partir del archivo nq que contenía todos los documentos nq.
 
 
+Resultados
+
+Se obtuvieron de las consultas a Sindice 254950 urls de documentos potencialmente contenedores de reviews.
+
+De las 254950 existían 236697 accedibles.
+
+De los 236697 51 documentos tenían una url de más de 255 caracteres por lo que no se pudo almacenar en el disco utilizando la url como nombre del archivo. Y 6 documentos malformados.
+
+La estadística fue la siguiente:
+
+\begin{tabular}{| l | c | }
+   Respuesta HTTP & Cantidad de documentos \\
+   200 & 236697 \\
+   Error sin código & 10026 \\
+   408 & 3519 \\
+   500 & 2963 \\
+   400 & 77 \\
+   403 & 25 \\
+   Connection reset & 19 \\
+   Premature EOF & 8 \\
+   Server redirected too many times & 8 \\
+   504 & 7 \\
+ \end{tabular}
 
