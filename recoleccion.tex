@@ -34,13 +34,8 @@ Luego a mano se inspeccionaron y seleccionaron los cuarenta dominios con mayor c
 
 Y luego se ejecutó una consulta para recuperar hasta 5000 URLs de documentos por cada uno de esos 40 dominios.
 
-Esto generó una lista de URLs a la cuál se le realizó un crawling, para descargar el documento actual de la web por cada uno. Para realizar la descarga se utilizó la librería flux.
+Esto generó una lista de URLs a la cuál se le realizó un crawling, para descargar el documento actual de la web por cada uno. Para realizar la descarga se utilizó la librería fluent.
 
-Como paso siguiente se utilizó any23 para extraer el contenido semántico  y generar por cada documento html, un documento en N-Quads.
-
-Luego se utilizó la herramienta RIOT para hacer un merge de todos los documentos nq y generar uno único.
-
-Y po rúltimo se utilizó la herramienta bulkloader para crear una base de datos TDB a partir del archivo nq que contenía todos los documentos nq.
 
 
 Resultados

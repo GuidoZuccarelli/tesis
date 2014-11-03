@@ -1,0 +1,27 @@
+\chapter{Extracción y Almacenamiento de los Datos}
+\label{chapter:extraccion}
+
+Objetivo
+
+Se realizará un proceso de extracción que convierta los documentos con información semántica embebida en documentos HTML en documentos RDF, que luego puedan ser 
+almacenados en un triplestore.
+
+La necesidad de tener la información en un triplestore surge de varios puntos:
+
+Tener la información centralizada, así, por cada paso siguiente a realizar, resulte mucho más simple aplicar un mismo proceso a todos los datos.
+
+Tener la información en un mismo lenguaje, por la misma razón que el punto anterior.
+
+Poder realizar queries SPARQL tanto para generar estadísticas como para realizar un curado de la información.
+
+Poder utilizar el motor de inferencias para detectar errores en los documentos.
+
+Estrategia
+
+Se utilizó any23 para extraer el contenido semántico  y generar por cada documento html, un documento en N-Quads.
+El motivo de utilizar any23 es que es la única librería que puede ser utilziada en java, y además soporta todos los lenguajes de RDF embebido en HTML.
+
+
+Luego se utilizó la herramienta RIOT para hacer un merge de todos los documentos nq y generar uno único.
+
+Y po rúltimo se utilizó la herramienta bulkloader para crear una base de datos TDB a partir del archivo nq que contenía todos los documentos nq.

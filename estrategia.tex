@@ -167,7 +167,8 @@ El procedimiento debería incluir los siguientes pasos
 
 \begin{description}
 \item[Selección de vocabularios ] Tanto la recolección como la publicación de datos en la web semántica involucra la elección del o de los vocabulario/s que mejor modelen el dominio de problema, con la excepción que para su publicación existe la posibilidad de desarrollar uno propio que se ajuste correctamente en caso de que no se encuentre uno existente. 
-\item[Recolección y extracción de los datos ] .... ?
+\item[Recolección  ] .... ?
+\item[Extracción y almacenaje de los datos] ??
 \item[Evaluación de Calidad de los Datos] ???
 \item[Curado de los Datos] ???
 \item[Integración de los datos] ?? 
@@ -229,7 +230,7 @@ Los desarrolladores pueden buscar las URIs con queries arbitrarias o búsquedas 
 
 Para permitir una fácil integración de la funcionalidad vocab.cc, toda la información está disponible como RDF y se puede acceder como Servicio Vinculado.
 
-\section{Recolección y extracción de los datos}
+\section{Recolección}
 
 %\input{explicacionReco}
 Como se mencionó antes, la web contiene grandes cantidades de documentos publicados con información semántica. Pero la tarea
@@ -295,6 +296,72 @@ Consultar estos sitios entonces generará una lista de endpoints SPARQL que se p
 Volcados de datos: Son datasets muy grandes que fueron el resultado de un web crawling, los cuales están disponibles para su descarga 
 y se pueden utilizar para procesarlos y obtener los datos requeridos. El más importante es http://challenge.semanticweb.org/2014/ .
 
+\subsection{Obtención}
+
+Este paso está directamente relacionado con el anterior, dado que la estrategia de obtención fue planeada con anterioridad, según 
+cuál sea la seleccionada, habrá sido la opción ejecutada en el paso anterior.
+
+Para este paso se tienen las siguientes estrategias:
+
+Web Crawling: Realizar un crawling partiendo de unas pocas URLs seleccionadas en el paso anteiror. Obtenidas de sitios autoritativos.
+Existen formas distintas de hacer web craling, dependiendo del nivel de profundidad en el cuál se recorrerá la web, podría también utilizarse los 
+sitios indexadores, SPARQL queries, o motores de búsqueda para obtener una lista de URLs que contienen la información deseada, y luego realizar un crawling de profundidad uno sobre cada url.
+Hacer crawling con profundidades muy grandes requiere de una algoritmia mucho más compleja para evitar loops, y también de muchos más recursos de hardware, pero se podrá obtener mucha más información.
+
+De-referenciamiento de URIs: Igual al web crawling, pero exclusivo de documentos semanticos NO embebidos, ya escritos en un formato nativo de la web semántica como RDF, turtle, n-Triples, etc.
+Luego la profundidad puede continuarse realizando lo que se llama un ''follow your nose'', que se realiza de-referenciando los documentos que son objeto de la propiedad owl:sameAs, o rdf:seeAlso.
+
+Descarga de las respuestas de las APIs: Este es otro caso del uso de lso sitios indexadores, SPARQL queries, o motores de búsqueda. Pero en lugar de 
+que la información  utilizada sean simpelmente las URL de los documentos, se utilizará también la ifnromación cacheada de dichos documentos y evitarse un crawling.
+Como desventaja se puede tener información desactualizada, pero como ventaja se podrá obtener información que ya no esté disponible. Todo dependerá de lo que se busque obtener.
+La información obtenida de estas APIs ya debería encontrarse en un formato de la web semántica por l oque no requerirá tampoco una futura extracción.
+
+Procesamiento de grandes volcados: Este paso requiere de la utilización de recursos minímos de hardware, ya que estos volcados suelen tener volúmenes de varios teras de información, y para procesarlos se requerirá 
+de mucha RAM, memoria secundaria y microprocesador.
+La idea de este paso es inspeccionar el volcado o bienpara obtener la URL de los documentos con la información deseada, para luego realizar un crawling de profundidad 1, 
+o directamente utilizar la información contenida en el volcado.
+Esta opción enrealidad es una suma de un paso intermedio con las demás opciones de este paso ya que se estaría realizando el trabajo que hacen los indexadores, que es procesar grandes volúmenes de datos.
+
+\section{Extracción y almacenaje}
+
+Una vez que se logró encontrar la información requerida en la web y contener una copia local, se necesita darle un mínimo procesamiento a determinados datos.
+Específicamente a aquellos que estén en un formato de información semántica embebida, que requeriran un proceso de extracción para luego ser almacenados en un triplestore.
+
+
+\subsection{Extracción}
+
+Esto significa, parsear el documento HTML, que como mensionamos anteriormente puede contener información semántica en formato RDF-a, microformatos o microdatos, buscando 
+la información semántica para luego generar un documento RDF (o de otro lenguaje de tripletas puro) que represente esa información semántica encontrada en tripletas que puedan ser almacenadas bajo un triplestore.
+
+Si bien podría escribirse manualmente un algoritmo que realice esta tarea, existen muchas herramientas que lo hacen, por lo que es recomendable la utilización de alguna de ellas.
+
+Los extractores más utilizados son los siguientes:
+
+getSchema: Es una herramienta online que se utiliza a travez de una API Restful para extraer documentos con microdatos. Como respuesta se obtendrán documentos semánticos 
+con la información extraída en formatos N-Triples, JSON, o N3. 
+Es una herramienta rápida y eficaz pero sólo sirve para microdatos.
+
+RDF Translator: Funciona también a travez de una API restful, y además de soportar también docuemntos con formato RDF-a, proveé la funcionalidad de transformar los documentos en sentido inverso, 
+(de tripletas a información semántica embebida en HTML). 
+También está la posibilidad de descargarse la librería y correr el algoritmo localmente.
+
+Any23: Una herramienta muy potente y completa que cuenta con una comunidad que lo actualiza constantemente. Al igual que las anteriores se puede utilizar de forma online a travez 
+de una API restful. Tiene como ventaja que soporta también microformatos. Es el extractor utilizado por Sindice. 
+También está disponible en forma de librería para utilizar localmente.
+
+Data Linter:Es una herramienta online que parsea documentos RDF-a, microdatos y JSON-LD.  
+Muy útil para analizar documentos, ya que dispone de varias ventajas: 
+
+Presenta la información organizada en tablas anidadas que son mucho más amigables para un análisis humano. 
+
+Posee un mecanismo de inferencia que alerta cuando se viola la sintaxis de los vocabularios.
+
+Como contrapartida, la información retornada por la herramienta es en texto plano. Por lo que no puede ser utilizado en un triplestore.
+
+
+\subsection{almacenje}
+
+Con la información recolectada de internet en forma de tripletas (o cuadrupletas) ya puede ser todo almacenado conjuntamente en un triplestore. 
 
 
 %\input{opcionesDescarga}
