@@ -3,8 +3,8 @@
 
 Objetivo
 
-Se realizará un proceso de extracción que convierta los documentos con información semántica embebida en documentos HTML en documentos RDF, que luego puedan ser 
-almacenados en un triplestore.
+Convertir los documentos con información semántica embebida en documentos HTML en documentos RDF, que luego puedan ser 
+almacenados en un triplestore y almacenarlos.
 
 La necesidad de tener la información en un triplestore surge de varios puntos:
 
@@ -18,10 +18,72 @@ Poder utilizar el motor de inferencias para detectar errores en los documentos.
 
 Estrategia
 
-Se utilizó any23 para extraer el contenido semántico  y generar por cada documento html, un documento en N-Quads.
-El motivo de utilizar any23 es que es la única librería que puede ser utilziada en java, y además soporta todos los lenguajes de RDF embebido en HTML.
+El extractor utilizado fue any23 con su librería para java. El motivo es que es el único de los extractores que provee librería para java, y además soporta todos los lenguajes de RDF embebido en HTML.
+Los documentos se guardaron en formato n-Quads ya que son mucho más eficientemente procesables y además se puede conservar el grafo del cual provienen.
 
+Como siguiente paso, con el objetivo de tener un backup ligero de los datos que pueda ser levantado a una base de datos fácilmente, se realizó un merge de todos los documentos extraídos en uno solo.
+Para ello utilizó la herramienta RIOT (disponible en la librería any23).
 
-Luego se utilizó la herramienta RIOT para hacer un merge de todos los documentos nq y generar uno único.
+Y por último se determinó utilizar una base de datos TDB, por múltiples razones:
 
-Y po rúltimo se utilizó la herramienta bulkloader para crear una base de datos TDB a partir del archivo nq que contenía todos los documentos nq.
+Es gratuita y opensource. 
+
+Es muy eficiente, ya que no trabaja sobre una base de datos MySQL.
+
+Se encuentra incorporado a jena por lo que se dispone de su utilización en Java.
+
+Para levantar la base de datos, a partir de ese documento nq se utilizó la operación bulkloader2 que la manera más rapida. Con lo que se obtuvo la base de datos TDB.
+
+Resultados
+
+Any23
+
+Extractores utilizados más importantes:
+\begin{tabular}{| l | c | p | }
+Extractor & Documentos & Porcentaje \\
+html-head-title & 233.743 & 98,77 \\    
+html-rdfa11 & 156.096 & 65,96 \\
+html-microdata & 110.325 & 46,62\\    
+html-mf-hreview & 109.096 & 46,10\\
+html-hcard & 73.197 & 30,93  \\
+html-hreview-aggregate & 48.771 & 20,60\\
+html-mf-adf & 44.788 & 18,92\\
+ \end{tabular}
+ 
+\\
+
+Errores por documentos mal descargados:
+
+null 4661
+
+invalid property name " 95
+
+Error while retrieving mime type 1
+\\ 
+ 
+Documentos obtenidos:
+
+\begin{tabular}{| l | c | }
+Documentos con review & 187.088 \\
+Documentos sin review & 49.552\\
+Documentos sin tripletas & 2.878\\
+Tripletas totales & 16.614.727\\
+Tripletas promedio por documento & 71.66\\
+Tripletas promedio en documentos con tripletas & 72.56\\
+Tripletas promedio sobre documentos con review & 84.02\\
+Tripletas totales de documentos con review & 15719392\\
+Tripletas promedio sobre documentos sin review & 20.01\\
+Total Documentos & 236640\\
+\end{tabular}
+
+Cabe destacar que, ese procentaje de documentos con review 79\% implica que el 21\% restante fueron documentos que sindice tiene indexados como contenedores de 
+alguna de las clases de review mencionadas y ya no los tiene en la actualidad. Ya sea porque:
+
+El documento no existe más
+
+El documento cambió y no habla sobre reviews
+
+El documento dejó de utilizar la web semántica para publicar reviews
+
+Pero ese porcentaje no refleja una estadística sobre un muestreo válido de sindice ya que, com ose mencionó anteriormente, los dominios fueron seleccionados 
+dependiendo de si aún existen y además aún tenían publicados documentos de reviews en la web semántica.
