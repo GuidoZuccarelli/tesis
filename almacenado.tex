@@ -33,25 +33,25 @@ Es muy eficiente, ya que no trabaja sobre una base de datos MySQL.
 Se encuentra incorporado a jena por lo que se dispone de su utilización en Java.
 
 Para levantar la base de datos, a partir de ese documento nq se utilizó la operación bulkloader2 que la manera más rapida. Con lo que se obtuvo la base de datos TDB.
-
+\\
+\\
 Resultados
 
 Any23
 
 Extractores utilizados más importantes:
-\begin{tabular}{| l | c | p | }
+\begin{tabular}{| l | c | r | }
 Extractor & Documentos & Porcentaje \\
 html-head-title & 233.743 & 98,77 \\    
 html-rdfa11 & 156.096 & 65,96 \\
-html-microdata & 110.325 & 46,62\\    
-html-mf-hreview & 109.096 & 46,10\\
+html-microdata & 110.325 & 46,62 \\    
+html-mf-hreview & 109.096 & 46,10 \\
 html-hcard & 73.197 & 30,93  \\
-html-hreview-aggregate & 48.771 & 20,60\\
-html-mf-adf & 44.788 & 18,92\\
+html-hreview-aggregated & 48.771 & 20,60 \\
+html-mf-adf & 44.788 & 18,92 \\
  \end{tabular}
- 
 \\
-
+\\
 Errores por documentos mal descargados:
 
 null 4661
@@ -87,3 +87,50 @@ El documento dejó de utilizar la web semántica para publicar reviews
 
 Pero ese porcentaje no refleja una estadística sobre un muestreo válido de sindice ya que, com ose mencionó anteriormente, los dominios fueron seleccionados 
 dependiendo de si aún existen y además aún tenían publicados documentos de reviews en la web semántica.
+\\
+\\
+Riot:
+
+Múltiples errores detectados en el merge de los documentos extraídos. No queda claro si causados por any23 en la extracción, o el documento ya de origen 
+mal confeccionado. Fueron errores  no detectados por any23:
+
+PORT\_SHOULD\_NOT\_BE\_WELL\_KNOWN in PORT: Ports under 1024 should be accessed using the appropieate scheme name. 
+
+ILLEGAL\_CHARACTER in FRAGMENT: The character violates the grammar rules for URIs/IRIs.
+
+DEFAULT\_PORT\_SHOULD\_BE\_OMITTED in PORT: If the port is the default one for the scheme it should be omitted. 
+
+REQUIRED\_COMPONENT\_MISSING in HOST: A component that is required by the scheme is missing.
+
+DOUBLE\_WHITESPACE in QUERY: Either two or more consecutive whitespace characters, or leading or trailing whitespace. These match no grammar rules of URIs/IRIs. These characters are permitted in RDF URI References, XML system identifiers, but not XML Schema anyURIs.
+
+WHITESPACE in PATH: A single whitespace character. These match no grammar rules of URIs/IRIs. These characters are permitted in RDF URI References, XML system identifiers, and XML Schema anyURIs.
+
+ILLEGAL\_PERCENT\_ENCODING in QUERY: The host component a percent occurred without two following hexadecimal digits.
+
+NOT\_DNS\_NAME in HOST: The host component did not meet the restrictions on DNS names.
+
+DNS\_LABEL\_DASH\_START\_OR\_END in HOST: A DNS name had a - at the beginning or end.
+
+PROHIBITED\_COMPONENT\_PRESENT in USER: A component that is prohibited by the scheme is present.
+
+WHITESPACE in FRAGMENT: A single whitespace character. These match no grammar rules of URIs/IRIs. These characters are permitted in RDF URI References, XML system identifiers, and XML Schema anyURIs.
+
+WHITESPACE in QUERY: A single whitespace character. These match no grammar rules of URIs/IRIs. These characters are permitted in RDF URI References, XML system identifiers, and XML Schema anyURIs.
+\\
+\\
+TDB Bulk load
+
+La base de datos resultante contiene:
+
+Cantidad de grafos: 182153
+
+Cantidad de grafos con schema/review: 50955 
+
+Cantidad de grafos con schema/aggregate rating: 52022
+
+Cantidad de grafos con purl/review: 104316 
+
+Cantidad de grafos con purl/aggregate review: 43991
+
+La búsqueda en sindice se realizó para schema/review y purl/review. Sin embargo, como se puede apreciar se obtuvieron muchos resultados con reviews agregados.
