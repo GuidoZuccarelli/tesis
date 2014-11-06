@@ -98,10 +98,10 @@ ReadWrite=true
 
 [item:almacenado.tex]
 archive=true
-column=0
+column=2
 encoding=UTF-8
 highlight=LaTeX
-line=22
+line=119
 mode=LaTeX
 open=true
 order=5
@@ -203,8 +203,8 @@ encoding=UTF-8
 highlight=LaTeX
 line=75
 mode=LaTeX
-open=false
-order=2
+open=true
+order=6
 
 [item:main.tex]
 archive=true
@@ -257,8 +257,8 @@ open=false
 order=-1
 
 [view-settings,view=0,item:almacenado.tex]
-CursorColumn=0
-CursorLine=22
+CursorColumn=2
+CursorLine=119
 JumpList=
 ViMarks=
 
