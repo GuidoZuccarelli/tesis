@@ -401,7 +401,25 @@ redactado esta hecho de forma inconsistente o insuficiente.
 Este paso entonces tiene por objetivo encontrar todos los problemas de calidad que pueda haber en el dataset que acaba de 
 ser descargado y extraído y que generen inconvenientes para una posterior integración/explotación.
 
-Por lo general se utilizará la base de datos mediante consultas SPARQL estratégicamente generadas para lograr sacar estadísticas y detectar los problemas.
+La estrategia se divide en dos partes, una formal y otra informal.
+
+La formal se encuentra ligada a la detección de errores sintácticos en el dataset, que son generalmente causados por una mala utilización del vocabulario (Aunque también suelen aparecer problemas causados por malas definiciones de los vocabularios)
+
+El ejemplo típico de este tipo de error es el uso incorrecto del dominio o rango de una propiedad. 
+
+Encontrar este tipo de errores no es una tarea demasiado compleja, disponiendo de los vocabularios se puede hacer inferencia sobre el dataset y determinar automáticamente los errores sintácticos.
+
+Y luego se encuentra la estrategia informal, que intenta encontrar los problemas semánticos del dataset, para los cuales resulta extremadamente difícil su detección automatizada.
+
+Un ejemplo de este caso es la falta de información precisa necesaria para identificar un ítem, por ejemplo poner ``batman'' como nombre, siendo esta la única forma de identificarlo. Como sabemos batman puede referirse a muchos ítem distintos y se necesita un nombre más preciso para su identificación.
+Este problema haría más dificultosa una posible integración, ya que no sería tan simple identificar cuales reviews hablan de los mismos ítems.
+
+Otro ejemplo es el de la inconsistencia en la información provista, si por ejemplo se establece schema:Book como tipo de ítem pero el nombre del ítem es ``Samsung SyncMaster 753s'' claramente es el caso de un tipo incorrecto, ya que hay una propiedad que sólo tendría sentido si se tratara de un schema:Product.
+Este último error modificaría el correcto funcionamiento de una posible aplicación resultante además de interferir en la integración. Ya que si esa aplicación por ejemplo, lista reviews según el tipo de ítem, cuando un usuario busque reviews de libros, se encontraría con el review de un monitor.
+
+Estos últimos errores suelen ser muy difíciles de encontrar y prácticamente imposibles de detectar mediante búsquedas automáticas.
+
+Para lograrlo se requiere observar humanamente el vocabulario y reflexionar sobre el mismo, deduciendo errores que podrían aparecer, también ayudaría mucho observar resultados de estadísticas sobre el uso de propiedades en el dataset.
 
 Existen frameworks para realizar estas operaciones.
 
