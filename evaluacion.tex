@@ -4,11 +4,66 @@
 Objetivo:
 Encontrar problemas en el dataset que dificulten una posible integración y modifiquen el correcto resultado de una posible aplicación derivada.
 
+Evaluación nº 1 - Duplicados
+
 Estrategia:
+Disponiendo de un gran dataset de información recolectada de la web, un primer paso muy útil es limpiar aquellos datos innecesarios. 
+Este primer paso consiste en detectar aquellos reviews en el dataset que se encuentren duplicados.
+La forma más sencilla que a cualquiera normalmente se le ocurriría es comparar los reviews todos con todos. Cuyo algoritmo tiene orden cuadrático que para el tamaño del dataset resulta demasiado denso.
+El algoritmo que se utilizó fue el siguiente:
+1)Por cada ontología de review se escogió arbitrariamente las propiedades más utilizadas y representativas de cada una:
 
-Como base se utilizó el framework RDFUnit que provee funcionalidades que asisten tanto a la búsuqeda de problemas sintácticos como semánticos.
+Purl-Review
+dcterms:date
+rev:text
+rev:title
+rev:rating
 
-Para encontrar los errores sintácticos se utilizaró una herramienta del framework que genera test automáticos sobre un vocabulario, y ésto se realizó sobre PURL y SCHEMA.
+Schema-Review
+sorg:datePublished
+sorg:description
+sorg:name
+sorg:author
+sorg:reviewBody
 
-RDFUnit también dispone de una serie de patrones de tests que pueden ser aplicados al contexto e implementados, algunos de los cuales pueden ser utilizados para detectar errores semánticos. 
+Purl-ReviewAggregate
+revagg:average
+revagg:count
+dcterms:date
+rev:title
+
+Schema-AggregateRating
+sorgagg:ratingCount
+sorgagg:ratingValue
+sorgagg:reviewCount
+
+Luego se arma en cada ontología un mapa para cada propiedad escogida, que contiene como clave un valor posible existente para esa propiedad, y 
+como valor un arreglo con todos los reviews que contiene ese valor para dicha propiedad.
+En otras palabras se separaron por cada propiedad, los reviews según su valor para esa propiedad.
+Luego se buscaron qué grupos de reviews se encontraban juntos para más de una propiedad mendiante obtener la intersección de ambos conjuntos. Por ejemplo:
+
+Para el valor 4 de la propiedad rev:rating se encuentran {review1, review2, review3}
+Y para el valor ``buena película'' de la propiedad rev:text se encuentran {review2, review3, review4}
+Entonces la intersección entre el conjunto de reviews para el primer conjunto con el segundo conjunto es {review2, review3}.
+Ahora para marcar ese conjunto como posible grupo de duplicados deben cumplir la condición de que, el ítem sobre el cuál el review habla
+tiene el mismo nombre en cada uno de los elementos.
+
+Esta comparación se reliza entre todos los conjuntos de reviews de los valores de una propiedad con el resto de los conjuntos de los valores de las restantes propiedades de esa ontología.
+
+Una vez obtenidos los conjuntos de los posibles duplicados se procede ahora sí a analizar minuciosamente los reviews todos con todos pero dentro del conjunto marcado como posible grupo de duplicados
+para corroborar.
+
+Resultados:
+
+Inter domain: 12709
+Inter document: 64991
+Intra document: 1009
+
+%Estrategia:
+
+%Como base se utilizó el framework RDFUnit que provee funcionalidades que asisten tanto a la búsuqeda de problemas sintácticos como semánticos.
+
+%Para encontrar los errores sintácticos se utilizaró una herramienta del framework que genera test automáticos sobre un vocabulario, y ésto se realizó sobre PURL y SCHEMA.
+
+%RDFUnit también dispone de una serie de patrones de tests que pueden ser aplicados al contexto e implementados, algunos de los cuales pueden ser utilizados para detectar errores semánticos. 
 

@@ -46,6 +46,16 @@ Indentation Mode=normal
 Mode=LaTeX
 ReadWrite=true
 
+[document-settings,item:curado.tex]
+Bookmarks=
+Encoding=UTF-8
+FoldedColumns=
+FoldedLines=
+Highlighting=LaTeX
+Indentation Mode=normal
+Mode=LaTeX
+ReadWrite=true
+
 [document-settings,item:estrategia.tex]
 Bookmarks=
 Encoding=UTF-8
@@ -118,13 +128,13 @@ ReadWrite=true
 
 [item:almacenado.tex]
 archive=true
-column=2
+column=0
 encoding=UTF-8
 highlight=LaTeX
-line=119
+line=136
 mode=LaTeX
 open=true
-order=5
+order=6
 
 [item:bibliografia.bib]
 archive=true
@@ -144,27 +154,27 @@ highlight=LaTeX
 line=1
 mode=LaTeX
 open=true
-order=7
+order=3
 
 [item:curado.tex]
-archive=true
-column=120
-encoding=
-highlight=
-line=0
-mode=
-open=false
-order=-1
-
-[item:estrategia.tex]
 archive=true
 column=0
 encoding=UTF-8
 highlight=LaTeX
-line=365
+line=0
 mode=LaTeX
 open=true
-order=3
+order=7
+
+[item:estrategia.tex]
+archive=true
+column=51
+encoding=UTF-8
+highlight=LaTeX
+line=423
+mode=LaTeX
+open=true
+order=5
 
 [item:estudio.tex]
 archive=true
@@ -178,13 +188,13 @@ order=-1
 
 [item:evaluacion.tex]
 archive=true
-column=83
+column=0
 encoding=UTF-8
 highlight=LaTeX
-line=25
+line=14
 mode=LaTeX
 open=true
-order=8
+order=4
 
 [item:explotacion.tex]
 archive=true
@@ -223,15 +233,15 @@ encoding=UTF-8
 highlight=LaTeX
 line=75
 mode=LaTeX
-open=true
+open=false
 order=6
 
 [item:main.tex]
 archive=true
-column=20
+column=16
 encoding=UTF-8
 highlight=LaTeX
-line=40
+line=46
 mode=LaTeX
 open=true
 order=0
@@ -248,10 +258,10 @@ order=-1
 
 [item:recoleccion.tex]
 archive=true
-column=0
+column=14
 encoding=UTF-8
 highlight=LaTeX
-line=0
+line=63
 mode=LaTeX
 open=true
 order=1
@@ -263,7 +273,7 @@ encoding=UTF-8
 highlight=LaTeX
 line=7
 mode=LaTeX
-open=true
+open=false
 order=4
 
 [item:tesis.kilepr]
@@ -277,8 +287,8 @@ open=false
 order=-1
 
 [view-settings,view=0,item:almacenado.tex]
-CursorColumn=2
-CursorLine=119
+CursorColumn=0
+CursorLine=136
 JumpList=
 ViMarks=
 
@@ -294,15 +304,21 @@ CursorLine=1
 JumpList=
 ViMarks=
 
-[view-settings,view=0,item:estrategia.tex]
+[view-settings,view=0,item:curado.tex]
 CursorColumn=0
-CursorLine=365
+CursorLine=0
+JumpList=
+ViMarks=
+
+[view-settings,view=0,item:estrategia.tex]
+CursorColumn=51
+CursorLine=423
 JumpList=
 ViMarks=
 
 [view-settings,view=0,item:evaluacion.tex]
-CursorColumn=83
-CursorLine=25
+CursorColumn=0
+CursorLine=14
 JumpList=
 ViMarks=
 
@@ -319,14 +335,14 @@ JumpList=
 ViMarks=
 
 [view-settings,view=0,item:main.tex]
-CursorColumn=20
-CursorLine=40
+CursorColumn=16
+CursorLine=46
 JumpList=
 ViMarks=
 
 [view-settings,view=0,item:recoleccion.tex]
-CursorColumn=0
-CursorLine=0
+CursorColumn=14
+CursorLine=63
 JumpList=
 ViMarks=
 
