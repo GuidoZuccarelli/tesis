@@ -4,11 +4,46 @@
 Objetivo:
 Encontrar problemas en el dataset que dificulten una posible integración y modifiquen el correcto resultado de una posible aplicación derivada.
 
-Evaluación nº 1 - Duplicados
+Evaluación nº 1 - Vocabularios
+
+Objetivo:
+Buscar aquellas propiedades y clases ligadas a recursos relevantes (que estén relacionados con algún review mediante property paths) 
+para las cuales no se encuentre representada en ninguna ontología. Y luego verificar que genere algún problema para la aplicación a construir.
 
 Estrategia:
-Disponiendo de un gran dataset de información recolectada de la web, un primer paso muy útil es limpiar aquellos datos innecesarios. 
-Este primer paso consiste en detectar aquellos reviews en el dataset que se encuentren duplicados.
+Este primer paso es bastante simple, básicamente se deben conseguir todos los vocabularios utilizados (para saber cuales son estos basta con revisar el namespace 
+de los prefijos) y cargarlos en el dataset.
+Una vez con los vocabularios cargados se puede realizar una consulta en SPARQL para las propiedades y leugo otra para las clases:
+
+SELECT ?c (count (distinct ?o) as ?cantidad)
+WHERE{
+{
+?s <http://local.org/id> ?id .
+?s (:|!:)+ ?o .
+}UNION{
+?s <http://local.org/itemId> ?id .
+?s (:|!:)+ ?o .
+}
+?o a ?c .
+FILTER NOT EXISTS{
+?c a rdfs:Class.
+}
+}GROUP BY ?c ORDER BY DESC(?cantidad)
+
+Luego se puede hacer una consulta igual pero buscando por propiedades.
+
+Resultados:
+Los resultados de esta evaluación fueron interesantes. Además de algunas propiedades mal escritas, ya sea por una letra faltante o una minúscula en lugar 
+de una mayúscula, se encontró que todas las propiedades utilizadas de la ontología schema estaban incorrectas.
+
+
+Evaluación nº 2 - Duplicados
+
+Objetivo:
+Disponiendo de un gran dataset de información recolectada de la web, un paso muy útil es limpiar aquellos datos innecesarios. 
+Este paso consiste en detectar aquellos reviews en el dataset que se encuentren duplicados.
+
+Estrategia:
 La forma más sencilla que a cualquiera normalmente se le ocurriría es comparar los reviews todos con todos. Cuyo algoritmo tiene orden cuadrático que para el tamaño del dataset resulta demasiado denso.
 El algoritmo que se utilizó fue el siguiente:
 1)Por cada ontología de review se escogió arbitrariamente las propiedades más utilizadas y representativas de cada una:
@@ -55,9 +90,29 @@ para corroborar.
 
 Resultados:
 
-Inter domain: 12709
-Inter document: 64991
-Intra document: 1009
+Se encontraron en total 17343 reviews replicados en un total de 78705 reviews de los cuales.
+
+1009 estaban duplicados dentro de un mismo documento.
+64991 estaban duplicados entre distintos documento pero dentro de un mismo dominio
+12709 estaban duplicados en documentos pertenecientes a distintos dominios
+
+Ésta es la lista con los dominios a los cuales se le encontraron más cantidad de reviews duplicados:
+
+
+\begin{tabular}{| l | c | }
+Dominio & Cantidad de reviews duplicados \\
+4outof10.com &	21582\\
+www.superpages.com &	18756\\
+www.kollermedia.at &	9864\\
+www.realtruck.com &	8372\\
+ormigo.com &	8133\\
+www.reptilecentre.com &	3440\\
+www.querfood.de &	3275\\
+www.carsurvey.org &	2766\\
+www.chip.de &	1526\\
+www.thewinecellarinsider.com &	1491\\
+\end{tabular}
+
 
 %Estrategia:
 
