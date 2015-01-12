@@ -33,9 +33,20 @@ FILTER NOT EXISTS{
 Luego se puede hacer una consulta igual pero buscando por propiedades.
 
 Resultados:
-Los resultados de esta evaluación fueron interesantes. Además de algunas propiedades mal escritas, ya sea por una letra faltante o una minúscula en lugar 
+Los resultados de esta evaluación fueron interesantes. Además de algunas propiedades y clases mal escritas, ya sea por una letra faltante o una minúscula en lugar 
 de una mayúscula, se encontró que todas las propiedades utilizadas de la ontología schema estaban incorrectas.
 
+Ninguna de las propiedades encontradas bajo el namespace http://schema.org/ pertenecían a la ontología schema.
+Esto se debe a que cada propiedad incluía bajo su path su clase dominio de la siguiente manera: http://schema.org/CLASE/Propiedad .
+Por ejemplo:
+http://schema.org/Product/aggregateRating en lugar de http://schema.org/aggregateRating
+
+Situaciones como ésta generan problemas cuando se intenta realizar consultas generales. Si por ejemplo se requiriera encontrar todos los aggregateRatings de todos los recursos no alcanzaría con 
+una simple querie, habría que realizar tantas queries como clases de la ontología schema existan.
+
+Haciendo un recorrido sobre los datos desde su origen (los documentos html publicados) hasta este punto, se encontró que el problema se 
+originó en el proceso de extracción. 
+Any23 cuando extrae las propiedades de la ontología schema, modifica las mismas adicionando el nombre de la clase de su correspondiente dominio, provocando que éstas queden incorrectas.
 
 Evaluación nº 2 - Duplicados
 
@@ -113,6 +124,38 @@ www.chip.de &	1526\\
 www.thewinecellarinsider.com &	1491\\
 \end{tabular}
 
+Evaluación nº 3 - RDFUnit
+
+Objetivo:
+Encontrar todos los problemas sintácticos de los datos relevantes del dataset e identificar cuales pueden representar un problema 
+para construir la aplicación.
+
+Estrategia:
+El framework crea test automaticamente a partir de las ontologías, buscando una amplia variedad de problemas posibles. Por lo que se 
+instaló el framework, se lo proveyó de las ontologías relevantes y se corrieron los test sobre el dataset.
+
+Resultados:
+
+\begin{tabular}{| l | c | }
+Total test cases & 2116\\
+Succeeded & 2067\\
+Failed & 49\\
+\end{tabular}
+
+Los tests fallados más relevantes fueron:
+
+\begin{tabular}{| l | c | r | }
+http://schema.org/ratingCount does not have datatype: http://www.w3.org/2001/XMLSchema\#decimal & 12509 & 12509\\
+http://schema.org/ratingValue has rdfs:domain different from: http://schema.org/Rating & 6198	 & 181178\\
+http://schema.org/worstRating has rdfs:domain different from: http://schema.org/Rating & 5867 & 108095\\
+http://schema.org/bestRating has rdfs:domain different from: http://schema.org/Rating & 5867 & 122057\\
+http://schema.org/aggregateRating is missing proper range & 4984 & 56890\\
+http://schema.org/reviewRating has different range from: http://schema.org/Rating & 4095 & 144239\\
+http://schema.org/name does not contain a literal value (http://www.w3.org/2001/XMLSchema\#string) & 1310 & 190840\\
+http://schema.org/itemReviewed is missing proper range & 1058 & 1505\\
+http://schema.org/reviewRating has rdfs:domain different from: http://schema.org/Review & 331	 & 144239\\
+http://schema.org/email does not contain a literal value (http://www.w3.org/2001/XMLSchema\#string) & 174 & 174\\
+\end{tabular}
 
 %Estrategia:
 
