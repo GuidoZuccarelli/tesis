@@ -1,2 +1,52 @@
 \chapter{Curado de los Datos}
 \label{chapter:curado}
+
+Objetivo:
+Corregir todos los problemas viables encontrados en el paso anterior que se pueda.
+
+Curado Evaluación nº 1 - Vocabularios:
+
+Estrategia:
+Se optó por adicionar al review la propiedad en forma correcta con el mismo recurso destino sin eliminar la propiedad incorrecta. 
+Todo se realizó con una simple consulta SPARQL
+
+INSERT{\\
+  GRAPH ?g {\\
+    ?s ?p ?o .\\
+  }\\
+}\\
+WHERE{\\
+  SELECT ?g ?s (IRI(CONCAT("http://schema.org/", ?prop)) AS ?p) ?o\\
+  WHERE{\\
+    GRAPH ?g{\\
+      ?s ?t ?o .\\
+      FILTER(REGEX(str(?t), "http://schema.org/*+", "i")).\\
+      BIND(REPLACE(str(?t), '^.*(#|/)', "") AS ?prop)\\
+    }\\
+  }\\
+}\\
+
+Resultados:
+Se crearon 2498221 propiedades nuevas de forma correcta correspondientes a cada una de las propiedades incorrectas de la ontología 
+schema.
+
+Curado Evaluación nº 2 - Duplicados:
+Se recorrieron todos los grupos de duplicados y se procedió a realizar la siguiente operación:
+Se le asignó a cada grupo un id único, al cual llamaremos groupId.
+Lueog por cada grupo de duplicados se seleccionó de manera arbitraria un representante con un criterio que se describirá a continuación:
+Si dentro del conjunto de documentos entre los cuales se encuentran todos los integrantes del grupo de duplicados no existe ninguno 
+que contenga un recurso ya elegido anteriormente como representante, se selecciona cualquier recurso de la lista de duplicados al azar.
+Caso contrario, se selecciona el primer recurso encontrado en la lista, que pertenezca al documento que ya contiene algún recurso escogido 
+como representante.
+Esto se realizó de esa forma, para que todos los representantes se concentren en los mismos documentos y no suceda que dados 2 
+documentos idénticos con 2 reviews cada uno, no terminen con un representante cada uno. De esta forma se minimizan la cantidad de 
+documentos con reviews en el dataset.
+Luego de elegir un representante para el grupo de duplicados, a ese recurso se le asignó una propiedad http://local.org/representantOf y 
+como objeto de la propiedad el groupId.
+Y para todos los recursos restantes del grupo de duplicados, se les asignó una propiedad http://local.org/duplicatedOf con objeto 
+el groupId.
+
+Resultados:
+Se asignaron 78705 propiedades duplicatedOf y 17343 representantOf
+
+Curado Evaluación nº 3 - RDFUnit Automático:

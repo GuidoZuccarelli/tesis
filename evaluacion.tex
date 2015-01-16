@@ -124,7 +124,7 @@ www.chip.de &	1526\\
 www.thewinecellarinsider.com &	1491\\
 \end{tabular}
 
-Evaluación nº 3 - RDFUnit
+Evaluación nº 3 - RDFUnit-Automatizado
 
 Objetivo:
 Encontrar todos los problemas sintácticos de los datos relevantes del dataset e identificar cuales pueden representar un problema 
@@ -142,9 +142,10 @@ Succeeded & 2067\\
 Failed & 49\\
 \end{tabular}
 
-Los tests fallados más relevantes fueron:
+Los tests fallados más relevantes fueron para schema:
 
 \begin{tabular}{| l | c | r | }
+http://schema.org/datePublished does not have datatype: http://www.w3.org/2001/XMLSchema\#date & 152138 & 152138\\
 http://schema.org/ratingCount does not have datatype: http://www.w3.org/2001/XMLSchema\#decimal & 12509 & 12509\\
 http://schema.org/ratingValue has rdfs:domain different from: http://schema.org/Rating & 6198	 & 181178\\
 http://schema.org/worstRating has rdfs:domain different from: http://schema.org/Rating & 5867 & 108095\\
@@ -156,6 +157,37 @@ http://schema.org/itemReviewed is missing proper range & 1058 & 1505\\
 http://schema.org/reviewRating has rdfs:domain different from: http://schema.org/Review & 331	 & 144239\\
 http://schema.org/email does not contain a literal value (http://www.w3.org/2001/XMLSchema\#string) & 174 & 174\\
 \end{tabular}
+
+Para purl:
+
+\begin{tabular}{| l | c | r | }
+http://purl.org/stuff/rev\#reviewer is missing proper range & 83340 & 157004\\
+http://purl.org/stuff/rev\#reviewer has different range from: http://xmlns.com/foaf/0.1/Person	 & 73664 & 157004\\
+http://purl.org/stuff/rev\#hasReview has different range from: http://purl.org/stuff/rev\#Review & 72398 & 347548\\
+http://purl.org/stuff/rev\#title has rdfs:domain different from: http://purl.org/stuff/rev\#Review & 14705 & 104900\\
+\end{tabular}
+
+Evaluación nº 4 - RDFUnit-Manual
+
+Objetivo: Correr test manuales en RDFUnit para evaluar el dataset en busca de errores sintácticos no contemplados por los test
+automáticos de la evaluación anterior.
+
+Estrategia: Se configuró RDFUnit utilizando patrones del framework para crear tests manuales. Luego se corrió para obtener resultados
+de la misma manera que en la evaluación anterior
+
+Resultados:
+\begin{tabular}{| l | c | r | }
+http://purl.org/dc/terms/date has a format different to YYYY-MM-DD & 92580 & 207130\\
+http://schema.org/datePublished has a format different to YYYY-MM-DD & 53740 & 144594\\
+http://schema.org/publishDate has a format different to YYYY-MM-DD & 50070 & 59825\\
+http://schema.org/dtreviewed has a format different to YYYY-MM-DD & 26903 & 26903\\ 
+http://purl.org/stuff/rev\#rating is not in the expected range (1-5) & 15319 & 298458\\
+http://schema.org/ratingValue is not in the expected range (1-5) & 4809 & 73090 \\
+http://purl.org/stuff/rev\#rating is not a natural number & 2866 & 301322\\
+http://schema.org/ratingValue is smaller than http://schema.org/worstRating & 41 & 108088 \\
+http://schema.org/ratingValue is not a natural number & 33 & 60682\\
+\end{tabular}
+
 
 %Estrategia:
 
