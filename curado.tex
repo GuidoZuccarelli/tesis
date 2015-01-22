@@ -30,7 +30,10 @@ Resultados:
 Se crearon 2498221 propiedades nuevas de forma correcta correspondientes a cada una de las propiedades incorrectas de la ontología 
 schema.
 
-Curado Evaluación nº 2 - Duplicados:
+Curado Evaluación nº 2 - Duplicados
+
+Estrategia: 
+
 Se recorrieron todos los grupos de duplicados y se procedió a realizar la siguiente operación:
 Se le asignó a cada grupo un id único, al cual llamaremos groupId.
 Lueog por cada grupo de duplicados se seleccionó de manera arbitraria un representante con un criterio que se describirá a continuación:
@@ -47,6 +50,90 @@ Y para todos los recursos restantes del grupo de duplicados, se les asignó una 
 el groupId.
 
 Resultados:
+
 Se asignaron 78705 propiedades duplicatedOf y 17343 representantOf
 
 Curado Evaluación nº 3 - RDFUnit Automático:
+
+Muchos de los problemas detectados por el framework, no otorgaban demasiada información, como por ejemplo
+http://schema.org/datePublished does not have datatype: http://www.w3.org/2001/XMLSchema\#date el cual sólo especifica que le 
+falta el tipo al recurso objeto, pero no necesariamente significa que esté mal, esto da un indicio de que algo puede andar mal
+y será verificado en la consulta manual, en este caso por ejemplo, lo importante es que la fecha tenga el formato apropiado.
+Se decidió entonces atacar los problemas más específicos:
+
+http://schema.org/ratingValue has rdfs:domain different from: http://schema.org/Rating
+
+Estrategia:
+Primero hubo que investigar, cuáles son todos los dominios para esa propiedad que aparecen en el dataset, para ver si se pueden 
+acomodar. Esto se realizó con la siguiente consulta sparql:
+
+select distinct ?dominio (count (?s) as ?cantidad) \\
+where{\\
+?s <http://schema.org/ratingValue> ?value .\\
+?s a ?dominio .\\
+}GROUP BY ?dominio\\
+
+Y los resultados fueron
+
+\begin{tabular}{| l | c |}
+ <http://schema.org/Rating> & 120165\\
+ <http://schema.org/AggregateRating> & 54815 \\
+ <http://schema.org/Review> & 5867 \\
+ <http://schema.org/Product> & 331 \\
+\end{tabular}
+
+Se puede apreciar que en la mayor parte de los casos de error, se dieron porque se incluyó la propiedad ratingValue directamente en 
+el Review. Ahora surge la necesidad de saber si esos casos donde el Review tiene la propiedad ratingValue, existe una propiedad reviewRating 
+con su respectivo Rating.
+Se relizó la consulta:
+select (count (?s) as ?cantidad) \\
+where{\\
+?s a <http://schema.org/Review> . \\
+?s <http://schema.org/ratingValue> ?value . \\
+?s <http:schema.org/reviewRating> ?rating . \\
+}
+
+El resultado fue 0.
+
+Por lo tanto ese problema se solucionó con la siguiente consulta:
+
+DELETE { \\
+GRAPH ?g{ \\
+?s <http://schema.org/ratingValue> ?value . \\
+} \\
+} \\
+INSERT{ \\
+GRAPH ?g{ \\
+?s <http://schema.org/reviewRating> ?rating . \\
+?rating a <http://schema.org/Rating> . \\
+?rating <http://schema.org/ratingValue> ?value . \\
+}\\
+}\\
+WHERE{\\
+GRAPH ?g {\\
+?s a <http://schema.org/Review> .\\
+?s <http://schema.org/ratingValue> ?value .\\
+}\\
+}\\
+
+schema:worstRating and schema:bestRating has rdfs:domain different from: http://schema.org/Rating
+Estrategia:
+El proceso es igual al anterior y los dominios disintos de rating eran Review, la misma cantidad que en el anterior 5867
+
+Resultados: 
+Idem los anteriores.
+
+http://schema.org/itemReviewed is missing proper range
+
+Estrategia:
+Esta evaluación se refiere a que existen recursos objeto de dicha propeidad, que no tienen un tipo específico. Para ver si 
+puede ser resuelto, primer hubo que evaluar qué clase de recursos contienen como objeto, esas propiedades que presentaron problemas.
+
+Resultado:
+La evaluación encontró que, todos esos recursos eran URIs de un dominio web 411ca.com para ser derreferenciados. La solución podría haber sido 
+descargar dichos recursos y anexarlos a la propiedad, pero lamentablemente dichos recursos no se encontraban disponibles de forma online.
+
+Curado Evaluación nº 3 - RDFUnit Manual:
+
+\{DateProperty} has a format different to YYYY-MM-DD:
+Para todas las propiedades que indiquen una fecha, los pasos para reparar este caso son los mismos.
