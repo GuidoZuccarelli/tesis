@@ -137,3 +137,95 @@ Curado Evaluación nº 3 - RDFUnit Manual:
 
 \{DateProperty} has a format different to YYYY-MM-DD:
 Para todas las propiedades que indiquen una fecha, los pasos para reparar este caso son los mismos.
+
+Cuando nos encontramos con este caso, se requiere de otra evaluación para entender cómo encarar el problema. Es una evaluación cuyo resultado
+pueda responder la siguiente pregunta:
+
+Si no tiene formato YYYY-MM-DD, ¿Qué formato tiene?
+
+La idea en esta evaluación entonces, es encontrar qué formatos distintos contienen los datos, para poder trasladarlos al correcto.
+
+Estrategia:
+
+Comenzando con la siguiente consulta:
+
+SELECT distinct ?date 
+WHERE{
+?review <http://local.org/id> ?id .
+?review {DateProperty} ?date .
+FILTER (!REGEX(str(?date), "^[0-9]{4}-[0-9]{2}-[0-9]{2}\$", "i")) .
+FILTER NOT EXISTS{
+?review <http://local.org/deplicateOf> ?dup.
+}
+}
+
+Esta consulta retorna la fecha de todos los reviews que no estén duplicados y que además dicha fecha no tenga el formato YYYY-MM-DD
+
+Luego observando los resultados manualmente, se prsta atención also primeros resultados y se trata de encontrar con qué patrón están formados 
+para luego anotarlo y realizar la misma consulta esta vez filtrando los reusltados ocn dicho patrón. Iterando este proceso hasta que 
+queden 0 resultados.
+
+Resultados:
+
+Se descubrieron los siguientes patrones
+\\
+\\
+http://schema.org/datePublished
+\begin{tabular}{| l | c |}
+Expresión regular & Cantidad de reviews\\
+^[A-z]+ [0-9]{2}, [0-9]{4}\$ & 14715 \\
+^[0-9]{4}-[0-9]{2}-[0-9]{2}.+ & 17700 \\
+^[0-9]{4}-[0-9]{2}-[0-9]{1} [0-9]{2}:[0-9]{2}:[0-9]{2}\$ & 7179 \\
+^[0-9]{2}\\.[0-9]{2}\\.[0-9]{4}\$ & 7172\\
+^[A-z]+ [0-9]{2}, [0-9]{4}.+ & 5049\\
+^[A-z]{3} [0-9]{1}, [0-9]{4} & 1847\\
+^[0-9]{2}\\.[0-9]{1}\\.[0-9]{4}\$ & 410\\
+^[0-9]{1}\\.[0-9]{1}\\.[0-9]{4}\$ & 120\\
+[0-9]{2}/[0-9]{2}/[0-9]{2} & 67\\
+^[0-9]{1}\\.[0-9]{2}\\.[0-9]{4}\$ & 30
+\end{tabular}
+
+http://purl.org/dc/terms/date
+\begin{tabular}{| l | c |}
+Expresión regular & Cantidad de reviews\\
+^[0-9]{4}-[0-9]{2}-[0-9]{2}.+ & 33833\\
+^[A-z]+.[A-z]{2}.[0-9]{4}-[0-9]{2}-[0-9]{2}\$ & 33058\\
+^[A-z]{3}\\n.*[0-9]{1}\\n.*[0-9]{4}\$ & 25543\\
+^[A-z]{3}\\n.*[0-9]{2}\\n.*[0-9]{4}\$ & 17770\\
+^[A-z]+ [0-9]{2}, [0-9]{4}\$ & 17069\\
+[0-9]{2}((?!-).)[0-9]{2}((?!-).)[0-9]{4} & 11720\\
+^[0-9]{2} [A-zéû]+ [0-9]{4} & 4147\\
+^[0-9]{2}((?!-).)[0-9]{2}((?!-).)[0-9]{4} & 4093\\
+^[0-9]{2}((?!-).)[0-9]{1}((?!-).)[0-9]{4} & 2803\\
+^[A-z]{3} [0-9]{1}, [0-9]{4} & 2783\\
+^[A-z]+ [0-9]{2}[a-z]{2} [0-9]{4}\\.\$ & 2058\\
+^[0-9]{2} [A-z]{3} [0-9]{4} & 1730\\
+^[0-9]{1}((?!-).)[0-9]{1}((?!-).)[0-9]{4}\$. & 1103\\
+^[0-9]{2}-[0-9]{2}-[0-9]{4}\$ & 1024\\
+^[A-z]+ [0-9]{1}[a-z]{2} [0-9]{4}\\.\$ & 746\\
+^[0-9]{1}((?!-).)[0-9]{2}((?!-).)[0-9]{4}\$ & 279\\
+\end{tabular}
+
+\\
+http://schema.org/publishDate
+\begin{tabular}{| l | c |}
+Expresión regular & Cantidad de reviews\\
+[0-9]{2}/[0-9]{2}/[0-9]{2} & 2511\\
+^[0-9]{2}\\.[0-9]{2}\\.[0-9]{4}\$ & 2207
+\end{tabular}
+
+\\
+http://schema.org/dtreviewed
+\begin{tabular}{| l | c |}
+Expresión regular & Cantidad de reviews\\
+^[0-9]{1}((?!-).)[0-9]{2}((?!-).)[0-9]{4}\$ & 14762\\
+^[0-9]{1}((?!-).)[0-9]{1}((?!-).)[0-9]{4}\$ & 6358\\
+^[0-9]{2}((?!-).)[0-9]{2}((?!-).)[0-9]{4}\$ & 4193\\
+^[0-9]{2}((?!-).)[0-9]{1}((?!-).)[0-9]{4}\$ & 1590
+\end{tabular}
+
+Una vez encontrados los patrones, sólo fue cuestion de correr un algoritmo en Java dónde se contemplan todo los patrones y se 
+le aplica la correción apropiada al String y se vuelve a almacenar en el review.
+También en varios casos hubo que verificar dónde se encontraba el día y dónde el mes como por ejemplo para casos como éste ^[0-9]{2}\\.[0-9]{2}\\.[0-9]{4}\$ & 2207 
+Manualmente se observan los resultados de ese patrón y se puede observar si los primeros 2 números son mes o día.
+
