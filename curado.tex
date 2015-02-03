@@ -10,21 +10,21 @@ Estrategia:
 Se optó por adicionar al review la propiedad en forma correcta con el mismo recurso destino sin eliminar la propiedad incorrecta. 
 Todo se realizó con una simple consulta SPARQL
 \begin{lstlisting}[frame=single]  
-INSERT{\\
-  GRAPH ?g {\\
-    ?s ?p ?o .\\
-  }\\
-}\\
-WHERE{\\
-  SELECT ?g ?s (IRI(CONCAT("http://schema.org/", ?prop)) AS ?p) ?o\\
-  WHERE{\\
-    GRAPH ?g{\\
-      ?s ?t ?o .\\
-      FILTER(REGEX(str(?t), "http://schema.org/*+", "i")).\\
-      BIND(REPLACE(str(?t), '^.*(\#|/)', "") AS ?prop)\\
-    }\\
-  }\\
-}\\
+INSERT{
+  GRAPH ?g {
+    ?s ?p ?o .
+  }
+}
+WHERE{
+  SELECT ?g ?s (IRI(CONCAT("http://schema.org/", ?prop)) AS ?p) ?o
+  WHERE{
+    GRAPH ?g{
+      ?s ?t ?o .
+      FILTER(REGEX(str(?t), "http://schema.org/*+", "i")).
+      BIND(REPLACE(str(?t), '^.*(\#|/)', "") AS ?prop)
+    }
+  }
+}
 \end{lstlisting}
 
 
@@ -70,11 +70,11 @@ Primero hubo que investigar, cuáles son todos los dominios para esa propiedad q
 acomodar. Esto se realizó con la siguiente consulta sparql:
 
 \begin{lstlisting}[frame=single]  
-select distinct ?dominio (count (?s) as ?cantidad) \\
-where{\\
-?s <http://schema.org/ratingValue> ?value .\\
-?s a ?dominio .\\
-}GROUP BY ?dominio\\
+select distinct ?dominio (count (?s) as ?cantidad) 
+where{
+?s <http://schema.org/ratingValue> ?value .
+?s a ?dominio .
+}GROUP BY ?dominio
 \end{lstlisting}
 
 Y los resultados fueron
@@ -92,11 +92,11 @@ con su respectivo Rating.
 Se relizó la consulta:
 
 \begin{lstlisting}[frame=single]  
-select (count (?s) as ?cantidad) \\
-where{\\
-?s a <http://schema.org/Review> . \\
-?s <http://schema.org/ratingValue> ?value . \\
-?s <http:schema.org/reviewRating> ?rating . \\
+select (count (?s) as ?cantidad) 
+where{
+?s a <http://schema.org/Review> . 
+?s <http://schema.org/ratingValue> ?value . 
+?s <http:schema.org/reviewRating> ?rating . 
 }
 \end{lstlisting}
 
@@ -105,24 +105,24 @@ El resultado fue 0.
 Por lo tanto ese problema se solucionó con la siguiente consulta:
 
 \begin{lstlisting}[frame=single]  
-DELETE { \\
-GRAPH ?g{ \\
-?s <http://schema.org/ratingValue> ?value . \\
-} \\
-} \\
-INSERT{ \\
-GRAPH ?g{ \\
-?s <http://schema.org/reviewRating> ?rating . \\
-?rating a <http://schema.org/Rating> . \\
-?rating <http://schema.org/ratingValue> ?value . \\
-}\\
-}\\
-WHERE{\\
-GRAPH ?g {\\
-?s a <http://schema.org/Review> .\\
-?s <http://schema.org/ratingValue> ?value .\\
-}\\
-}\\
+DELETE { 
+GRAPH ?g{ 
+?s <http://schema.org/ratingValue> ?value . 
+} 
+} 
+INSERT{ 
+GRAPH ?g{ 
+?s <http://schema.org/reviewRating> ?rating . 
+?rating a <http://schema.org/Rating> . 
+?rating <http://schema.org/ratingValue> ?value . 
+}
+}
+WHERE{
+GRAPH ?g {
+?s a <http://schema.org/Review> .
+?s <http://schema.org/ratingValue> ?value .
+}
+}
 \end{lstlisting}
 
 schema:worstRating and schema:bestRating has rdfs:domain different from: http://schema.org/Rating
@@ -164,7 +164,7 @@ SELECT distinct ?date
 WHERE{
 ?review <http://local.org/id> ?id .
 ?review {DateProperty} ?date .
-FILTER (!REGEX(str(?date), "^[0-9]{4}-[0-9]{2}-[0-9]{2}\$", "i")) .
+FILTER (!REGEX(str(?date), "^[0-9]{4}-[0-9]{2}-[0-9]{2}$", "i")) .
 FILTER NOT EXISTS{
 ?review <http://local.org/deplicateOf> ?dup.
 }
@@ -187,61 +187,254 @@ Se descubrieron los siguientes patrones
 http://schema.org/datePublished
 \begin{tabular}{| l | c |}
 Expresión regular & Cantidad de reviews\\
-\^[A-z]+ [0-9]{2}, [0-9]{4}\$ & 14715 \\
-\^[0-9]{4}-[0-9]{2}-[0-9]{2}.+ & 17700 \\
-\^[0-9]{4}-[0-9]{2}-[0-9]{1} [0-9]{2}:[0-9]{2}:[0-9]{2}\$ & 7179 \\
-\^[0-9]{2}\\.[0-9]{2}\\.[0-9]{4}\$ & 7172\\
-\^[A-z]+ [0-9]{2}, [0-9]{4}.+ & 5049\\
-\^[A-z]{3} [0-9]{1}, [0-9]{4} & 1847\\
-\^[0-9]{2}\\.[0-9]{1}\\.[0-9]{4}\$ & 410\\
-\^[0-9]{1}\\.[0-9]{1}\\.[0-9]{4}\$ & 120\\
-[0-9]{2}/[0-9]{2}/[0-9]{2} & 67\\
-\^[0-9]{1}\\.[0-9]{2}\\.[0-9]{4}\$ & 30
+\verb|^[A-z]+ [0-9]{2}, [0-9]{4}$ &| 14715 \\
+\verb|^[0-9]{4}-[0-9]{2}-[0-9]{2}.+ &| 17700 \\
+\verb|^[0-9]{4}-[0-9]{2}-[0-9]{1} [0-9]{2}:[0-9]{2}:[0-9]{2}$ &| 7179 \\
+\verb|^[0-9]{2}\\.[0-9]{2}\\.[0-9]{4}$ &| 7172\\
+\verb|^[A-z]+ [0-9]{2}, [0-9]{4}.+ &| 5049\\
+\verb|^[A-z]{3} [0-9]{1}, [0-9]{4} &| 1847\\
+\verb|^[0-9]{2}\\.[0-9]{1}\\.[0-9]{4}$ &| 410\\
+\verb|^[0-9]{1}\\.[0-9]{1}\\.[0-9]{4}$ &| 120\\
+\verb|[0-9]{2}/[0-9]{2}/[0-9]{2} &| 67\\
+\verb|^[0-9]{1}\\.[0-9]{2}\\.[0-9]{4}$ &| 30
 \end{tabular}
 
 http://purl.org/dc/terms/date
 \begin{tabular}{| l | c |}
 Expresión regular & Cantidad de reviews\\
-\^[0-9]{4}-[0-9]{2}-[0-9]{2}.+ & 33833\\
-\^[A-z]+.[A-z]{2}.[0-9]{4}-[0-9]{2}-[0-9]{2}\$ & 33058\\
-\^[A-z]{3}\\n.*[0-9]{1}\\n.*[0-9]{4}\$ & 25543\\
-\^[A-z]{3}\\n.*[0-9]{2}\\n.*[0-9]{4}\$ & 17770\\
-\^[A-z]+ [0-9]{2}, [0-9]{4}\$ & 17069\\
-\left[0-9]{2}((?!-).)[0-9]{2}((?!-).)[0-9]{4} & 11720\\
-\^[0-9]{2} [A-zéû]+ [0-9]{4} & 4147\\
-\^[0-9]{2}((?!-).)[0-9]{2}((?!-).)[0-9]{4} & 4093\\
-\^[0-9]{2}((?!-).)[0-9]{1}((?!-).)[0-9]{4} & 2803\\
-\^[A-z]{3} [0-9]{1}, [0-9]{4} & 2783\\
-\^[A-z]+ [0-9]{2}[a-z]{2} [0-9]{4}\\.\$ & 2058\\
-\^[0-9]{2} [A-z]{3} [0-9]{4} & 1730\\
-\^[0-9]{1}((?!-).)[0-9]{1}((?!-).)[0-9]{4}\$. & 1103\\
-\^[0-9]{2}-[0-9]{2}-[0-9]{4}\$ & 1024\\
-\^[A-z]+ [0-9]{1}[a-z]{2} [0-9]{4}\\.\$ & 746\\
-\^[0-9]{1}((?!-).)[0-9]{2}((?!-).)[0-9]{4}\$ & 279\\
-\end{tabular}
+\verb|^[0-9]{4}-[0-9]{2}-[0-9]{2}.+ &| 33833\\
+\verb|^[A-z]+.[A-z]{2}.[0-9]{4}-[0-9]{2}-[0-9]{2}$ &| 33058\\
+\verb|^[A-z]{3}\\n.*[0-9]{1}\\n.*[0-9]{4}$ &| 25543\\
+\verb|^[A-z]{3}\\n.*[0-9]{2}\\n.*[0-9]{4}$ &| 17770\\
+\verb|^[A-z]+ [0-9]{2}, [0-9]{4}$ &| 17069\\
+\verb|[0-9]{2}((?!-).)[0-9]{2}((?!-).)[0-9]{4} &| 11720\\
+\verb|^[0-9]{2} [A-zéû]+ [0-9]{4} &| 4147\\
+\verb|^[0-9]{2}((?!-).)[0-9]{2}((?!-).)[0-9]{4} &| 4093\\
+\verb|^[0-9]{2}((?!-).)[0-9]{1}((?!-).)[0-9]{4} &| 2803\\
+\verb|^[A-z]{3} [0-9]{1}, [0-9]{4} &| 2783\\
+\verb|^[A-z]+ [0-9]{2}[a-z]{2} [0-9]{4}\\.$ &| 2058\\
+\verb|^[0-9]{2} [A-z]{3} [0-9]{4} &| 1730\\
+\verb|^[0-9]{1}((?!-).)[0-9]{1}((?!-).)[0-9]{4}$. &| 1103\\
+\verb|^[0-9]{2}-[0-9]{2}-[0-9]{4}$ &| 1024\\
+\verb|^[A-z]+ [0-9]{1}[a-z]{2} [0-9]{4}\\.$ &| 746\\
+\verb|^[0-9]{1}((?!-).)[0-9]{2}((?!-).)[0-9]{4}$ &| 279\\
+\end{tabular}\\
 
-\\
 http://schema.org/publishDate
 \begin{tabular}{| l | c |}
 Expresión regular & Cantidad de reviews\\
-[0-9]{2}/[0-9]{2}/[0-9]{2} & 2511\\
-\^[0-9]{2}\\.[0-9]{2}\\.[0-9]{4}\$ & 2207
-\end{tabular}
+\verb|[0-9]{2}/[0-9]{2}/[0-9]{2} &| 2511\\
+\verb|^[0-9]{2}\\.[0-9]{2}\\.[0-9]{4}$ &| 2207
+\end{tabular}\\
 
-\\
 http://schema.org/dtreviewed
 \begin{tabular}{| l | c |}
 Expresión regular & Cantidad de reviews\\
-\^[0-9]{1}((?!-).)[0-9]{2}((?!-).)[0-9]{4}\$ & 14762\\
-\^[0-9]{1}((?!-).)[0-9]{1}((?!-).)[0-9]{4}\$ & 6358\\
-\^[0-9]{2}((?!-).)[0-9]{2}((?!-).)[0-9]{4}\$ & 4193\\
-\^[0-9]{2}((?!-).)[0-9]{1}((?!-).)[0-9]{4}\$ & 1590
+\verb|^[0-9]{1}((?!-).)[0-9]{2}((?!-).)[0-9]{4}$ &| 14762\\
+\verb|^[0-9]{1}((?!-).)[0-9]{1}((?!-).)[0-9]{4}$ &| 6358\\
+\verb|^[0-9]{2}((?!-).)[0-9]{2}((?!-).)[0-9]{4}$ &| 4193\\
+\verb|^[0-9]{2}((?!-).)[0-9]{1}((?!-).)[0-9]{4}$ &| 1590
 \end{tabular}
 
 Una vez encontrados los patrones, sólo fue cuestion de correr un algoritmo en Java dónde se contemplan todo los patrones y se 
 le aplica la correción apropiada al String y se vuelve a almacenar en el review.
-También en varios casos hubo que verificar dónde se encontraba el día y dónde el mes como por ejemplo para casos como éste ^[0-9]{2}\\.[0-9]{2}\\.[0-9]{4}\$ & 2207 
+También en varios casos hubo que verificar dónde se encontraba el día y dónde el mes como por ejemplo para casos como éste 
+\verb|^[0-9]{2}\\.[0-9]{2}\\.[0-9]{4}\$ &| 2207 
 Manualmente se observan los resultados de ese patrón y se puede observar si los primeros 2 números son mes o día.
-También hubo casos no tratables como ^[A-z]+ [0-9]{2} donde no estaba explicitado el año.
+También hubo casos no tratables como \verb|^[A-z]+ [0-9]{2}| donde no estaba explicitado el año.
 
-http://purl.org/stuff/rev\#rating is not in the expected range (1-5) & 15319 & 298458\\
+\verb|http://purl.org/stuff/rev#rating is not in the expected range (1-5) & 15319 &| 298458\\
+
+
+{RatingProperty} is not in the expected range (1-5):
+Cuando nos encontramos con un review en esta situación, resulta casi imposible incluso manualmente corregir este error con la información 
+provista por el review o el documento que contiene el review. Si el rating del review es 7, ¿Cuál es el máximo valor que el autor tenía en mente cuando  
+generó la evaluación?. Uno podría pensar que lo más lógico sería 10, pero no se puede saber a ciencia cierta, por lo menos con la información del entorno al review.
+Para encontrar la respuesta, se necesita la información de todos los reviews del dominio que contiene el review problemático. 
+
+Estrategia:
+Para resolver el problema de rango en los ratings de los reviews entonces, lo primero que hay que hacer es una evaluación, en la cual 
+se pueda observar qué valores tomaron los ratings de otros reviews correspondientes al mismo sitio web hosting del review. 
+Esto sólo se aplicó par ala ontología purl, dado que apra schema los valores erróneos eran muy pocos y no se jsutificaba.
+Para implementarlo, lo primero que se realizó fue la siguiente consulta
+
+\begin{lstlisting}[frame=single]
+ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> 
+ SELECT distinct ?g ?rating ?id 
+ WHERE{
+ GRAPH ?g{
+ ?review <http://local.org/id> ?id .
+ ?review <http://purl.org/stuff/rev#rating> ?rating .
+ FILTER NOT EXISTS{
+ ?review <http://local.org/duplicateOf> ?dup .
+ }
+ FILTER NOT EXISTS{
+ ?rat <http://purl.org/stuff/rev#maxRating> ?best .
+ }
+ FILTER NOT EXISTS{
+ ?rat <http://purl.org/stuff/rev#minRating>  ?worst .
+ }
+ FILTER ((xsd:integer(?rating) > 5) || (xsd:integer(?rating) < 1)).
+ }
+ }
+\end{lstlisting}
+
+Esta consulta retorna todos las urls de los documentos que contienen el review problemático incluyendo el id del review y el 
+rating correspondiente a dicho review.
+
+A partir de esta información, puede obtenerse el dominio de la URL, y almacenarse toda la información en un mapa de Java, donde para cada dominio se 
+guarde los valores de los ratings encontrados, y la cantidad de veces que se encontró cada valor de rating.
+
+Resultados:
+El mapa resultante de esta evaluación fue el siguiente.
+
+Dominio: www.yellowbot.com\\
+\begin{tabular}{| l | c |}
+ Valor & Cantidad\\
+ 0 & 13\\
+\end{tabular}
+
+Dominio: www.chip.de\\
+\begin{tabular}{| l | c |}
+ Valor & Cantidad\\
+ 6 & 1\\
+ 8 & 2\\
+ 9 & 1\\
+ 19 & 1\\
+ 25 & 1\\
+ 27 & 1\\
+ 29 & 1\\
+ 31 & 1\\
+ 30 & 1\\
+ 34 & 1\\
+ 33 & 2\\
+ 38 & 1\\
+ 36 & 3\\
+ 37 & 1\\
+ 42 & 1\\
+ 43 & 3\\
+ 40 & 1\\
+ 46 & 1\\
+ 47 & 4\\
+ 44 & 1\\
+ 45 & 4\\
+ 51 & 9\\
+ 50 & 10\\
+ 49 & 8\\
+ 48 & 6\\
+ 55 & 7\\
+ 54 & 15\\
+ 53 & 5\\
+ 52 & 12\\
+ 59 & 8\\
+ 58 & 18\\
+ 57 & 11\\
+ 56 & 19\\
+ 63 & 25\\
+ 62 & 23\\
+ 61 & 12\\
+ 60 & 12\\
+ 68 & 62\\
+ 69 & 34\\
+ 70 & 50\\
+ 71 & 62\\
+ 64 & 24\\
+ 65 & 39\\
+ 66 & 35\\
+ 67 & 32\\
+ 76 & 82\\
+ 77 & 82\\
+ 78 & 81\\
+ 79 & 86\\
+ 72 & 81\\
+ 73 & 70\\
+ 74 & 72\\
+ 75 & 73\\
+ 85 & 120\\
+ 84 & 92\\
+ 87 & 128\\
+ 86 & 91\\
+ 81 & 97\\
+ 80 & 117\\
+ 83 & 115\\
+ 82 & 136\\
+ 93 & 52\\
+ 92 & 68\\
+ 95 & 49\\
+ 94 & 58\\
+ 89 & 98\\
+ 88 & 103\\
+ 91 & 91\\
+ 90 & 93\\
+ 100 & 101\\
+ 98 & 11\\
+ 99 & 8\\
+ 96 & 34\\
+ 97 & 27
+\end{tabular}
+
+Dominio: www.gamezebo.com\\
+\begin{tabular}{| l | c |}
+ Valor & Cantidad\\
+ 0 & 5\\
+\end{tabular}
+
+Dominio: www.gogobot.com\\
+\begin{tabular}{| l | c |}
+ Valor & Cantidad\\
+ 0 & 1\\
+\end{tabular}
+
+Dominio: www.ormigo.com\\
+\begin{tabular}{| l | c |}
+ Valor & Cantidad\\
+ 0 & 9\\
+ -1 & 24
+\end{tabular}
+
+Dominio: www.chroniclesofchaos.com\\
+\begin{tabular}{| l | c |}
+ Valor & Cantidad\\
+ 0 & 17\\
+ 6 & 391\\
+ 7 & 776\\
+ 8 & 851\\
+ 9 & 497\\
+ 10 & 101\\
+\end{tabular}
+
+Dominio: www.kollermedia.at\\
+\begin{tabular}{| l | c |}
+ Valor & Cantidad\\
+ 6 & 19\\
+ 7 & 26\\
+ 8 & 26\\
+ 9 & 7\\
+ 10 & 7\\
+\end{tabular}
+ 
+En base a esta información se infirieron los siugientes rangos:
+
+\begin{tabular}{| l | c | r | }
+ Dominio & Rango mínimo & Rango máximo \\
+ www.gamezebo.com & 0 & 5 \\
+ www.yellowbot.com & 0 & 5 \\
+ www.chroniclesofchaos.como & 0 & 10 \\
+ www.kollermedia.at & 1 & 10 \\
+ www.chip.de & 1 & 100 
+\end{tabular}
+
+Luego estos resultados se corroboraron manualmente revisando todos los valores que poseía el dominio tanto dentro del rango 1-5 como fuera .
+Desde ya que no se puede asegurar la veracidad de los rangos encontrados, dado que por ejemplo, podría suceder que para el dominio 
+www.kollermedia.at por mas absurdo que parezca el rango real es 1-11 pero no existe ningún review con el valor 11 en su rating.
+Nota: Manualmente se verificó que ormigo poseía simplemente reviews mal generados.
+
+Una vez con estos resultados se puede proceder a corregir los valores de los reviews del dataset.
+
+Estrategia:
+Disponiendo de los rango correctos para cada dominio se recorrieron todos los reviews de cada dominio resultante, y se les adicionaron 
+las propiedades rev:minRating y rev:maxRating con los valores correspondientes.
+Esto no sólo para los reviews con ratings erróneos encontrados en la etapa de evaluación (fuera del rango 1-5) dado que, para los reviews de 
+cada dominio con rango encontrado, por más que el rating se encuentre dentro del rango 1-5 y aparente ser correcto,  ya se sabe que dicho dominio se 
+maneja con rangos diferentes y el valor real del rating cambiaría (no es lo mismo el valor 3 en un rango 1-100 que en un rango 1-5)
+
