@@ -370,10 +370,55 @@ Posee un mecanismo de inferencia que alerta cuando se viola la sintaxis de los v
 Como contrapartida, la información retornada por la herramienta es en texto plano. Por lo que no puede ser utilizado en un triplestore.
 
 
-\subsection{almacenje}
+\subsection{almacenaje}
 
-Con la información recolectada de internet en forma de tripletas (o cuadrupletas) ya puede ser todo almacenado conjuntamente en un triplestore. 
+Con la información recolectada de internet en forma de tripletas (o cuadrupletas) ya puede ser almacenada conjuntamente en un triplestore. 
 
+Se disponen de muchas opciones de triplestores en la actualidad, algunos pagos y otros gratuitos. Cada uno con ventajas en algunos aspectos y desventajas en otros.
+
+Muchos son librerías que forman parte de un framework, además algunos mapean tripletas a otros motores de base de datos como por ejemplo MYSQL o POSGRE.
+
+Algunos posibles triplestores pueden ser
+
+TDB: Componente del framework Jena, que puede ser accedido mediante linea de comandos o a travez de la API de jena. Almacena tanto tripletas como cuadrupletas, y las almacena en varios archivos donde cada uno indexa los datos de distintas formas. Tiene una muy aceptable performance pero pequeños errores en su uso pueden corromper la información facilmente.
+
+SDB: Al igual que TDB es un componente de Jena, pero que no almacena la información como archivos en el disco, sino que mapea los datos a un motor de bases de datos subyacente como MYSQL y POSGRE. Su performance está atada a dicho motor de bbdd subyacente pero por lo general no suele dar buenos resultados. 
+
+Sesame triplestore: Componente del framework Sesame, que tiene la opción de almacenar la información en disco o en memoria. Lo que puede significar un improtante beneficio para quienes requieran performance elevada en queries. Soporta no solo SPARQL sino también SeRQL. Tiene además la ventaja de poder integrar Alibaba, que es un mapeador de calses de Java a ontologías RDF.
+
+Aquí hay un par de datos extraídos del paper Chris Bizer, Andreas Schultz. The Berlin SPARQL Benchmark. Int. J. Semantic Web Inf. Syst. 5(2): 1-24 (2009) que habla sobre un benchmark que compara triplestores:
+
+
+    To load 100m triples of evaluation data:
+        Sesame: 3 days 6 hours
+        Jena TDB: 1.5 hours
+        Jena SDB: 1 day 15 hours
+    Complex Query Mixes per Hour (rate of query answering -- higher = better) for 1M triples:
+        Sesame: 18,094
+        Jena TDB: 4,450
+        Jena SDB: 10,421
+    Complex Query Mixes per Hour for 25M triples:
+        Sesame: 1,343
+        Jena TDB: 353
+        Jena SDB: 968
+    Complex Query Mixes per Hour for 100M triples:
+        Sesame: 254
+        Jena TDB: 81
+        Jena SDB: 211
+    Simple Query Mixes per Hour for 1M triples:
+        Sesame: 38,727
+        Jena TDB: 15,842
+        Jena SDB: 15,692
+    Simple Query Mixes per Hour for 25M triples:
+        Sesame: 39,059
+        Jena TDB: 1,856
+        Jena SDB: 4,877
+    Simple Query Mixes per Hour for 100M triples:
+        Sesame: 3,116
+        Jena TDB: 459
+        Jena SDB: 584
+
+No sólo se debería elegir el triplestore en cuanto a su performance, su facilidad de uso y flexibilidad también es un aspecto muy importante a evaluar.
 
 %\input{opcionesDescarga}
 %input{opcionesTransformación}
@@ -452,7 +497,21 @@ que este proceso puede ser muy dificultoso, habrá que ver en base a los requeri
 Una vez realizada la integración mínima necesaria para los requerimientos, el dataset ya estará listo para su explotación.
 
 \section{Publicación del Dataset Curado}
-???
+
+Existen varias maneras de publicar el dataset, y la elección de una en particular dependerá tanto de para qué se podría utilizar el dataset en el futuro como
+de los recursos de timepo/hardware/económicos que se esté dispuesto a gastar.
+
+Una posible solución muy barata y simple es generar un volcado de la base de datos, comprimirlo y subirlo a un hosting de archivos como Mega. Cualquier usuario podría descargarse entonces la base de datos y utilizarla de la forma que más le convenga.
+Tendría el problema en ese caso de no serle útil a usuarios con pocos conocimientos sobre esta tecnología, o que no posean demasiados recursos de hardware, o tiempo.
+
+Una solución un poco más costosa es utilizar un servidor (ya sea propio, pago, o simplemente una pc), y crear un SPARQL Endpoint accesible mediante la web.
+Esta última opción puede implementarse utilizando algúnas herramientas:
+
+Fuseki: SPARQL endpoint que utiliza el protocolo SPARQL mediante HTTP con estilo REST. Tiene una performance aceptable y la ventaja de ser muy sensilla su instalación y puesta en marcha. Se puede directamente utilizar un volcado de TDB.
+
+Virtuoso Server: Middleware que incluye no solo un endpoint, sino también un motor de base de datos, un server, una aplicación web y todo lo necesario para publicar los datos en la web. Puede ser muy útil pero su instalación y puesta en marcha no es trivial. Y requiere la adquisición de una licencia para su uso.
+
+ARQ: Componente de Jena que funciona como query engine, y puede ser utilizado para armar el endpoint manualmente, eso singifica realizar a mano la aplicación web.
 
 \section{Explotación del Dataset}
 \begin{framed}
