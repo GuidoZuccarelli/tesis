@@ -24,7 +24,7 @@ Propiedad (predicado) - Una propiedad es un aspecto específico, característica
 Cada propiedad tiene un significado específico, define sus valores permitidos, los tipos de recursos que se puede describir, 
 y su relación con otras propiedades. 
 
-Objecto - puede ser otro recurso o puede ser un literal; es decir, un recurso (especificado por un URI) o una cadena simple o 
+Objeto - puede ser otro recurso o puede ser un literal; es decir, un recurso (especificado por un URI) o una cadena simple o 
 de otro tipo de datos primitivo definido por XML. En términos RDF, un literal puede tener contenido que es el formato XML,
 pero no se evalúa aún más por el procesador de RDF.
 
@@ -167,19 +167,18 @@ El procedimiento debería incluir los siguientes pasos
 
 \begin{description}
 \item[Selección de vocabularios ] Tanto la recolección como la publicación de datos en la web semántica involucra la elección del o de los vocabulario/s que mejor modelen el dominio de problema, con la excepción que para su publicación existe la posibilidad de desarrollar uno propio que se ajuste correctamente en caso de que no se encuentre uno existente. 
-\item[Recolección  ] .... ?
-\item[Extracción y almacenaje de los datos] ??
-\item[Evaluación de Calidad de los Datos] ???
-\item[Curado de los Datos] ???
-\item[Integración de los datos] ?? 
-\item[Publicación del Dataset Curado] ?? 
-\item[Explotación del Dataset] ?? 
+\item[Recolección  ] Proceso que comprende dos tareas (Búsqueda y Obtención) en el cual se intenta conseguir los datos deseados, los cuales se encuentran dispersos en la web y para ello pueden utilizarse múltiples herramientas y servicios web.
+\item[Extracción y almacenaje de los datos] Se le aplica estos dos pasos a los datos crudos obtenidos en la web para poder tener la información semántica y descartar el resto en un formato mucho mejor procesable.
+\item[Evaluación de Calidad de los Datos] Se evalúa si los datos poseen la calidad mínima necesaria para crear una aplicación que satisfaga a los requerimientos.
+\item[Curado de los Datos] Intentar corregir los problemas de calidad de los datos encontrados en el paso anterior. Siempre y cuando sea posible y viable.
+\item[Integración de los datos] Este puede ser el proceso más costoso pero también el más importante, en el cual se intenta unificar e interconectar la información para que pueda ser aprovechable. Existen distintos niveles de integración más simples o más complejos.
+\item[Publicación del Dataset Curado] El dataset ya con una calidad teóricamente superior y un estado mucho más aprovechable que el que se encontraba en un primer momento se deja a disposición de todos de forma online.  
+\item[Explotación del Dataset] Se construye una aplicación que en base a los requerimientos utilice el dataset. 
 \end{description}
 
 \begin{framed}
 \textcolor{red}{acá sería bueno incluir un diagrama que muestre el pipeline. En la lista de arriba con un párrafo se explica cada paso. Luego, en las secciones que sigue se analiza mas cada paso, pero se lo plantea como un problema.. se analizan los retos; entonces los capítulos 4 a 9, explican como los resolviste. Alternativamente, se puede hablar menos acá, solo lo suficiente para que se entienda la estrategia general, y luego en los capítulos 4 a 9 se analiza el problema en detalle y se propone la solución. Con esta ultima forma, todo lo que se refiere a los vocabularios quedaría en el capitulo 4 y no acá. Puede ser mejor.}
 \end{framed}
-
 
 \section{Selección de vocabularios}
 
@@ -279,20 +278,20 @@ El grado de atemporalidad mínima tolerable en los datos
 
 El primer paso para realizar la recolección es intentar responder la siguiente pregunta: ¿Dónde encuentro la informanción?
 
-Una vez seleccionados los vocabularios, se necesitará obtener fuentes de datos que contengan sus datos publicados en esos vocabularios.
+Una vez seleccionados los vocabularios, se necesitará obtener fuentes de datos que contengan sus datos publicados en los vocabularios previamente seleccionados.
  
 Para lograrlo se podrá utilizar como punto de partida:
 
 Sitios indexadores: Son algunos sitios que disponen de un dataset muy grande procesado con documentos indexados, que ofrecen consultar dicho 
-dataset mediante servicios web. Generalmente proveen una API donde se pueden consutlar los datos mediante distintos grados de flexibilidad.
+dataset a travez servicios web. Generalmente proveen una API donde se pueden consutlar los datos mediante distintos grados de flexibilidad.
 
-Sindice, LOD cloud cache y UriBurner son algunos ejemplos de estos sitios. Se puede utilizar entocnes, los servicios web a fin
-de obtener una lista de URL que se cree que tendrán la información necesaria.
+Sindice, LOD cloud cache y UriBurner son algunos ejemplos de estos sitios. Se puede utilizar entocnes, dichos servicios web a fin
+de obtener una lista de URLs en las cuales se cree que contendrán la información necesaria.
 
 Sindice: Es una herramienta creada en conjunto por la Universidad de Deri,  Fondazione Bruno Kessler y Openlink Software que propociona múltiples tipos de API ofreciendo acceso a su dataset de la web de datos. Este dataset contiene información recolectada de la web en múltiples formatos de la web semántica y puede ser accedido a travez de un search engine, una API restful o un SPARQL endpoint.  
 En la actualidad posee indexados 708.26 millones de documentos.
 
-Link Open Data Cloud Cache (LOD): Al igual que sindice proporciona acceso a un dataset recolectado de la web de datos pero de una manera mucho más acotada. Se dispone de un text search (funciona como un search engine) o de un SPARQL Endpoint bastante restringido. Sólo se puede acceder al dataset entero mediante federated queries, en caso de querer buscar sobre todo el dataset, el endpoint limita la consulta sólo a una parte del mismo. Tambien posee muchas restricciones respecto a los time outs, por lo que las consultas no pueden ser muy flexibles.
+Link Open Data Cloud Cache (LOD): Al igual que sindice proporciona acceso a un dataset recolectado de la web de datos pero de una manera mucho más restringida. Se dispone de un text search (funciona como un search engine) o de un SPARQL Endpoint muy poco flexible y limitado en cuanto a la cantidad de información ofrecida comparada con la que podría ofrecer. Sólo se puede acceder al dataset entero mediante federated queries, en caso de querer buscar sobre todo el dataset, el endpoint limita la consulta sólo a una parte del mismo. Tambien posee muchas restricciones respecto a los time outs, por lo que las consultas no pueden ser muy flexibles.
 Para poder disponer de la funcionalidad completa del endpoint y así poder aprovechar tanto el dataset como las consultas SPARQL deberá comrprarse una licencia.
 
 Sitios autoritativos: Son sitios conocidos que generan información relevante y la publican en las ontologías y vocabularios 
@@ -303,7 +302,7 @@ Catálogos de enpoints: Son catálogos provistos por algunos sitios que mantiene
 junto con el estado de disponibilidad en el que se encuentran. Por ejemplo los sitios http://labs.mondeca.com/sparqlendpointsstatus/ y 
 http://www.w3.org/wiki/SparqlEndpoints que este último además provee detalles sobre la información de los mismos.
 
-Consultar estos sitios entonces generará una lista de endpoints SPARQL que se podrá utilizar para consultar la información necesaria.
+Consultar estos sitios entonces generará una lista de endpoints SPARQL los cuales se podrían utilizar para pedir la información necesaria.
 
 Volcados de datos: Son datasets muy grandes que fueron el resultado de un web crawling, los cuales están disponibles para su descarga 
 y se pueden utilizar para procesarlos y obtener los datos requeridos. El más importante es http://challenge.semanticweb.org/2014/ .
