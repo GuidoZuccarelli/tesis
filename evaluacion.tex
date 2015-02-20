@@ -214,7 +214,8 @@ WHERE{
 Esta query debería devolver las propiedades que poseen los reviews y la cantidad de reviews que la utilizan para una clase de review dada.
 
 Resultados más improtantes:
-Para la clase schema:Review
+
+Para la clase schema:Review\\
 \begin{tabular}{| l | c | }
  Propiedad & Cantidad \\
  http://schema.org/author & 146243 \\
@@ -293,10 +294,30 @@ Para la clase schema:Review
  Conclusión: La mayoría de los problemas son ocacionados por la inconsistencia, inestabilidad e incoherencia de la ontología. Principalmente 
  en el afán de hacerla elegante, crearon a Review como subclase de CreativeWork que normalmente suele ser suplerclase de clases que son ítems de reviews
  lo que concluye en una ontología demasiado larga y redundante.
- 
- 
- 
- 
+ \\
+ \\
+ Para la clase purl:Review\\
+ \begin{tabular}{| l | c | }
+ Propiedad & Cantidad \\
+ http://purl.org/stuff/rev#text & 207259\\
+ http://purl.org/stuff/rev#rating & 195005\\
+ http://purl.org/stuff/rev#reviewer & 154663\\
+ http://purl.org/dc/terms/date & 146473\\
+ http://purl.org/stuff/rev#title & 88148\\
+ http://purl.org/stuff/rev#hasReview & 6424\\
+ http://www.w3.org/2006/vcard/ns#n & 6424\\
+ http://www.w3.org/2006/vcard/ns#fn & 6424\\
+ http://www.w3.org/2006/vcard/ns#url & 6420\\
+ http://www.w3.org/2006/vcard/ns#geo & 6123\\
+\end{tabular}
+\\ 
+
+Los resultados más llamativos son la aparición de propiedades que normalmente se encuentran en el ítem, dado que no tienen sentido para un review
+que son hasReview (un review dentro de un review), n (nombre para un review), fn (idem n), geo (posición geográfica de un review).
+El hecho de que todas se encuentren en cantidades similares es el gran indicador de que es un dominio repitiendo algún problema a lo largo de sus documentos.
+Una inspección de los dominios donde se encuentra cada uan muestra que todas están incluídas en http://hoteles.hotelopia.es y http://hotels.hotelopia.it/
+Básicamente el problema es que le asignaron el tipo purl:Review a ítems.
+
 %Estrategia:
 
 %Como base se utilizó el framework RDFUnit que provee funcionalidades que asisten tanto a la búsuqeda de problemas sintácticos como semánticos.
