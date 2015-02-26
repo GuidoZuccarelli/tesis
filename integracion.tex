@@ -1,2 +1,25 @@
 \chapter{Integración de los Datos}
 \label{chapter:integracion}
+
+Como quedó explicado en la sección estrategia, integración comprende los procedimientos que se realizan con el objetivo de obtener una
+visión más unificada del dataset.
+Esto puede significar, modificar los datos y ontologías y también agregar información faltante en los ítems/reviews.
+Este es el paso más importante de todo el proceso y la posibilidad de conseguir realizar una aplicación correcta que satisfaga los requerimientos
+depende del éxito obtenido en el mismo.
+En base a los requerimientos establecidos, se pueden pensar en distintos procedimientos que son necesarios para poder explotar los datos
+correctamente:
+\\
+\\
+Unificación de vocabularios: En el primer paso del proceso se realizó una selección de los vocabularios con los que se trabajará, 
+estos vocabularios modelan el mismo dominio de información pero muchas veces de forma distinta. Explotar información modelada de 
+diferentes maneras puede resultar innecesariamente engorroso, y también para quienes en un futuro quieran hacer uso del dataset (ya que
+deberán consutlar la información previamente conociendo todas las ontologías de review existentes).\\
+Unificación de autores: Es muy importante para lograr cumplir el objetivo de los requerimientos que si dos reviews distintos fueron 
+generados por el mismo autor, esto quede explícitamente asentado, para poder realizar los algoritmos de recomendación.\\
+Unificación de ítems: El paso más difícil y más importante, si un ítem está modelado dos veces de forma distinta debería saberse que 
+se trata del mismo.\\
+Unificación de tipos de ítems: Esto es muy útil para darle más posibilidades a la aplicación, y es agrupar los ítems según su tipo 
+(Libro, película, Hotel, Auto, etc), de manera que por ejemplo si un usuario quiere que le recomienden un libro, la aplicación sólo 
+le ofresca libros. Para la ontología schema, esto puede ser más sensillo dado que los ítems ya se encuentran con su tipo identificado con 
+la clase, en el caso de libro, sería cuestión de buscar ítems con la clase schema:Book. El problema es que esto puede no ocurrir siempre, 
+Un libro, puede estar clasificado como schema:Product, por lo que necesitaría que también lo clasifiquen como Book.\\

@@ -448,5 +448,59 @@ Se le asignaron propiedades a:
  www.kollermedia.at & 9968\\
  www.chip.de & 13751\\
  Total & 41545
+\end{tabular}\\
+\\
+Curado Evaluación nº 5 - Análisis experto:
+\\
+El problema encontrado con el uso de la propiedad description en lugar de reviewBody, será solucionado cuando se efectúe la integración, 
+por lo que no requiere una solución en esta etapa. Lo mismo sucede con las propiedades de date.
+De los casos planteados el único que parece requerir un arreglo es el de review dentro de review. Ya que si no se corrige en este paso, 
+se utilizará como reviews en el futuro, recursos que no lo son, lo que bajará la calidad del dataset.
+\\
+Objetivo:
+Corregir la clase de los recursos que son de tipo schema:Comment pero fueron clasificados como schema:Review
+
+Estrategia: 
+Lo que se intentará es cambiar la clase Review del recurso, y transferir todas las propiedades a una equivalente en la clase Comment.
+Por lo que primero se debe inspeccionar qué propiedades continen dichos recursos.
+
+\begin{lstlisting}[frame=single]
+ SELECT distinct ?p
+ WHERE{
+ ?s a <http://schema.org/Review> .
+ ?s <http://schema.org/review> ?review .
+ ?review ?p ?o .
+ }
+\end{lstlisting}\\
+\\
+Las propiedades resultantes fueron
+\begin{tabular}{| l | c |}
+Propiedad encontrada & Equivalente en Comment\\
+http://schema.org/description & http://schema.org/text \\
+http://schema.org/reviewBody & http://schema.org/text \\
+http://schema.org/datePublished & http://schema.org/datePublished \\
+http://schema.org/author & http://schema.org/author
 \end{tabular}
+
+Entonces simplemente para solucionar el problema alcanza con la siguiente consulta SPARQL:\\
+\begin{lstlisting}[frame=single]
+ DELETE { 
+ GRAPH ?g{ 
+ ?review <http://schema.org/ratingValue> ?value . 
+ } 
+ } 
+ INSERT{ 
+ GRAPH ?g{ 
+ ?s <http://schema.org/reviewRating> ?rating . 
+ ?rating a <http://schema.org/Rating> . 
+ ?rating <http://schema.org/ratingValue> ?value . 
+ }
+ }
+ WHERE{
+ GRAPH ?g {
+ ?s a <http://schema.org/Review> .
+ ?s <http://schema.org/ratingValue> ?value .
+ }
+ }
+\end{lstlisting}\\
 

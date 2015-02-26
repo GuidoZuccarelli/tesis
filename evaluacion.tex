@@ -247,7 +247,7 @@ Para la clase schema:Review\\
  Por otro lado otra propiedad en el listado que llama la atención es description. Analizando la propiedad semánticamente, significaría describir 
  el review en sí mismo, y no el ítem, dado que si ese fuese el objetivo, dicha propiedad estaría en el ítem y no en el review.
  Observando varios de los valores otorgados a esa propiedad en el contexto del review, muestran que se trata de la opinión textual del ítem, 
- para lo cual al igual que en la situación anterior existe una propiedad específica para eso reviewBody. 
+ para lo cual al igual que en la situación anterior existe una propiedad específica para eso: reviewBody. 
  La causa de que se utilice description en lugar de reviewBody (incluso con mayor frecuencia) proviene de la ontología de data vocabulary, en la cuál 
  como se explicó al principio de la tesis utiliza la propiedad description como propiedad específica para realizar el review textual.
  Puede suceder que sean dominios que migraron sus reviews desde data vocabulary hacia schema y usaron como propiedad equivalente la que 
@@ -283,8 +283,8 @@ Para la clase schema:Review\\
  Por último hay que mensionar la superpoblación de propiedades que establecen la fecha del review: datePublished, publishDate y dtreviewed.
  El motivo por el cual aparecen tres propiedades distintas para referirse a lo mismo es básicamente porque publishDate y dtreviewed no existen bajo la 
  ontología schema. Es el mismo caso que itemreviewed. 
- Es interesante también mensionar que tanto itemreviewed como dtreviewed son propiedades existentes bajo la ontología data vocabulary, 
- por lo que la causa es muy probable que se deba a un intento erróneo de migrar el vocabulario de una a otra ontología, o de venir acostumbrado a la 
+ Es interesante también mencionar que tanto itemreviewed como dtreviewed son propiedades existentes bajo la ontología data vocabulary, 
+ por lo que la causa es muy probable que sea a un intento erróneo de migrar el vocabulario de una a otra ontología, o de venir acostumbrado a la 
  ontología anterior y no prestar atención a este detalle.
  En cambio el motivo por el cual muchos dominios optaron por utilizar publishDate en lugar de datePublished, es que hasta fines de 2014, 
  era una propiedad válida que además se encontraba como ejemplo de un correcto uso de la clase Review provisto por parte de la documentación 
@@ -317,7 +317,6 @@ que son hasReview (un review dentro de un review), n (nombre para un review), fn
 El hecho de que todas se encuentren en cantidades similares es el gran indicador de que es un dominio repitiendo algún problema a lo largo de sus documentos.
 Una inspección de los dominios donde se encuentra cada uan muestra que todas están incluídas en http://hoteles.hotelopia.es y http://hotels.hotelopia.it/
 Básicamente el problema es que le asignaron el tipo purl:Review a ítems.
-
 %Estrategia:
 
 %Como base se utilizó el framework RDFUnit que provee funcionalidades que asisten tanto a la búsuqeda de problemas sintácticos como semánticos.
