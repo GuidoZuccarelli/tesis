@@ -486,21 +486,26 @@ Entonces simplemente para solucionar el problema alcanza con la siguiente consul
 \begin{lstlisting}[frame=single]
  DELETE { 
  GRAPH ?g{ 
- ?review <http://schema.org/ratingValue> ?value . 
+ ?s <http://schema.org/review> ?review .
+ ?review <http://schema.org/description> ?description .
+ ?review <http://schema.org/reviewBody> ?body .
+ ?review a <http://schema.org/Review> .
  } 
  } 
  INSERT{ 
  GRAPH ?g{ 
- ?s <http://schema.org/reviewRating> ?rating . 
- ?rating a <http://schema.org/Rating> . 
- ?rating <http://schema.org/ratingValue> ?value . 
+ ?s <http://schema.org/comment> ?review .
+ ?review <http://schema.org/text> ?description .
+ ?review <http://schema.org/text> ?body .
+ ?review a <http://schema.org/Comment> .
  }
  }
  WHERE{
  GRAPH ?g {
  ?s a <http://schema.org/Review> .
- ?s <http://schema.org/ratingValue> ?value .
+ ?s <http://schema.org/review> ?review .
+ OPTIONAL {  ?review <http://schema.org/description> ?description . }
+ OPTIONAL { ?review <http://schema.org/reviewBody> ?body . }
  }
  }
 \end{lstlisting}\\
-
