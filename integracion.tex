@@ -23,4 +23,55 @@ Unificación de tipos de ítems: Esto es muy útil para darle más posibilidades
 le ofresca libros. Para la ontología schema, esto puede ser más sensillo dado que los ítems ya se encuentran con su tipo identificado con 
 la clase, en el caso de libro, sería cuestión de buscar ítems con la clase schema:Book. El problema es que esto puede no ocurrir siempre, 
 Un libro, puede estar clasificado como schema:Product, por lo que necesitaría que también lo clasifiquen como Book.\\
-
+\\
+\\
+Por razones de que la tesis ya cubrió el desarrollo suficiente, sólo se intentarán implementar los puntos 1 y 4 de la integración. Ya que 
+los otros dos son demasiado abarcativos y pueden requerir demasiado trabajo.\\
+\\
+Unificación de vocabularios\\
+\\
+Objetivo: Conservar los reviews del dataset en una única ontología. Lo que simplificará las búsquedas, agregaciones y otras operaciones.
+Además de contener datos semánticamente más parecidos. Y también facilitará la comprensión del dataset a quienes quieran hacer uso del mismo
+en un futuro (ya que sólo deberán concentrarse en una sola ontología)
+\\
+Estrategia: Deberá como primer paso realizarse una selección de vocabulario, en la cual se escoja uno para que quede como el único en el dataset.
+En este caso de estudio el vocabulario elejido es Review Ontology, ya que todas sus propiedades son suficientes para cumplir los requerimientos y 
+este es mucho más simple, lo que facilitará su utilización. El vocabulario de schema poseé demasiadas propiedades que son irrelevantes para este caso de estudio. 
+Además vale la pena recordar los problemas encontrados en el capítulo evaluación causados por la ontología.
+Como segundo paso, buscar para cada propiedad de schema:Review utilizada en el dataset su contraparte en la ontología purl.\\
+La equivalencia entre las propiedades ya fueron realizadas en el capítulo de selección de vocabularios. Pero sólo fue realizado con las propiedades 
+relevantes al caso de estudio. Las siguientes propiedades (que valga la redundancia son irrelevantes al caso de estudio) fueron utilizadas dentro del dataset, y 
+no se estableció su equivalente en el otro vocabulario:
+http://schema.org/about y http://schema.org/keywords. 
+Si bien, la falta de estas propiedades no impactará sobre la aplicación final, es conveniente no perder datos para la publicación del dataset, ya que 
+a alguien podría resultarle útil. 
+En la etapa de evaluación se observó que la propiedad about, se utilizó en el dataset sólo para poner contener el valor ``This is required'' en todos los casos. 
+Por lo que no incluir esta propiedad en el dataset no producirá una pérdida de información.
+Y la propiedad keywords puede ser reemplazada por http://purl.org/dc/terms/subject. Ya que en la documentación de dublin core, proponen la utilización de esta propiedad 
+utilizando keywords.
+El caso de reviewRating, que tiene como objeto un schema:Rating, no puede ser explicitamente reemplazado, ya que esa propiedad 
+sólo es utilizada para desacoplar el rating del review, situación que no se da en la otra ontología. Pero las propiedades dentro del rating se encuentran todas 
+con su equivalente en purl, por lo tanto no causará ningún problema.
+Por último, schema:Person que es rango de la propiedad author, debería ser mapeado a foaf:Person que es objeto d ela propiedad reviewer. 
+El problema se encuentra en lo analizado en la etapa de curado, que se observó que los nombres de los autores podía ser nomrbes completos o usernames. 
+Y no existe una propiedad dentro del vocabulario de foaf:Person que sea tan genérico como para contemplar todo slos casos posibles, como sí existe en vCard.
+Además de que todos los previos valores de reviewer están conformados por un vCard, como también ya se analizó en la etapa de curado.
+Por estos motivos se determinó continuar utilizando vCards en lugar de recursos de tipo foaf, y dichos vCards utilizarán la propiedad
+fn (que contempla todos los casos mencionados).
+Finalmente el mapeo de propiedades quedaría:\\
+\begin{tabular}{| l | c |}
+Propiedad schema & Propiedad de reemplazo\\
+name & title \\
+reviewBody & text \\
+datePublished & dc:date \\
+author & reviewer \\
+ratingValue & rating\\
+bestRating (reviewRating) & maxRating\\
+worstRating (reviewRating)& minRating\\
+url & vcard:url\\
+keywords & dc:subject\\
+name (author) & vcard:fn (reviewer)\\
+comments & hasComment\\
+author (comment) & commenter \\
+text (comment) & commentText 
+\end{tabular}

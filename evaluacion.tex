@@ -177,7 +177,7 @@ automáticos de la evaluación anterior.
 Estrategia: Se configuró RDFUnit utilizando patrones del framework para crear tests manuales. Luego se corrió para obtener resultados
 de la misma manera que en la evaluación anterior
 
-Resultados:
+Resultados:\\
 \begin{tabular}{| l | c | r | }
 http://purl.org/dc/terms/date has a format different to YYYY-MM-DD & 92580 & 207130\\
 http://schema.org/datePublished has a format different to YYYY-MM-DD & 53740 & 144594\\
@@ -280,7 +280,7 @@ Para la clase schema:Review\\
  Una observación de los valores verifican lo descripto anteriormente y además muestran que esta propiedad es sólo utilizada en lso reviews por el dominio 
  http://www.kennstdueinen.de/ que además utiliza el idioma danés.
  
- Por último hay que mensionar la superpoblación de propiedades que establecen la fecha del review: datePublished, publishDate y dtreviewed.
+ También hay que mencionar la superpoblación de propiedades que establecen la fecha del review: datePublished, publishDate y dtreviewed.
  El motivo por el cual aparecen tres propiedades distintas para referirse a lo mismo es básicamente porque publishDate y dtreviewed no existen bajo la 
  ontología schema. Es el mismo caso que itemreviewed. 
  Es interesante también mencionar que tanto itemreviewed como dtreviewed son propiedades existentes bajo la ontología data vocabulary, 
@@ -290,6 +290,27 @@ Para la clase schema:Review\\
  era una propiedad válida que además se encontraba como ejemplo de un correcto uso de la clase Review provisto por parte de la documentación 
  de la ontología. 
  También la misma ontología en su documentación aclaraba que tanto datePublished como publishDate eran indistintas.
+ 
+ Por último, un vistazo a la propiedad más popular de la clase Review, author, mostró que todos los valores de dicha propiedad están compuestos 
+ por un string o más específicamente un Literal. Esto contradice la definición de la ontología schema, tanto la documentación como la implementación, que
+ establecen que le rango de la propiedad author es Organization o Person. 
+ El asunto más relevante en este caso es entender porqué este error sintáctico de rango de propiedades no fue contemplado en los test 
+ automáticos generados por el framework RDFUnit.
+ Y la respuesta parece estar en la complejidad con la que establecieron el rango en la definición de la ontología. El extracto de las 
+ tripletas relevantes muestran lo siguiente:
+ \begin{lstlisting}[frame=single]
+ schema:author rdfs:domain schema:CreativeWork .
+ _:node1 rdf:type owl:Class .
+ _:node2 rdf:first schema:Organization .
+ _:node2 rdf:rest _:node3 .
+ _:node3 rdf:first schema:Person .
+ _:node3 rdf:rest rdf:nil .
+ _:node1 owl:unionOf _:node2 .
+ schema:author rdfs:range _:node1 .
+ \end{lstlisting}
+ 
+ Al parecer la definición del rango de la propiedad author utiliza estructuras de lista y conjuntos que parecen requerir más inferencia de la 
+ que el framework RDFUnit puede realizar.
  
  Conclusión: La mayoría de los problemas son ocacionados por la inconsistencia, inestabilidad e incoherencia de la ontología. Principalmente 
  en el afán de hacerla elegante, crearon a Review como subclase de CreativeWork que normalmente suele ser suplerclase de clases que son ítems de reviews

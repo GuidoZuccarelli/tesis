@@ -142,7 +142,22 @@ Resultado:
 La evaluación encontró que, todos esos recursos eran URIs de un dominio web 411ca.com para ser derreferenciados. La solución podría haber sido 
 descargar dichos recursos y anexarlos a la propiedad, pero lamentablemente dichos recursos no se encontraban disponibles de forma online.
 
-Curado Evaluación nº 3 - RDFUnit Manual:
+http://purl.org/stuff/rev\#hasReview has different range from: http://purl.org/stuff/rev\#Review 
+En este caso no hay error, el inconvieniente surge porque los recursos de tipo purl:ReviewAggregate utilizan también la propiedad hasReview
+que no esta contemplado en la ontología de purl.
+
+http://purl.org/stuff/rev\#reviewer is missing proper range
+Este caso se da porque se genera un recurso vació, específicamente el reviewer. El reviewer no fue provisto en lso documentos orginales donde 
+se derivó este problema, simplemente establecían el metadato reviewer dejándolo vacío.
+
+http://purl.org/stuff/rev\#reviewer has different range from: http://xmlns.com/foaf/0.1/Person
+En estos casos analizando qué clase contenian si no era foaf:Person, se observó que la clase era http://www.w3.org/2006/vcard/ns\#VCard.
+En todos los casos donde el reviewer no se encontraba vacío, se utilizó un v:card en lugar de un foaf:Person, y esto tiene una explicación, 
+y es que al haberse utilizado hreview con microformatos es imposible crear un recurso de esa clase, dado que no se posee un namespace, para que 
+eso sea posible, la clase foaf debería encontrarse dentro de los estándares de los microformatos. 
+En este caso al no haber alternativa por parte del creador del review, se considera correcto el uso del v-card, en reemplazo de foaf.
+
+Curado Evaluación nº 4 - RDFUnit Manual:
 
 {DateProperty} has a format different to YYYY-MM-DD:
 Para todas las propiedades que indiquen una fecha, los pasos para reparar este caso son los mismos.
@@ -439,8 +454,8 @@ Esto no sólo para los reviews con ratings erróneos encontrados en la etapa de 
 cada dominio con rango encontrado, por más que el rating se encuentre dentro del rango 1-5 y aparente ser correcto,  ya se sabe que dicho dominio se 
 maneja con rangos diferentes y el valor real del rating cambiaría (no es lo mismo el valor 3 en un rango 1-100 que en un rango 1-5)
 
-Resultados:
-Se le asignaron propiedades a:
+Resultados:\\
+Se le asignaron propiedades a:\\
 \begin{tabular}{| l | c |}
  www.gamezebo.com & 3905\\
  www.yellowbot.com & 8955\\
@@ -452,11 +467,18 @@ Se le asignaron propiedades a:
 \\
 Curado Evaluación nº 5 - Análisis experto:
 \\
-El problema encontrado con el uso de la propiedad description en lugar de reviewBody, será solucionado cuando se efectúe la integración, 
-por lo que no requiere una solución en esta etapa. Lo mismo sucede con las propiedades de date.
-De los casos planteados el único que parece requerir un arreglo es el de review dentro de review. Ya que si no se corrige en este paso, 
-se utilizará como reviews en el futuro, recursos que no lo son, lo que bajará la calidad del dataset.
+Propiedades inexistentes o semánticamente incorrectas\\
+Son los casos de itemreviewed, dtreviewed, publishDate y reviewBody, ya analizados en la evaluación.
+Estrategia: En este caso para todas el procedimiento es exactamente el mismo, y es bastante sensillo, crear una nueva propiedad con 
+el mismo sujeto y objeto, pero la propiedad indicada para cada caso y luego borrar la tripleta incorrecta\\
+\begin{tabular}{| l | c |}
+ itemreviewed & itemReviewed\\
+ dtreviewed, publishDate & datePublished\\
+ description & reviewBody
+\end{tabular}\\
 \\
+
+Comentarios en forma de reviews\\
 Objetivo:
 Corregir la clase de los recursos que son de tipo schema:Comment pero fueron clasificados como schema:Review
 
@@ -471,9 +493,8 @@ Por lo que primero se debe inspeccionar qué propiedades continen dichos recurso
  ?s <http://schema.org/review> ?review .
  ?review ?p ?o .
  }
-\end{lstlisting}\\
-\\
-Las propiedades resultantes fueron
+\end{lstlisting}
+Las propiedades resultantes fueron\\
 \begin{tabular}{| l | c |}
 Propiedad encontrada & Equivalente en Comment\\
 http://schema.org/description & http://schema.org/text \\
@@ -508,4 +529,39 @@ Entonces simplemente para solucionar el problema alcanza con la siguiente consul
  OPTIONAL { ?review <http://schema.org/reviewBody> ?body . }
  }
  }
-\end{lstlisting}\\
+\end{lstlisting}
+
+Por último, el problema encontrado con los objetos de la propiedad author, que deberían ser recursos de tipo schema:Person o schema:Organization, 
+necesitan un arreglo.
+Estrategia: 
+Primero es necesario saber qué representan esos textos utilizados como objeto de author, una observación de esos valores mostró que 
+en su gran mayoría representan usernames dentro de la página publicadora, y el resto nombre y apellido.
+Esto genera un problema a la hora de llevar a cabo la corrección, ya que de por sí, schema:Person utilizada una propiedad para el nombre (givenName) 
+y otra para el apellido (familyName), y no hay una propiedad específica para un username, aunque existe la propiedad alternativeName que 
+se utiliza para los nombres que no encajen en las demás propiedades que podría ser utilizado para el username.
+Pero cómo saber automáticamente cuando es un username, y cuando es un nombre completo, y más aún, en los nombres completos, cómo saber cuál es el nombre y 
+cuál es el apellido?.
+Esto no puede ser automáticamente resuelto, por lo que se optó por incluir a todos (tanto usernames como nombres completos) dentro de la propiedad name, heredada de 
+schema:Thing.
+Entonces como procedimiento final, se cambio el objeto de la spropiedades author, por un recurso de tipo Person, con una propiedad name conteniendo 
+como objeto el antiguo valor de author. Realizado con la siguiente consulta SPARQL:\\
+\begin{lstlisting}[frame=single]
+ DELETE { 
+ GRAPH ?g{ 
+ ?s <http://schema.org/author> ?author .
+ } 
+ } 
+ INSERT{ 
+ GRAPH ?g{ 
+ ?s <http://schema.org/author> _:foo .
+ _:foo a <http://schema.org/Person> .
+ _:foo <http://schema.org/name> ?author .
+ }
+ }
+ WHERE{
+ GRAPH ?g {
+ ?s a <http://schema.org/Review> .
+ ?s <http://schema.org/author> ?author .
+ }
+ }
+\end{lstlisting}
