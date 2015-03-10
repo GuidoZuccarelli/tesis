@@ -52,7 +52,7 @@ utilizando keywords.
 El caso de reviewRating, que tiene como objeto un schema:Rating, no puede ser explicitamente reemplazado, ya que esa propiedad 
 sólo es utilizada para desacoplar el rating del review, situación que no se da en la otra ontología. Pero las propiedades dentro del rating se encuentran todas 
 con su equivalente en purl, por lo tanto no causará ningún problema.
-Por último, schema:Person que es rango de la propiedad author, debería ser mapeado a foaf:Person que es objeto d ela propiedad reviewer. 
+Por último, schema:Person que es rango de la propiedad author, debería ser mapeado a foaf:Person que es rango de la propiedad reviewer. 
 El problema se encuentra en lo analizado en la etapa de curado, que se observó que los nombres de los autores podía ser nomrbes completos o usernames. 
 Y no existe una propiedad dentro del vocabulario de foaf:Person que sea tan genérico como para contemplar todo slos casos posibles, como sí existe en vCard.
 Además de que todos los previos valores de reviewer están conformados por un vCard, como también ya se analizó en la etapa de curado.
@@ -65,6 +65,7 @@ name & title \\
 reviewBody & text \\
 datePublished & dc:date \\
 author & reviewer \\
+reviewer & reviewer \\
 ratingValue & rating\\
 bestRating (reviewRating) & maxRating\\
 worstRating (reviewRating)& minRating\\
@@ -73,5 +74,6 @@ keywords & dc:subject\\
 name (author) & vcard:fn (reviewer)\\
 comments & hasComment\\
 author (comment) & commenter \\
-text (comment) & commentText 
+text (comment) & rdfs:comment
 \end{tabular}
+

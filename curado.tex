@@ -7,9 +7,14 @@ Corregir todos los problemas viables encontrados en el paso anterior que se pued
 Curado Evaluación nº 1 - Vocabularios:
 
 Estrategia:
-Se optó por adicionar al review la propiedad en forma correcta con el mismo recurso destino sin eliminar la propiedad incorrecta. 
+Con una consulta SPARQL, se eliminó la propiedad incorrecta y se agregó la misma en la forma que corresponde.
 Todo se realizó con una simple consulta SPARQL
 \begin{lstlisting}[frame=single]  
+DELETE{
+  GRAPH ?g {
+    ?s ?t ?o .
+  }
+}
 INSERT{
   GRAPH ?g {
     ?s ?p ?o .
@@ -480,10 +485,10 @@ el mismo sujeto y objeto, pero la propiedad indicada para cada caso y luego borr
 
 Comentarios en forma de reviews\\
 Objetivo:
-Corregir la clase de los recursos que son de tipo schema:Comment pero fueron clasificados como schema:Review
+Corregir la clase de los recursos que son de tipo schema:UserComments pero fueron clasificados como schema:Review
 
 Estrategia: 
-Lo que se intentará es cambiar la clase Review del recurso, y transferir todas las propiedades a una equivalente en la clase Comment.
+Lo que se intentará es cambiar la clase Review del recurso, y transferir todas las propiedades a una equivalente en la clase UserComments.
 Por lo que primero se debe inspeccionar qué propiedades continen dichos recursos.
 
 \begin{lstlisting}[frame=single]
@@ -497,10 +502,10 @@ Por lo que primero se debe inspeccionar qué propiedades continen dichos recurso
 Las propiedades resultantes fueron\\
 \begin{tabular}{| l | c |}
 Propiedad encontrada & Equivalente en Comment\\
-http://schema.org/description & http://schema.org/text \\
-http://schema.org/reviewBody & http://schema.org/text \\
-http://schema.org/datePublished & http://schema.org/datePublished \\
-http://schema.org/author & http://schema.org/author
+http://schema.org/description & http://schema.org/commentText \\
+http://schema.org/reviewBody & http://schema.org/commentText \\
+http://schema.org/datePublished & http://schema.org/commentTime \\
+http://schema.org/author & http://schema.org/creator
 \end{tabular}
 
 Entonces simplemente para solucionar el problema alcanza con la siguiente consulta SPARQL:\\
@@ -511,14 +516,18 @@ Entonces simplemente para solucionar el problema alcanza con la siguiente consul
  ?review <http://schema.org/description> ?description .
  ?review <http://schema.org/reviewBody> ?body .
  ?review a <http://schema.org/Review> .
+ ?review <http://schema.org/author> ?author . 
+ ?review <http://schema.org/datePublished> ?date .
  } 
  } 
  INSERT{ 
  GRAPH ?g{ 
  ?s <http://schema.org/comment> ?review .
- ?review <http://schema.org/text> ?description .
- ?review <http://schema.org/text> ?body .
- ?review a <http://schema.org/Comment> .
+ ?review <http://schema.org/commentText> ?description .
+ ?review <http://schema.org/commentText> ?body .
+ ?review <http://schema.org/commentTime> ?date .
+ ?review <http://schema.org/creator> ?author .
+ ?review a <http://schema.org/UserComments> .
  }
  }
  WHERE{
@@ -527,6 +536,8 @@ Entonces simplemente para solucionar el problema alcanza con la siguiente consul
  ?s <http://schema.org/review> ?review .
  OPTIONAL {  ?review <http://schema.org/description> ?description . }
  OPTIONAL { ?review <http://schema.org/reviewBody> ?body . }
+ OPTIONAL { ?review <http://schema.org/datePublished> ?date . }
+ OPTIONAL { ?review <http://schema.org/author> ?author . }
  }
  }
 \end{lstlisting}
