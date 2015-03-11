@@ -4,6 +4,17 @@
 Lo que vamos a construir es un caso de aplicación de la web semantica....
 
 \section{Aplicaciones en la Web Semantica}
+
+\subsection{dbpedia}
+
+DBpedia
+
+La aplicación más importante de la Web Semántica, que tiene como objetivo extraer información de wikipedia, y crear una versión semántica 
+de la información. Para ello creó una serie de ontologías, donde modelan y relacionan la información extraída de wikipedia.
+Dbpedia en la actualidad es reconocido como el sitio autoritativo de recursos de la web semántica, siendo las URIs de estos recursos 
+la mejor forma de identificarlos.
+Es por eso que el 99\% de la aplicaciones de la web semántica hacen uso de esta ontología.
+
 \section{Principios}
 Dar historia (muy breve), definiciones  (RDF, tripletas, owl, inferencia, ..)
 Escribir a medida que lo necesitas-.
@@ -42,7 +53,7 @@ corresponden a las variables de instancia.
 RDF Schema (RDFS)
 
 Es una extensión semántica de RDF, que provee elementos básicos para la descripción de ontologías (también llamadas vocabularios RDF) con el objetivo
-de estructurar los recursos RDF. Proporciona la manera de definir udefinir las clases y las propiedades específicas de la aplicación en RDF.
+de estructurar los recursos RDF. Proporciona la manera de definir las clases y las propiedades específicas de la aplicación en RDF.
 RDFS no proporciona las clases sino que proporciona el marco necesario para poder definirlas.
 
 Clases en RDFS se parecen mucho a las clases en lenguajes orientados a objetos. Esto permite que los recursos se definan como 
@@ -80,6 +91,48 @@ Restricciones de Propiedades
 
     rdfs:range es una instancia de rdf:Property que especifica el rango de una propiedad P. Esto es, la clase de los recursos que aparecen como objetos en las tripletas donde P es predicado.
     
+    
+\subsection{vocabularios}
+
+Vocabularios
+
+Son una colección de clases y propiedades con sus respectivas URIs, que son utilizadas para describir significado. Dichos vocabularios 
+pueden ser fácilmente creados por cualquier usuario, sólo es necesario darle uso a la URI y documentarlo en algún lado. 
+Por lo general, son estándares de uso no restrictivos de propiedades y clases que poseén una documentación.
+El objetivo de los vocabularios es poder describir el significado de los recursos web y del mundo real, modelándolos en clases y 
+propiedades que se utilizarán para describir al objeto en cuestión.
+
+\subsection{owl}
+
+OWL
+
+Web Ontology Languaje: Es un vocabulario que funciona como lenguaje para crear ontologías en la web. Fue creado en el 2006 y aceptado 
+por WC3 como estándar en 2007 en su versión OWL 1.1. Tiene por objetivo proveer reglas a los vocabualrios para aumentar su expresividad. 
+Estas reglas incluyen: jerarquías de clasess, cardinalidad, relaciones de conjunto, tipologías de propiedades más complejas, etc. Lo que proporciona la posibilidad de crear ontologías que pueden 
+representarse en un paradigma muy parecido a la orientación a objetos. Cabe destacar que OWL no es el único vocabulario con este objetivo, ya que RDFS 
+es también un conjunto de estándares mucho más básico que permite estas características.
+En la actualidad existe la versión 2 de OWL que es mucho más completa.
+
+\subsection{ontologías}
+
+Ontologías
+
+La aparición de OWL permitió darle mucha más expresividad y restricciones a los vocabularios, que ahora no sólo eran un conjunto de 
+propiedades y clases, sino que podían tener una definición mucho más completa, que permitía describir taxonomías y relaciones entre clases que pueden formar axiomas.
+``An ontology is a formal specification of a shared conceptualization'' Tom Grubber (cita requerida)
+Las ontologías se han convertido en uno de los pilares de la web semántica, esto se debe a que es uno de los principales componentes que permiten 
+cumplir con el objetivo de ésta, que fue planteado en la introducción: ``La Web Semántica promete facilitar el desarrollo de la web social y la inteligencia colectiva, a través de mecanismos de clasificación, relación y descripción del contenido de la información publicada mejorando su interoperabilidad.''
+
+\subsection{inferencias}
+
+Motores de inferencias.
+
+Son componentes de software que pertimente establecer consecuencias lógicas en base a los axiomas definidos tanto por OWL como por RDFS
+Estos componentes tienen como objetivo enriquecer las ontologías, creando reglas de inferencia. 
+Dichas inferencias pueden ser más o menos complejas dependiendo de la capacidad y la configuración del motor utilizado. Existen tanto gratuitos 
+como pagos.
+
+
 \subsection{sparql}
 SPARQL
 
@@ -155,6 +208,38 @@ Muchas veces (sobre todo con microformatos) los extractores tienen que tomar dec
 un mismo documento HTML puede ser extraído de distintas maneras según el extractor. Esto no ocurre con RDFa, ya que la equivalencia a RDF es mucho 
 más clara.
 
+\subsection{dublincore}
+
+Dublin core
+
+Es un vocabulario ampliamente utilizado para describir tanto recursos web como recursos físicos creado en 2012. Comenzó siento un conjunto de 15 
+propiedades 
+
+    Title
+    Creator
+    Subject
+    Description
+    Publisher
+    Contributor
+    Date
+    Type
+    Format
+    Identifier
+    Source
+    Language
+    Relation
+    Coverage
+    Rights
+
+Consta también de Dublin Core Metadata Initiative que provee un foro de desarrollo de estándares de metadatos interoperable.
+En la actualidad, se ha extendido a 55 propiedades y 22 clases.
+
+\subsection{owl}
+
+OWL
+
+
+
 \section{Tecnologías}
 Triplestores, frameworks, extractores, crawlers, motores de busqueda semanticos...
 
@@ -204,8 +289,17 @@ otorgar. Y muchas veces la documentación de la ontología (si es que existe) no
 \begin{framed}
 \textcolor{red}{Este párrafo que sigue no se entiende; aclarar que sería cubrir las necesidades mínimas de los casos de uso.}
 \end{framed}
-Luego se deberá analizar si existen las propiedades para cubrir las necesidades mínimas de los casos de uso.
+Luego se deberá analizar si existen las propiedades para cubrir las necesidades mínimas de los casos de uso. Esto significa que pueda modelar 
+toda la información que más adelante será requerida. Por ejemplo, si se quiere construir una aplicación que compare autos, al momento 
+de elegir un vocabulario que modele autos, es necesario que contenga ciertas propiedades que puedan expresar información  para determinados 
+casos de uso, como comparar cantidad de puertas, lo que requeriría que el vocabulario elegido contenga una propiedad que exprese la cantidad 
+de puertas del auto.
 
+Es posible que ante una aplicación muy extensa, con casos de uso muy complejos, no se consiga un vocabulario con propiedades tan abarcativas 
+que puedan cubrir todos los casos de uso. 
+Para esto, se puede aprovechar que las propiedades de un vocabulario, no necesariamente tienen que ser utilizadas estrictamente dentro del mismo.
+Lo único que debe respetarse es el dominio y rango de cada una, si no se explicita, puede utilizarse en otros vocabularios.
+Goodrelations es un ejemplo del uso de propiedades de múltiples vocabulairos para crear uno nuevo.
 
 Y por último se debería intentar buscar ejemplos reales que muestren el uso que le dieron los usuarios a la ontología, para 
 determinar qué propiedades están incorrectamente interpretadas o también para los casos donde las propiedades que se encuentren 
