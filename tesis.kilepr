@@ -4,7 +4,7 @@ img_extIsRegExp=false
 img_extensions=.eps .jpg .jpeg .png .pdf .ps .fig .gif
 kileprversion=2
 kileversion=2.1.0
-lastDocument=integracion.tex
+lastDocument=curado.tex
 masterDocument=
 name=Tesis
 pkg_extIsRegExp=false
@@ -138,13 +138,13 @@ ReadWrite=true
 
 [item:almacenado.tex]
 archive=true
-column=31
+column=5
 encoding=UTF-8
 highlight=LaTeX
-line=42
+line=39
 mode=LaTeX
-open=false
-order=5
+open=true
+order=10
 
 [item:bibliografia.bib]
 archive=true
@@ -168,20 +168,20 @@ order=3
 
 [item:curado.tex]
 archive=true
-column=2
+column=0
 encoding=UTF-8
 highlight=LaTeX
-line=229
+line=12
 mode=LaTeX
 open=true
 order=5
 
 [item:estrategia.tex]
 archive=true
-column=14
+column=36
 encoding=UTF-8
 highlight=LaTeX
-line=516
+line=25
 mode=LaTeX
 open=true
 order=8
@@ -198,10 +198,10 @@ order=-1
 
 [item:evaluacion.tex]
 archive=true
-column=72
+column=88
 encoding=UTF-8
 highlight=LaTeX
-line=318
+line=292
 mode=LaTeX
 open=true
 order=4
@@ -218,10 +218,10 @@ order=-1
 
 [item:integracion.tex]
 archive=true
-column=33
+column=22
 encoding=UTF-8
 highlight=LaTeX
-line=14
+line=67
 mode=LaTeX
 open=true
 order=9
@@ -238,10 +238,10 @@ order=-1
 
 [item:introduccion.tex]
 archive=true
-column=237
+column=2
 encoding=UTF-8
 highlight=LaTeX
-line=49
+line=59
 mode=LaTeX
 open=true
 order=6
@@ -297,8 +297,8 @@ open=false
 order=-1
 
 [view-settings,view=0,item:almacenado.tex]
-CursorColumn=31
-CursorLine=42
+CursorColumn=5
+CursorLine=39
 JumpList=
 ViMarks=
 
@@ -315,26 +315,26 @@ JumpList=
 ViMarks=
 
 [view-settings,view=0,item:curado.tex]
-CursorColumn=2
-CursorLine=229
+CursorColumn=0
+CursorLine=12
 JumpList=
 ViMarks=
 
 [view-settings,view=0,item:estrategia.tex]
-CursorColumn=14
-CursorLine=516
+CursorColumn=36
+CursorLine=25
 JumpList=
 ViMarks=
 
 [view-settings,view=0,item:evaluacion.tex]
-CursorColumn=72
-CursorLine=318
+CursorColumn=88
+CursorLine=292
 JumpList=
 ViMarks=
 
 [view-settings,view=0,item:integracion.tex]
-CursorColumn=33
-CursorLine=14
+CursorColumn=22
+CursorLine=67
 JumpList=
 ViMarks=
 
@@ -345,8 +345,8 @@ JumpList=
 ViMarks=
 
 [view-settings,view=0,item:introduccion.tex]
-CursorColumn=237
-CursorLine=49
+CursorColumn=2
+CursorLine=59
 JumpList=
 ViMarks=
 

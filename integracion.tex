@@ -18,14 +18,21 @@ Unificación de autores: Es muy importante para lograr cumplir el objetivo de lo
 generados por el mismo autor, esto quede explícitamente asentado, para poder realizar los algoritmos de recomendación.\\
 Unificación de ítems: El paso más difícil y más importante, si un ítem está modelado dos veces de forma distinta debería saberse que 
 se trata del mismo.\\
+Unificación de formato de ratings: Si bien este paso sería válido también en la etapa de curación, se decidió que encajaba mejor acá.
+Se trata de llevar todos los ratings a un formato único numérico. Hay sitios que establecen los ratings de distintas formas como 
+por ejemplo ``4 out of 5''. En sí no es un problema sintáctico dado que no hay un rango establecido para las propiedades de rating, 
+pero va a presentar problemas a la hora de utilizar la información en conjunto, ya que se requerirá tener en cuenta todos los casos 
+distintos de formatos de ratings. Puede verse como un problema semántico, tomando en cuenta el ejemplo 4 out of 5, no es más que una sobrecarga de 
+propiedades, ya que como valor de la propiedad rating, se especifica no sólo el valor de dicha propìedad, sino que además el valor de la 
+propiedad maxRating. \\
 Unificación de tipos de ítems: Esto es muy útil para darle más posibilidades a la aplicación, y es agrupar los ítems según su tipo 
 (Libro, película, Hotel, Auto, etc), de manera que por ejemplo si un usuario quiere que le recomienden un libro, la aplicación sólo 
-le ofresca libros. Para la ontología schema, esto puede ser más sensillo dado que los ítems ya se encuentran con su tipo identificado con 
+le ofresca libros. Para la ontología schema, esto puede ser más sencillo dado que los ítems ya se encuentran con su tipo identificado con 
 la clase, en el caso de libro, sería cuestión de buscar ítems con la clase schema:Book. El problema es que esto puede no ocurrir siempre, 
 Un libro, puede estar clasificado como schema:Product, por lo que necesitaría que también lo clasifiquen como Book.\\
 \\
 \\
-Por razones de que la tesis ya cubrió el desarrollo suficiente, sólo se intentarán implementar los puntos 1 y 4 de la integración. Ya que 
+Por razones de que la tesis ya cubrió el desarrollo suficiente, sólo se intentarán implementar los puntos 1, 3 y 4 de la integración. Ya que 
 los otros dos son demasiado abarcativos y pueden requerir demasiado trabajo.\\
 \\
 Unificación de vocabularios\\
@@ -58,7 +65,7 @@ Y no existe una propiedad dentro del vocabulario de foaf:Person que sea tan gen�
 Además de que todos los previos valores de reviewer están conformados por un vCard, como también ya se analizó en la etapa de curado.
 Por estos motivos se determinó continuar utilizando vCards en lugar de recursos de tipo foaf, y dichos vCards utilizarán la propiedad
 fn (que contempla todos los casos mencionados).
-Finalmente el mapeo de propiedades quedaría:\\
+Finalmente el mapeo de propiedades quedó:\\
 \begin{tabular}{| l | c |}
 Propiedad schema & Propiedad de reemplazo\\
 name & title \\
@@ -74,6 +81,63 @@ keywords & dc:subject\\
 name (author) & vcard:fn (reviewer)\\
 comments & hasComment\\
 author (comment) & commenter \\
-text (comment) & rdfs:comment
+text (comment) & text 
 \end{tabular}
 
+No hubo problemas con el algoritmo que realizaba el procedimiento.
+\\
+\\
+Unificación de formatos de ratings.\\
+\\
+Objetivo: Disponer de todos los ratings de los reviews, con el mismo formato. Un número sin decimales, para facilitar la implementación 
+de operaciones como: ``Listar los reviews más populares de determinada fecha'' o ``Hacer un promedio de puntaje para un ítem determinado''
+\\
+Estrategia: Exactamente el mismo principio que para corregir los formatos de las fechas, sólo que un poco más simple porque sólo se realizará 
+para una propiedad en lugar de 4.
+\\
+Primero se realizó una consulta SPARQL buscando los valores de ratings que no estén dentro de los correctos. \\
+
+ \begin{lstlisting}[frame=single]
+ SELECT distinct ?value (count (distinct ?review) as ?cantidad)
+ WHERE{ 
+ ?review <http://local.org/id> ?id .
+ ?review <http://purl.org/stuff/rev#rating> ?value .
+ FILTER NOT EXISTS{
+ ?review <http://local.org/duplicateOf> ?dup .
+ }
+ FILTER (!REGEX(str(?value), "^[0-9]{1}$", "i")) .
+ FILTER (!REGEX(str(?value), "^[0-9]{2}$", "i")) .
+ FILTER (!REGEX(str(?value), "^[0-9]{3}$", "i")) .
+ }GROUP BY ?value ORDER BY DESC(?cantidad)
+ \end{lstlisting}
+ Y luego analizando los resultados se fueron agregando los siguientes filtros a la consulta:\\
+ \begin{lstlisting}[frame=single]
+ FILTER (!REGEX(str(?value), "^[0-9]{1}½$", "i")) . 
+ FILTER (!REGEX(str(?value), "^[0-9]{2}\\.[0-9]{1}$", "i")) .
+ FILTER (!REGEX(str(?value), "^[0-9]{1}\\.[0-9]{1}$", "i")) . 
+ FILTER (!REGEX(str(?value), "^[0-9]{1},[0-9]{1}$", "i")) .
+ FILTER (!REGEX(str(?value), "^[0-9]{1} ", "i")) .  
+ FILTER (!REGEX(str(?value), "^Rating [0-9]{1}", "i")) .  
+ FILTER (!REGEX(str(?value), "^About.com Rating  [0-9]{1}", "i")) . 
+ FILTER (!REGEX(str(?value), "^[0-9]{1}\\.[0-9]{1} ", "i")) .  
+ FILTER (!REGEX(str(?value), "Rating [0-9]{1}", "i")) .
+ FILTER (!REGEX(str(?value), "\\([0-9]{1} ", "i")) .
+ \end{lstlisting}
+ Una vez que los resultados arrojados por la consulta fueron 0. Se realizó el algoritmo que lleve el rating al formato correspondiente 
+ según su expresión regular.\\
+ \\
+ Resultados:\\
+ Se corrigieron:
+ \begin{tabular}{| l | c |}
+ Expresión regular & Cantidad de ratings \\
+ \verb|^[0-9]{1}½$| & 3722\\
+ \verb|^[0-9]{2}\\.[0-9]{1}$| & 250\\
+ \verb|^[0-9]{1}\\.[0-9]{1}$| & 63695\\
+ \verb|^[0-9]{1},[0-9]{1}$| & 45927\\
+ \verb|^[0-9]{1} | & 26314\\
+ \verb|^Rating [0-9]{1}| & 149\\
+ \verb|^About.com Rating  [0-9]{1}| & 2613\\
+ \verb|^[0-9]{1}\\.[0-9]{1} | & 5603\\
+ \verb|Rating [0-9]{1}| & 3300\\
+ \verb|\\([0-9]{1} | 4176& 
+ \end{tabular}
