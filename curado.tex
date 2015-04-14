@@ -4,7 +4,8 @@
 Objetivo:
 Corregir todos los problemas viables encontrados en el paso anterior que se pueda.
 
-Curado Evaluación nº 1 - Vocabularios:
+\section{Curado nº 1 - Vocabularios}
+\label{section:curado-vocabularios}
 
 Estrategia:
 Con una consulta SPARQL, se eliminó la propiedad incorrecta y se agregó la misma en la forma que corresponde.
@@ -37,7 +38,8 @@ Resultados:
 Se crearon 2498221 propiedades nuevas de forma correcta correspondientes a cada una de las propiedades incorrectas de la ontología 
 schema.
 
-Curado Evaluación nº 2 - Duplicados
+\section{Curado nº 2 - Duplicados}
+\label{section:curado-duplicados}
 
 Estrategia: 
 
@@ -60,7 +62,8 @@ Resultados:
 
 Se asignaron 78705 propiedades duplicatedOf y 17343 representantOf
 
-Curado Evaluación nº 3 - RDFUnit Automático:
+\section{Curado nº 3 - RDFUnit-Automatizado}
+\label{section:curado-automatizado}
 
 Muchos de los problemas detectados por el framework, no otorgaban demasiada información, como por ejemplo
 http://schema.org/datePublished does not have datatype: http://www.w3.org/2001/XMLSchema\#date el cual sólo especifica que le 
@@ -162,7 +165,8 @@ y es que al haberse utilizado hreview con microformatos es imposible crear un re
 eso sea posible, la clase foaf debería encontrarse dentro de los estándares de los microformatos. 
 En este caso al no haber alternativa por parte del creador del review, se considera correcto el uso del v-card, en reemplazo de foaf.
 
-Curado Evaluación nº 4 - RDFUnit Manual:
+\section{Curado nº 4 - RDFUnit-Manual}
+\label{section:curado-manual}
 
 {DateProperty} has a format different to YYYY-MM-DD:
 Para todas las propiedades que indiquen una fecha, los pasos para reparar este caso son los mismos.
@@ -470,8 +474,8 @@ Se le asignaron propiedades a:\\
  Total & 41545
 \end{tabular}\\
 \\
-Curado Evaluación nº 5 - Análisis experto:
-\\
+\section{Curado nº 5 - Análisis experto}
+\label{section:curado-analisis}
 Propiedades inexistentes o semánticamente incorrectas\\
 Son los casos de itemreviewed, dtreviewed, publishDate y reviewBody, ya analizados en la evaluación.
 Estrategia: En este caso para todas el procedimiento es exactamente el mismo, y es bastante sensillo, crear una nueva propiedad con 

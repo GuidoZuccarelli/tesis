@@ -4,7 +4,8 @@
 Objetivo:
 Encontrar problemas en el dataset que dificulten una posible integración y modifiquen el correcto resultado de una posible aplicación derivada.
 
-Evaluación nº 1 - Vocabularios
+\section{Evaluación nº 1 - Vocabularios}
+\label{section:evaluacion-vocabularios}
 
 Objetivo:
 Buscar aquellas propiedades y clases ligadas a recursos relevantes (que estén relacionados con algún review mediante property paths) 
@@ -50,7 +51,8 @@ Haciendo un recorrido sobre los datos desde su origen (los documentos html publi
 originó en el proceso de extracción. 
 Any23 cuando extrae las propiedades de la ontología schema, modifica las mismas adicionando el nombre de la clase de su correspondiente dominio, provocando que éstas queden incorrectas.
 
-Evaluación nº 2 - Duplicados
+\section{Evaluación nº 2 - Duplicados}
+\label{section:evaluacion-duplicados}
 
 Objetivo:
 Disponiendo de un gran dataset de información recolectada de la web, un paso muy útil es limpiar aquellos datos innecesarios. 
@@ -126,7 +128,8 @@ www.chip.de &	1526\\
 www.thewinecellarinsider.com &	1491\\
 \end{tabular}
 
-Evaluación nº 3 - RDFUnit-Automatizado
+\section{Evaluación nº 3 - RDFUnit-Automatizado}
+\label{section:evaluacion-automatizado}
 
 Objetivo:
 Encontrar todos los problemas sintácticos de los datos relevantes del dataset e identificar cuales pueden representar un problema 
@@ -169,7 +172,8 @@ http://purl.org/stuff/rev\#hasReview has different range from: http://purl.org/s
 http://purl.org/stuff/rev\#title has rdfs:domain different from: http://purl.org/stuff/rev\#Review & 14705 & 104900\\
 \end{tabular}
 
-Evaluación nº 4 - RDFUnit-Manual
+\section{Evaluación nº 4 - RDFUnit-Manual}
+\label{section:evaluacion-manual}
 
 Objetivo: Correr test manuales en RDFUnit para evaluar el dataset en busca de errores sintácticos no contemplados por los test
 automáticos de la evaluación anterior.
@@ -190,7 +194,8 @@ http://schema.org/ratingValue is not a natural number & 33 & 60682\\
 http://schema.org/ratingValue is not in the expected range (1-5) & 1 & 73090 
 \end{tabular}
 
-Evaluación nº 5 - Análisis experto
+\section{Evaluación nº 5 - Análisis experto}
+\label{section:evaluacion-analisis}
 
 Objetivo: Encontrar problemas a grandes razgos que son muy difícil de detectar por algoritmos. También indicios indicadores de 
 situaciones que lleven a pensar en otras búsquedas de problemas. Esto debería ayudar a entender mejor el dataset para mejorar el manejo 
