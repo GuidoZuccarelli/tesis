@@ -1,3 +1,19 @@
 \chapter{Publicación del Dataset Curado}
-\label{publicacion}
+\label{chapter:publicacion}
 
+Para este paso, se escogió en un primer lugar el aprovicionamineto de un servicio web para ser accedido públicamente. Esto beneficia 
+a los usuarios que requieran hacer un uso inmediato y simple de la información contenida. Ya que si se decidiera proporcionar un 
+volcado de datos, el usuario deberá tener conocimiento de la manupulación del disco, así como recursos de hardware y tiempo de configuración.\\
+\\
+Para proceder con la publicación del dataset de la forma mencionada, el motor que se optó por utilizar es Fuseki, ya que proporciona un
+medio de implementación extremadamente sencillo, debido a que funciona perfectamente en conjunto de un dataset TDB, que es con el que 
+actualmente se cuenta. \\
+Fuseki además, tiene la ventaja de ser fácilmente configurable, y no requiere instalación. En el caso de haber elegido otros motores, 
+habría que haber hecho una conversión del dataset para obtenerlo en un formato adecuado, además del esfuerzo necesario para instalar y configurar 
+toda la aplicación.\\
+\\
+Por otro lado se consideró también que podría existir la necesidad por parte de algunos usuarios (la minoría), en hacer un uso más complejo del 
+dataset (recordar que la utilización de endpoints sparql tiene sus restricciones), para lo cual requerirían manipular el dataset completo 
+por su cuenta.\\
+Resolver esta situación, no representó casi inconveniente, debido a la alta capacidad de compresión de datos que poseé una base de datos TDB, 
+que pasó de 8,4Gb a 1,0Gb. Dicho dataset con esas características puede ser fácilmente publicado para una posible descarga muy fácilmente. 
