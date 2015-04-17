@@ -5,45 +5,55 @@ Lo que vamos a construir es un caso de aplicación de la web semantica....
 
 \section{Aplicaciones en la Web Semantica}
 
-\subsection{dbpedia}
-
-DBpedia
+\subsection{DBpedia}
 
 La aplicación más importante de la Web Semántica, que tiene como objetivo extraer información de wikipedia, y crear una versión semántica 
 de la información. Para ello creó una serie de ontologías, donde modelan y relacionan la información extraída de wikipedia.
+
 Dbpedia en la actualidad es reconocido como el sitio autoritativo de recursos de la web semántica, siendo las URIs de estos recursos 
 la mejor forma de identificarlos.
-Es por eso que el 99\% de la aplicaciones de la web semántica hacen uso de esta ontología.
+Es por eso que la gran mayoría de las aplicaciones de la web semántica utilizan la información de dbpedia para enriquecer sus datasets.
+En Septiembre de 2013, se contaron mas de 45 millones de links entre DBpedia y datasets externos como  Freebase, OpenCyc, UMBEL, GeoNames,
+Musicbrainz, etc.
 
-\subsection{revyu}
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth,natwidth=610,natheight=642]{dbpedia}
+    \caption{La utilización de DBpedia como fuente de datos}
+\end{figure}
 
-Revyu.com
+\subsection{Revyu}
 
-Es una aplicación que tiene el objetivo de generar reviews de cualquier dominio. Alentando al usuario 
+Es una aplicación que se utiliza para publicar reviews de cualquier tipo en RDF. Alentando al usuario a generar reviews en la Web Semántica 
+sin la necesidad de conocimiento sobre la misma.
+
+Tiene el objetivo de proveer información reusable para otras aplicaciones, y generar datos de confianza y recomendación en las redes sociales.
+
+La información es publicada tanto en documentos HTML como RDF además de su SPARQL Endpoint, siendo así de utilidad para los distintos tipos de usuarios.
+También alienta el uso de links a distintos dataset semánticos, como el de DBpedia, RDF Book Mashup, etc.
 
 \section{Principios}
-Dar historia (muy breve), definiciones  (RDF, tripletas, owl, inferencia, ..)
-Escribir a medida que lo necesitas-.
 
-\subsection{rdf}
-Resource Description Framework (RDF)
+\subsection{Resource Description Framework (RDF)}
+
 Es una familia de especificaciones de WC3 diseñada para modelar datos intercambiables en la web. 
 Consta de expresiones hechas por tripletas. Cada tripleta es considerada una sentencia para este lenguaje.
 Una tripleta es un conjunto de un valor de cada uno de los siguientes tipos:
 
-Recurso (sujeto) - Todo aquello descripto por RDF se lo denomina recurso, este último podría ser por ejemplo una página web entera (por ejemplo 
+\begin{description}
+ \item[Recurso (sujeto)] Todo aquello descripto por RDF se lo denomina recurso, este último podría ser por ejemplo una página web entera (por ejemplo 
 un documento HTML "http://www.w3.org/Overview.html") o una parte de ella.  Un recurso puede ser también un objeto que no 
 se puede acceder directamente a través de la Web; por ejemplo un libro impreso. Los recursos son siempre nombrados por las 
 URIs más identificadores de anclaje opcionales (ver [URI]). Cualquier cosa puede tener un URI; la extensibilidad de URIs 
 permite la introducción de identificadores para cualquier entidad imaginable.
-
-Propiedad (predicado) - Una propiedad es un aspecto específico, característica, atributo o relación se utiliza para describir un recurso. 
+ \item[Propiedad (predicado)] Una propiedad es un aspecto específico, característica, atributo o relación se utiliza para describir un recurso. 
 Cada propiedad tiene un significado específico, define sus valores permitidos, los tipos de recursos que se puede describir, 
 y su relación con otras propiedades. 
-
-Objeto - puede ser otro recurso o puede ser un literal; es decir, un recurso (especificado por un URI) o una cadena simple o 
+ \item[Objeto] Puede ser otro recurso o puede ser un literal; es decir, un recurso (especificado por un URI) o una cadena simple o 
 de otro tipo de datos primitivo definido por XML. En términos RDF, un literal puede tener contenido que es el formato XML,
 pero no se evalúa aún más por el procesador de RDF.
+\end{description}
+
 
 Esta estructura forma una vinculación dirigida de un gráfico etiquetado, donde las aristas representan el enlace entre dos 
 recursos (propiedad), representados por los nodos del grafo.
@@ -55,8 +65,7 @@ por tanto, pueden parecerse a los de un diagrama entidad-relación.
 En la terminología de diseño orientado a objetos, los recursos corresponden a los objetos y propiedades 
 corresponden a las variables de instancia.
 
-\subsection{rdfs}
-RDF Schema (RDFS)
+\subsection{RDF Schema (RDFS)}
 
 Es una extensión semántica de RDF, que provee elementos básicos para la descripción de ontologías (también llamadas vocabularios RDF) con el objetivo
 de estructurar los recursos RDF. Proporciona la manera de definir las clases y las propiedades específicas de la aplicación en RDF.
@@ -65,10 +74,10 @@ RDFS no proporciona las clases sino que proporciona el marco necesario para pode
 Clases en RDFS se parecen mucho a las clases en lenguajes orientados a objetos. Esto permite que los recursos se definan como 
 instancias de clases y subclases de las clases.
 
-Elementos de RDFS
+\subsubsection{Elementos básicos}
 
-Básicos
-
+\begin{itemize}
+  \item 
     rdfs:Class permite declarar recursos como clases para otros recursos. 
     
     Atravez de la propiedad rdf:type, se puede asignar un tipo al recurso, un rucurso de tipo rdfs:Class puede entonces ser tipo de otro recurso. 
@@ -76,31 +85,34 @@ Básicos
     y siendo el objeto de esa propiedad el recurso Auto, entonces el tipo de Volkswagen Gol será auto.
     
     La defición de rdfs:Class es recursiva: rdfs:Class es la rdfs:Class de cualquier rdfs:Class.
-
+  \item
     rdfs:Resource es la clase a la que pertenecen todos los recursos.
-
+  \item
     rdfs:Literal es la clase de todos los valores literales, cadenas y enteros.
-
+  \item
     rdfs:Datatype es la clase que abarca los tipos de datos definidos en el modelo RDF.
-
+  \item
     rdfs:Property es la clase que abarca las propiedades.
+\end{itemize}
 
-Definen relaciones
+\subsubsection{Elementos que definen relaciones}
 
-    rdfs:subClassOf es una instancia de rdf:Property (osea una propiedad) que permite definir jerarquías. Relaciona una clase con sus superclases.
+\begin{itemize}
+  \item rdfs:subClassOf es una instancia de rdf:Property (osea una propiedad) que permite definir jerarquías. Relaciona una clase con sus superclases.
 
-    rdfs:subPropertyOf es una instancia de rdf:Property que permite definir jerarquías de propiedades.
+  \item rdfs:subPropertyOf es una instancia de rdf:Property que permite definir jerarquías de propiedades.
+\end{itemize}
     
-Restricciones de Propiedades
+\subsubsection{Restricciones de Propiedades}
 
-    rdfs:domain es una instancia de rdf:Property que especifica el dominio de una propiedad P. Esto es, la clase de los recursos que aparecen como sujetos en las tripletas donde P es predicado.
+\begin{itemize}
+   \item rdfs:domain es una instancia de rdf:Property que especifica el dominio de una propiedad P. Esto es, la clase de los recursos que aparecen como sujetos en las tripletas donde P es predicado.
 
-    rdfs:range es una instancia de rdf:Property que especifica el rango de una propiedad P. Esto es, la clase de los recursos que aparecen como objetos en las tripletas donde P es predicado.
+   \item rdfs:range es una instancia de rdf:Property que especifica el rango de una propiedad P. Esto es, la clase de los recursos que aparecen como objetos en las tripletas donde P es predicado.
     
-    
-\subsection{vocabularios}
+\end{itemize}
 
-Vocabularios
+\subsection{Vocabularios}
 
 Son una colección de clases y propiedades con sus respectivas URIs, que son utilizadas para describir significado. Dichos vocabularios 
 pueden ser fácilmente creados por cualquier usuario, sólo es necesario darle uso a la URI y documentarlo en algún lado. 
@@ -108,9 +120,8 @@ Por lo general, son estándares de uso no restrictivos de propiedades y clases q
 El objetivo de los vocabularios es poder describir el significado de los recursos web y del mundo real, modelándolos en clases y 
 propiedades que se utilizarán para describir al objeto en cuestión.
 
-\subsection{owl}
+\subsection{OWL}
 
-OWL
 
 Web Ontology Languaje: Es un vocabulario que funciona como lenguaje para crear ontologías en la web. Fue creado en el 2006 y aceptado 
 por WC3 como estándar en 2007 en su versión OWL 1.1. Tiene por objetivo proveer reglas a los vocabualrios para aumentar su expresividad. 
@@ -119,9 +130,7 @@ representarse en un paradigma muy parecido a la orientación a objetos. Cabe des
 es también un conjunto de estándares mucho más básico que permite estas características.
 En la actualidad existe la versión 2 de OWL que es mucho más completa.
 
-\subsection{ontologías}
-
-Ontologías
+\subsection{Ontologías}
 
 La aparición de OWL permitió darle mucha más expresividad y restricciones a los vocabularios, que ahora no sólo eran un conjunto de 
 propiedades y clases, sino que podían tener una definición mucho más completa, que permitía describir taxonomías y relaciones entre clases que pueden formar axiomas.
@@ -129,9 +138,7 @@ propiedades y clases, sino que podían tener una definición mucho más completa
 Las ontologías se han convertido en uno de los pilares de la web semántica, esto se debe a que es uno de los principales componentes que permiten 
 cumplir con el objetivo de ésta, que fue planteado en la introducción: ``La Web Semántica promete facilitar el desarrollo de la web social y la inteligencia colectiva, a través de mecanismos de clasificación, relación y descripción del contenido de la información publicada mejorando su interoperabilidad.''
 
-\subsection{inferencias}
-
-Motores de inferencias.
+\subsection{Motores de inferencias.}
 
 Son componentes de software que pertimente establecer consecuencias lógicas en base a los axiomas definidos tanto por OWL como por RDFS
 Estos componentes tienen como objetivo enriquecer las ontologías, creando reglas de inferencia. 
@@ -139,8 +146,7 @@ Dichas inferencias pueden ser más o menos complejas dependiendo de la capacidad
 como pagos.
 
 
-\subsection{sparql}
-SPARQL
+\subsection{SPARQL}
 
 Se trata de un lenguaje estandarizado de consulta de grafos RDF.
 SPARQL se puede utilizar para expresar consultas que permiten interrogar diversas fuentes de datos (si es que los datos fueron almacenados 
@@ -149,21 +155,21 @@ de los patrones obligatorios y opciones de grafo, junto con sus conjunciones y d
 la ampliación o restricción del ámbito de las consultas indicando los grafos sobre los que opera (grafos con nombre). Los resultados de las consultas
 SPARQL pueden ser conjuntos de resultados o grafos RDF.
 
+\subsubsection{Términos de conjuntos de colecciones de datos semánticos}
 
-Términos de conjuntos de colecciones de datos semánticos
+\begin{description}
+ \item[Model:] Colección de sentencias.
 
-Model: Colección de sentencias.
+ \item[DataSource:] Colección de Modelos. Siendo uno de ellos el modelo por defecto y el resto modelos con nombre. El Datasource es de lectura y escritura, por lo que se pueden agregar tripletas.
 
-DataSource: Colección de Modelos. Siendo uno de ellos el modelo por defecto y el resto modelos con nombre. El Datasource es de lectura y escritura, por lo que se pueden agregar tripletas.
+ \item[Dataset:] Lo mismo que el DataSource pero estático, por lo que es de solo lectura.
 
-Dataset: Lo mismo que el DataSource pero estático, por lo que es de solo lectura.
+ \item[Graph:] Colección de tripletas. Cualquier modelo puede ser transformado a un grafo, y así tener una representación más cercana de RDF.
 
-Graph: Colección de tripletas. Cualquier modelo puede ser transformado a un grafo, y así tener una representación más cercana de RDF.
+ \item[DatasetGraph:] Un contenedor de Grafos, similar al DataSource (También de lectura y escritura) que provee una estructura para un grafo por defecto y grafos con nombre.
+\end{description}
 
-DatasetGraph: Un contenedor de Grafos, similar al DataSource (También de lectura y escritura) que provee una estructura para un grafo por defecto y grafos con nombre.
-
-\subsection{semantichtml}
-HTML semántico
+\subsection{HTML semántico}
 
 El uso y participación en la Web Semántica a travez de documentos RDF no es atractivo para la mayoría, porque no parece proveer un beneficio 
 directo, ya que esto implica, aprender un lenguaje nuevo para generar documentos que sólo le será de utilidad a usuarios con un grado de conocimiento 
@@ -171,41 +177,37 @@ muy alto.
 
 Para resolver este problema, existen etiquetas de marcado en HTML que le proporcionan información semántica al documento, que copmo se verá más adelante 
 puede ser extraída para generar documentos RDF. Existen distintos tipos:
-
-Microdatos: Son un grupo de pares nombre-valor anidados dentro del documento, en paralelo con el contenido existente. Dichos grupo son 
+\begin{description}
+  \item[Microdatos:] Son un grupo de pares nombre-valor anidados dentro del documento, en paralelo con el contenido existente. Dichos grupo son 
 también llamados ítems y cada par nombre-valor es la propiedad. Los atributos más utilizados son:
+  \begin{itemize}
+    \item itemscope: Se utiliza para crear un ítem
+    \item itemprop: Se utiliza para crear una propiedad
+    \item a, href, src, img: Se utilizan para definir valores URL
+    \item value: Se utilizan para definir valores String
+    \item itemtype: Se utiliza para establecer el tipo a un ítem.
+  \end{itemize}
 
-Para crear un ítem, se utiliza el atributo de HTML ``itemscope``. 
-
-Para crear una propiedad se utiliza el atributo ''itemprop``.
-
-Luego para definir los valores, se utilizan según sea una URL o un String los siguientes atributos:
-''a`` con ''href``, ''src`` o ''img`` para difinir un valor URL
-''value'' para un String.
-
-También se le puede establecer el tipo a un ítem mediante el atributo ''itemtype``
-
-
-Microformatos: Nacen con la intención acercar más personas al uso de la web semántica a travez de una forma sensilla de utilizar 
+  \item[Microformatos:] Nacen con la intención acercar más personas al uso de la web semántica a travez de una forma sensilla de utilizar 
 una serie de atributos de las etiquetas de XHTML:
 
-class: especifica el nombre de la clase
+  \begin{itemize}
+    \item class: especifica el nombre de la clase
 
-rel: Se utiliza en los enlaces para indicar relaciones en los documentos.
+    \item rel: Se utiliza en los enlaces para indicar relaciones en los documentos.
 
-rev: Igual al rev pero en sentido inverso.
-
+    \item rev: Igual al rev pero en sentido inverso.
+  \end{itemize}
+  
 Con el uso del atributo class se puede entonces especificar un microformato a utilizar. Existen muchos tipos como por ejemplo: hCard (para describir 
 personas), hreview (para describir reviews), geo (para describir posiciones), etc. Cada uno de ellos con distintas propiedades.
 
-
-RDF-a: Permite directamente embeber tripletas (sujeto-predicado-objeto) utilizando namespaces de XML. Modela la información en forma de grafo, 
+\item[RDF-a:] Permite directamente embeber tripletas (sujeto-predicado-objeto) utilizando namespaces de XML. Modela la información en forma de grafo, 
 a diferencia de microdatos y microformatos que lo hacen en forma de árbol, lo que hace que el mapeo a RDF sea claro, ya que en los otros casos puede ser problemático.
 También tiene la opción de darle tipo a los literales. Como contrapartida tiene la desventaja de ser mucho más complejo de utilizar. 
+\end{description}
 
-\subsection{extractores}
-
-Extratores
+\subsection{Extractores}
 
 Son herramientas que permiten extraer tripletas de los lenguajes de metadatos semánticos embebidos en HTML vistos anteriormente. 
 Utilizan estándares como GRDDL, parseando todo el documento HTML y buscan sentencias para traducir a RDF y generar un nuevo documento 
@@ -214,36 +216,23 @@ Muchas veces (sobre todo con microformatos) los extractores tienen que tomar dec
 un mismo documento HTML puede ser extraído de distintas maneras según el extractor. Esto no ocurre con RDFa, ya que la equivalencia a RDF es mucho 
 más clara.
 
-\subsection{dublincore}
-
-Dublin core
+\subsection{Dublin core}
 
 Es un vocabulario ampliamente utilizado para describir tanto recursos web como recursos físicos creado en 2012. Comenzó siento un conjunto de 15 
 propiedades 
 
-    Title
-    Creator
-    Subject
-    Description
-    Publisher
-    Contributor
-    Date
-    Type
-    Format
-    Identifier
-    Source
-    Language
-    Relation
-    Coverage
-    Rights
+\begin{lstlisting}
+    Title		Publisher	Format
+    Creator		Contributor	Identifier
+    Subject		Date		Source
+    Description		Type		Language
+    Relation		Coverage	Rights
+\end{lstlisting}
+
+
 
 Consta también de Dublin Core Metadata Initiative que provee un foro de desarrollo de estándares de metadatos interoperable.
 En la actualidad, se ha extendido a 55 propiedades y 22 clases.
-
-\subsection{owl}
-
-OWL
-
 
 
 \section{Tecnologías}
@@ -267,13 +256,19 @@ El procedimiento debería incluir los siguientes pasos
 \item[Explotación del Dataset] Se construye una aplicación que en base a los requerimientos utilice el dataset. 
 \end{description}
 
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth,natwidth=610,natheight=642]{proceso}
+    \caption{Flujo completo del procedimiento}
+\end{figure}
+
 \begin{framed}
 \textcolor{red}{acá sería bueno incluir un diagrama que muestre el pipeline. En la lista de arriba con un párrafo se explica cada paso. Luego, en las secciones que sigue se analiza mas cada paso, pero se lo plantea como un problema.. se analizan los retos; entonces los capítulos 4 a 9, explican como los resolviste. Alternativamente, se puede hablar menos acá, solo lo suficiente para que se entienda la estrategia general, y luego en los capítulos 4 a 9 se analiza el problema en detalle y se propone la solución. Con esta ultima forma, todo lo que se refiere a los vocabularios quedaría en el capitulo 4 y no acá. Puede ser mejor.}
 \end{framed}
 
 \section{Selección de vocabularios}
 
-Seleccionar un vocabulario implica analizar varios aspectos del mismo, no sólo su definición e implementación, sino también el uso práctico dado por sus usuarios. 
+\noindent Seleccionar un vocabulario implica analizar varios aspectos del mismo, no sólo su definición e implementación, sino también el uso práctico dado por sus usuarios. 
 En primer lugar se debe comprobar que los nombres de las propiedades que posee sean correctamente auto-explicativas. Supongamos por ejemplo que existe un ítem con un rating agregado modelado por una ontología que posee las siguientes propiedades:
 
 \begin{enumerate}
@@ -283,11 +278,11 @@ En primer lugar se debe comprobar que los nombres de las propiedades que posee s
 \end{enumerate}
 
 
-Las dos últimas propiedades resultan fácilmente identificables, ratingValue se trata del promedio de puntaje, y ratingCount 
+\noindent Las dos últimas propiedades resultan fácilmente identificables, ratingValue se trata del promedio de puntaje, y ratingCount 
 la cantidad de puntajes que le fueron otorgados, pero la propiedad minRating podría generar distintas formas de interpretación, 
 alguien podría suponer que se trata del valor mínimo que fue adquirido por un usuario, o el valor mínimo que un usuario puede 
 otorgar. Y muchas veces la documentación de la ontología (si es que existe) no es suficiente.
-
+\\\\
 \begin{framed}
 \textcolor{red}{Explicar que en realidad uno no elige ``un'' vocabulario sino que la información podría expresarse combinando términos de varios vocabularios. Dejar claro que no es lo mismo elegir el/los vocabulario/s en el que uno va a publicar que decidir cuales son todos los vocabularios que uno va a considerar al buscar información publicada por otros - dar un ejemplo}
 \end{framed}
@@ -295,28 +290,29 @@ otorgar. Y muchas veces la documentación de la ontología (si es que existe) no
 \begin{framed}
 \textcolor{red}{Este párrafo que sigue no se entiende; aclarar que sería cubrir las necesidades mínimas de los casos de uso.}
 \end{framed}
-Luego se deberá analizar si existen las propiedades para cubrir las necesidades mínimas de los casos de uso. Esto significa que pueda modelar 
+
+\noindent Luego se deberá analizar si existen las propiedades para cubrir las necesidades mínimas de los casos de uso. Esto significa que pueda modelar 
 toda la información que más adelante será requerida. Por ejemplo, si se quiere construir una aplicación que compare autos, al momento 
 de elegir un vocabulario que modele autos, es necesario que contenga ciertas propiedades que puedan expresar información  para determinados 
 casos de uso, como comparar cantidad de puertas, lo que requeriría que el vocabulario elegido contenga una propiedad que exprese la cantidad 
 de puertas del auto.
-
+\\\\
 Es posible que ante una aplicación muy extensa, con casos de uso muy complejos, no se consiga un vocabulario con propiedades tan abarcativas 
 que puedan cubrir todos los casos de uso. 
+
 Para esto, se puede aprovechar que las propiedades de un vocabulario, no necesariamente tienen que ser utilizadas estrictamente dentro del mismo.
 Lo único que debe respetarse es el dominio y rango de cada una, si no se explicita, puede utilizarse en otros vocabularios.
-Goodrelations es un ejemplo del uso de propiedades de múltiples vocabulairos para crear uno nuevo.
 
+Goodrelations es un ejemplo del uso de propiedades de múltiples vocabulairos para crear uno nuevo.
+\\\\
 Y por último se debería intentar buscar ejemplos reales que muestren el uso que le dieron los usuarios a la ontología, para 
 determinar qué propiedades están incorrectamente interpretadas o también para los casos donde las propiedades que se encuentren 
 en desuso.
-
+\\\\
 Con estas precauciones en mente se puede emprender la búsqueda, que podría tener como comienzo búsquedas en  search engines. 
 Existen dos buscadores específicos para esta tarea:
 
-\subsection{lov}
-
-Linked Open Vocabulary (LOV)
+\subsection{Linked Open Vocabulary (LOV)}
 
 Proporciona una plataforma técnica de búsqueda y evaluación de calidad sobre un dataset extraído de linked data cloud que contiene descripciones de vocabularios RDFS 
 y ontologías OWL. Esas descripciones están en forma de metadatos y pueden ser generados tanto por los autores de los vocabularios como por curadores de LOV.
@@ -324,10 +320,7 @@ Posee además de la búsqueda las funciones de estadística o sugerencia.
 
 Actualmente el dataset está integrado por 475 namespaces distintos que contienen una media de 10 clases y 20 propiedades, siendo schema.org el más grande de ellos.
 
-\subsection{vocabcc}
-
-Vocab.cc
-
+\subsection{Vocab.cc}
 Vocabcc es un proyecto opensource que permite a los desarolladores de RDF realizar búsquedas de vocabularios de Linked Data.
 
 Para facilitar la decisión de seleccionar un vocabulario deseado, proporciona además información estadística de cada uno sobre el dataset Billon Triple Challenge (BTCD). 
