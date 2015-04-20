@@ -1,243 +1,6 @@
 \chapter{Enfoque General}
 \label{chapter:estrategia}
 
-Lo que vamos a construir es un caso de aplicación de la web semantica....
-
-\section{Aplicaciones en la Web Semantica}
-
-\subsection{DBpedia}
-
-La aplicación más importante de la Web Semántica, que tiene como objetivo extraer información de wikipedia, y crear una versión semántica 
-de la información. Para ello creó una serie de ontologías, donde modelan y relacionan la información extraída de wikipedia.
-
-Dbpedia en la actualidad es reconocido como el sitio autoritativo de recursos de la web semántica, siendo las URIs de estos recursos 
-la mejor forma de identificarlos.
-Es por eso que la gran mayoría de las aplicaciones de la web semántica utilizan la información de dbpedia para enriquecer sus datasets.
-En Septiembre de 2013, se contaron mas de 45 millones de links entre DBpedia y datasets externos como  Freebase, OpenCyc, UMBEL, GeoNames,
-Musicbrainz, etc.
-
-\begin{figure}
-    \centering
-    \includegraphics[width=0.8\textwidth,natwidth=610,natheight=642]{dbpedia}
-    \caption{La utilización de DBpedia como fuente de datos}
-\end{figure}
-
-\subsection{Revyu}
-
-Es una aplicación que se utiliza para publicar reviews de cualquier tipo en RDF. Alentando al usuario a generar reviews en la Web Semántica 
-sin la necesidad de conocimiento sobre la misma.
-
-Tiene el objetivo de proveer información reusable para otras aplicaciones, y generar datos de confianza y recomendación en las redes sociales.
-
-La información es publicada tanto en documentos HTML como RDF además de su SPARQL Endpoint, siendo así de utilidad para los distintos tipos de usuarios.
-También alienta el uso de links a distintos dataset semánticos, como el de DBpedia, RDF Book Mashup, etc.
-
-\section{Principios}
-
-\subsection{Resource Description Framework (RDF)}
-
-Es una familia de especificaciones de WC3 diseñada para modelar datos intercambiables en la web. 
-Consta de expresiones hechas por tripletas. Cada tripleta es considerada una sentencia para este lenguaje.
-Una tripleta es un conjunto de un valor de cada uno de los siguientes tipos:
-
-\begin{description}
- \item[Recurso (sujeto)] Todo aquello descripto por RDF se lo denomina recurso, este último podría ser por ejemplo una página web entera (por ejemplo 
-un documento HTML "http://www.w3.org/Overview.html") o una parte de ella.  Un recurso puede ser también un objeto que no 
-se puede acceder directamente a través de la Web; por ejemplo un libro impreso. Los recursos son siempre nombrados por las 
-URIs más identificadores de anclaje opcionales (ver [URI]). Cualquier cosa puede tener un URI; la extensibilidad de URIs 
-permite la introducción de identificadores para cualquier entidad imaginable.
- \item[Propiedad (predicado)] Una propiedad es un aspecto específico, característica, atributo o relación se utiliza para describir un recurso. 
-Cada propiedad tiene un significado específico, define sus valores permitidos, los tipos de recursos que se puede describir, 
-y su relación con otras propiedades. 
- \item[Objeto] Puede ser otro recurso o puede ser un literal; es decir, un recurso (especificado por un URI) o una cadena simple o 
-de otro tipo de datos primitivo definido por XML. En términos RDF, un literal puede tener contenido que es el formato XML,
-pero no se evalúa aún más por el procesador de RDF.
-\end{description}
-
-
-Esta estructura forma una vinculación dirigida de un gráfico etiquetado, donde las aristas representan el enlace entre dos 
-recursos (propiedad), representados por los nodos del grafo.
-
-Su representación puede ser asociada tanto a un modelo entidad-relación como a un diagrama de clases de objetos.
-Las Propiedades RDF pueden ser considerados como atributos de los recursos y en este sentido corresponden a pares 
-atributo-valor tradicionales. Las Propiedades RDF también representan las relaciones entre los recursos y un modelo RDF,
-por tanto, pueden parecerse a los de un diagrama entidad-relación.
-En la terminología de diseño orientado a objetos, los recursos corresponden a los objetos y propiedades 
-corresponden a las variables de instancia.
-
-\subsection{RDF Schema (RDFS)}
-
-Es una extensión semántica de RDF, que provee elementos básicos para la descripción de ontologías (también llamadas vocabularios RDF) con el objetivo
-de estructurar los recursos RDF. Proporciona la manera de definir las clases y las propiedades específicas de la aplicación en RDF.
-RDFS no proporciona las clases sino que proporciona el marco necesario para poder definirlas.
-
-Clases en RDFS se parecen mucho a las clases en lenguajes orientados a objetos. Esto permite que los recursos se definan como 
-instancias de clases y subclases de las clases.
-
-\subsubsection{Elementos básicos}
-
-\begin{itemize}
-  \item 
-    rdfs:Class permite declarar recursos como clases para otros recursos. 
-    
-    Atravez de la propiedad rdf:type, se puede asignar un tipo al recurso, un rucurso de tipo rdfs:Class puede entonces ser tipo de otro recurso. 
-    Por ejemplo, podemos definir el recurso Auto como un rdfs:Class, y a su vez podemos definir el recurso Volkswagen Gol con la propiedad rdf:type 
-    y siendo el objeto de esa propiedad el recurso Auto, entonces el tipo de Volkswagen Gol será auto.
-    
-    La defición de rdfs:Class es recursiva: rdfs:Class es la rdfs:Class de cualquier rdfs:Class.
-  \item
-    rdfs:Resource es la clase a la que pertenecen todos los recursos.
-  \item
-    rdfs:Literal es la clase de todos los valores literales, cadenas y enteros.
-  \item
-    rdfs:Datatype es la clase que abarca los tipos de datos definidos en el modelo RDF.
-  \item
-    rdfs:Property es la clase que abarca las propiedades.
-\end{itemize}
-
-\subsubsection{Elementos que definen relaciones}
-
-\begin{itemize}
-  \item rdfs:subClassOf es una instancia de rdf:Property (osea una propiedad) que permite definir jerarquías. Relaciona una clase con sus superclases.
-
-  \item rdfs:subPropertyOf es una instancia de rdf:Property que permite definir jerarquías de propiedades.
-\end{itemize}
-    
-\subsubsection{Restricciones de Propiedades}
-
-\begin{itemize}
-   \item rdfs:domain es una instancia de rdf:Property que especifica el dominio de una propiedad P. Esto es, la clase de los recursos que aparecen como sujetos en las tripletas donde P es predicado.
-
-   \item rdfs:range es una instancia de rdf:Property que especifica el rango de una propiedad P. Esto es, la clase de los recursos que aparecen como objetos en las tripletas donde P es predicado.
-    
-\end{itemize}
-
-\subsection{Vocabularios}
-
-Son una colección de clases y propiedades con sus respectivas URIs, que son utilizadas para describir significado. Dichos vocabularios 
-pueden ser fácilmente creados por cualquier usuario, sólo es necesario darle uso a la URI y documentarlo en algún lado. 
-Por lo general, son estándares de uso no restrictivos de propiedades y clases que poseén una documentación.
-El objetivo de los vocabularios es poder describir el significado de los recursos web y del mundo real, modelándolos en clases y 
-propiedades que se utilizarán para describir al objeto en cuestión.
-
-\subsection{OWL}
-
-
-Web Ontology Languaje: Es un vocabulario que funciona como lenguaje para crear ontologías en la web. Fue creado en el 2006 y aceptado 
-por WC3 como estándar en 2007 en su versión OWL 1.1. Tiene por objetivo proveer reglas a los vocabualrios para aumentar su expresividad. 
-Estas reglas incluyen: jerarquías de clasess, cardinalidad, relaciones de conjunto, tipologías de propiedades más complejas, etc. Lo que proporciona la posibilidad de crear ontologías que pueden 
-representarse en un paradigma muy parecido a la orientación a objetos. Cabe destacar que OWL no es el único vocabulario con este objetivo, ya que RDFS 
-es también un conjunto de estándares mucho más básico que permite estas características.
-En la actualidad existe la versión 2 de OWL que es mucho más completa.
-
-\subsection{Ontologías}
-
-La aparición de OWL permitió darle mucha más expresividad y restricciones a los vocabularios, que ahora no sólo eran un conjunto de 
-propiedades y clases, sino que podían tener una definición mucho más completa, que permitía describir taxonomías y relaciones entre clases que pueden formar axiomas.
-``An ontology is a formal specification of a shared conceptualization'' Tom Grubber (cita requerida)
-Las ontologías se han convertido en uno de los pilares de la web semántica, esto se debe a que es uno de los principales componentes que permiten 
-cumplir con el objetivo de ésta, que fue planteado en la introducción: ``La Web Semántica promete facilitar el desarrollo de la web social y la inteligencia colectiva, a través de mecanismos de clasificación, relación y descripción del contenido de la información publicada mejorando su interoperabilidad.''
-
-\subsection{Motores de inferencias.}
-
-Son componentes de software que pertimente establecer consecuencias lógicas en base a los axiomas definidos tanto por OWL como por RDFS
-Estos componentes tienen como objetivo enriquecer las ontologías, creando reglas de inferencia. 
-Dichas inferencias pueden ser más o menos complejas dependiendo de la capacidad y la configuración del motor utilizado. Existen tanto gratuitos 
-como pagos.
-
-
-\subsection{SPARQL}
-
-Se trata de un lenguaje estandarizado de consulta de grafos RDF.
-SPARQL se puede utilizar para expresar consultas que permiten interrogar diversas fuentes de datos (si es que los datos fueron almacenados 
-de forma nativa como RDF o fueron definidos mediante vistas a RDF a travez de algún middleware). Tiene capacidades para la consulta
-de los patrones obligatorios y opciones de grafo, junto con sus conjunciones y disyunciones. SPARQL también soporta 
-la ampliación o restricción del ámbito de las consultas indicando los grafos sobre los que opera (grafos con nombre). Los resultados de las consultas
-SPARQL pueden ser conjuntos de resultados o grafos RDF.
-
-\subsubsection{Términos de conjuntos de colecciones de datos semánticos}
-
-\begin{description}
- \item[Model:] Colección de sentencias.
-
- \item[DataSource:] Colección de Modelos. Siendo uno de ellos el modelo por defecto y el resto modelos con nombre. El Datasource es de lectura y escritura, por lo que se pueden agregar tripletas.
-
- \item[Dataset:] Lo mismo que el DataSource pero estático, por lo que es de solo lectura.
-
- \item[Graph:] Colección de tripletas. Cualquier modelo puede ser transformado a un grafo, y así tener una representación más cercana de RDF.
-
- \item[DatasetGraph:] Un contenedor de Grafos, similar al DataSource (También de lectura y escritura) que provee una estructura para un grafo por defecto y grafos con nombre.
-\end{description}
-
-\subsection{HTML semántico}
-
-El uso y participación en la Web Semántica a travez de documentos RDF no es atractivo para la mayoría, porque no parece proveer un beneficio 
-directo, ya que esto implica, aprender un lenguaje nuevo para generar documentos que sólo le será de utilidad a usuarios con un grado de conocimiento 
-muy alto. 
-
-Para resolver este problema, existen etiquetas de marcado en HTML que le proporcionan información semántica al documento, que copmo se verá más adelante 
-puede ser extraída para generar documentos RDF. Existen distintos tipos:
-\begin{description}
-  \item[Microdatos:] Son un grupo de pares nombre-valor anidados dentro del documento, en paralelo con el contenido existente. Dichos grupo son 
-también llamados ítems y cada par nombre-valor es la propiedad. Los atributos más utilizados son:
-  \begin{itemize}
-    \item itemscope: Se utiliza para crear un ítem
-    \item itemprop: Se utiliza para crear una propiedad
-    \item a, href, src, img: Se utilizan para definir valores URL
-    \item value: Se utilizan para definir valores String
-    \item itemtype: Se utiliza para establecer el tipo a un ítem.
-  \end{itemize}
-
-  \item[Microformatos:] Nacen con la intención acercar más personas al uso de la web semántica a travez de una forma sensilla de utilizar 
-una serie de atributos de las etiquetas de XHTML:
-
-  \begin{itemize}
-    \item class: especifica el nombre de la clase
-
-    \item rel: Se utiliza en los enlaces para indicar relaciones en los documentos.
-
-    \item rev: Igual al rev pero en sentido inverso.
-  \end{itemize}
-  
-Con el uso del atributo class se puede entonces especificar un microformato a utilizar. Existen muchos tipos como por ejemplo: hCard (para describir 
-personas), hreview (para describir reviews), geo (para describir posiciones), etc. Cada uno de ellos con distintas propiedades.
-
-\item[RDF-a:] Permite directamente embeber tripletas (sujeto-predicado-objeto) utilizando namespaces de XML. Modela la información en forma de grafo, 
-a diferencia de microdatos y microformatos que lo hacen en forma de árbol, lo que hace que el mapeo a RDF sea claro, ya que en los otros casos puede ser problemático.
-También tiene la opción de darle tipo a los literales. Como contrapartida tiene la desventaja de ser mucho más complejo de utilizar. 
-\end{description}
-
-\subsection{Extractores}
-
-Son herramientas que permiten extraer tripletas de los lenguajes de metadatos semánticos embebidos en HTML vistos anteriormente. 
-Utilizan estándares como GRDDL, parseando todo el documento HTML y buscan sentencias para traducir a RDF y generar un nuevo documento 
-que contiene sólo las tripletas de información semántica. 
-Muchas veces (sobre todo con microformatos) los extractores tienen que tomar decisiones sobre cómo traducir a RDF, por lo que 
-un mismo documento HTML puede ser extraído de distintas maneras según el extractor. Esto no ocurre con RDFa, ya que la equivalencia a RDF es mucho 
-más clara.
-
-\subsection{Dublin core}
-
-Es un vocabulario ampliamente utilizado para describir tanto recursos web como recursos físicos creado en 2012. Comenzó siento un conjunto de 15 
-propiedades 
-
-\begin{lstlisting}
-    Title		Publisher	Format
-    Creator		Contributor	Identifier
-    Subject		Date		Source
-    Description		Type		Language
-    Relation		Coverage	Rights
-\end{lstlisting}
-
-
-
-Consta también de Dublin Core Metadata Initiative que provee un foro de desarrollo de estándares de metadatos interoperable.
-En la actualidad, se ha extendido a 55 propiedades y 22 clases.
-
-
-\section{Tecnologías}
-Triplestores, frameworks, extractores, crawlers, motores de busqueda semanticos...
-
 \section{Estrategia propuesta}
 Con el fin de crear una aplicación que satisfaga los requerimientos mensionados anteriormente, se debe encontrar
 un procedimiento que incluya desde obtener los datos relevantes de la web hasta llevarlos a un estado que permita una 
@@ -349,7 +112,7 @@ tripletas o cuadrupletas. Para esto existen múltiples herramientas.
 
 Una vez encontrados, descargados y transformados los documentos HTML a documentos semánticos puede construirse la base de datos semántica 
 con la información recolectada. 
-
+\\\\
 Estos son los cuatro pasos necesarios para lograr tener el dataset semántico con el cual se puede empezar a trabajar. Cada uno de ellos 
 posee distintas alternativas para su realización, algunas se describirán a continuación 
 
@@ -362,69 +125,66 @@ posee distintas alternativas para su realización, algunas se describirán a con
 
 
 La forma de ejecución de esta tarea dependerá de algunos aspectos:
+\begin{itemize}
+\item Recursos de hardware disponibles
 
-Recursos de hardware disponibles
+\item Cantidad y calidad de la información requerida
 
-Cantidad y calidad de la información requerida
+\item El grado de atemporalidad mínima tolerable en los datos
 
-El grado de atemporalidad mínima tolerable en los datos
+\end{itemize}
 
-El primer paso para realizar la recolección es intentar responder la siguiente pregunta: ¿Dónde encuentro la informanción?
+El primer paso para realizar la recolección es intentar responder la siguiente pregunta: \textit{¿Dónde encuentro la informanción?}
 
 Una vez seleccionados los vocabularios, se necesitará obtener fuentes de datos que contengan sus datos publicados en los vocabularios previamente seleccionados.
- 
+ \\\\
 Para lograrlo se podrá utilizar como punto de partida:
-
-Sitios indexadores: Son algunos sitios que disponen de un dataset muy grande procesado con documentos indexados, que ofrecen consultar dicho 
+\begin{description}
+\item[Sitios indexadores:] Son algunos sitios que disponen de un dataset muy grande procesado con documentos indexados, que ofrecen consultar dicho 
 dataset a travez servicios web. Generalmente proveen una API donde se pueden consutlar los datos mediante distintos grados de flexibilidad.
 
 Sindice, LOD cloud cache y UriBurner son algunos ejemplos de estos sitios. Se puede utilizar entocnes, dichos servicios web a fin
 de obtener una lista de URLs en las cuales se cree que contendrán la información necesaria.
 
-Sindice: Es una herramienta creada en conjunto por la Universidad de Deri,  Fondazione Bruno Kessler y Openlink Software que propociona múltiples tipos de API ofreciendo acceso a su dataset de la web de datos. Este dataset contiene información recolectada de la web en múltiples formatos de la web semántica y puede ser accedido a travez de un search engine, una API restful o un SPARQL endpoint.  
-En la actualidad posee indexados 708.26 millones de documentos.
-
-Link Open Data Cloud Cache (LOD): Al igual que sindice proporciona acceso a un dataset recolectado de la web de datos pero de una manera mucho más restringida. Se dispone de un text search (funciona como un search engine) o de un SPARQL Endpoint muy poco flexible y limitado en cuanto a la cantidad de información ofrecida comparada con la que podría ofrecer. Sólo se puede acceder al dataset entero mediante federated queries, en caso de querer buscar sobre todo el dataset, el endpoint limita la consulta sólo a una parte del mismo. Tambien posee muchas restricciones respecto a los time outs, por lo que las consultas no pueden ser muy flexibles.
-Para poder disponer de la funcionalidad completa del endpoint y así poder aprovechar tanto el dataset como las consultas SPARQL deberá comrprarse una licencia.
-
-Sitios autoritativos: Son sitios conocidos que generan información relevante y la publican en las ontologías y vocabularios 
+\item[Sitios autoritativos:] Son sitios conocidos que generan información relevante y la publican en las ontologías y vocabularios 
 seleccionados. Ejemplos aplicados al caso de estudio podrían ser IMDB (que publica reviews de películas bajo el vocabulario schema), o Rottentomatoes
 (que hace lo mismo pero no solo con películas). Se podrán utilizar entonces estos sitios como punto base para un posible crawling.
 
-Catálogos de enpoints: Son catálogos provistos por algunos sitios que mantienen una lista actualizada de SPARQL endpoints 
+\item[Catálogos de enpoints:] Son catálogos provistos por algunos sitios que mantienen una lista actualizada de SPARQL endpoints 
 junto con el estado de disponibilidad en el que se encuentran. Por ejemplo los sitios http://labs.mondeca.com/sparqlendpointsstatus/ y 
 http://www.w3.org/wiki/SparqlEndpoints que este último además provee detalles sobre la información de los mismos.
 
 Consultar estos sitios entonces generará una lista de endpoints SPARQL los cuales se podrían utilizar para pedir la información necesaria.
 
-Volcados de datos: Son datasets muy grandes que fueron el resultado de un web crawling, los cuales están disponibles para su descarga 
+\item[Volcados de datos:] Son datasets muy grandes que fueron el resultado de un web crawling, los cuales están disponibles para su descarga 
 y se pueden utilizar para procesarlos y obtener los datos requeridos. El más importante es http://challenge.semanticweb.org/2014/ .
-
+\end{description}
 \subsection{Obtención}
 
 Este paso está directamente relacionado con el anterior, dado que la estrategia de obtención fue planeada con anterioridad, según 
 cuál sea la seleccionada, habrá sido la opción ejecutada en el paso anterior.
-
+\\\\
 Para este paso se tienen las siguientes estrategias:
-
-Web Crawling: Realizar un crawling partiendo de unas pocas URLs seleccionadas en el paso anteiror. Obtenidas de sitios autoritativos.
+\begin{description}
+\item[Web Crawling:] Realizar un crawling partiendo de unas pocas URLs seleccionadas en el paso anteiror. Obtenidas de sitios autoritativos.
 Existen formas distintas de hacer web craling, dependiendo del nivel de profundidad en el cuál se recorrerá la web, podría también utilizarse los 
 sitios indexadores, SPARQL queries, o motores de búsqueda para obtener una lista de URLs que contienen la información deseada, y luego realizar un crawling de profundidad uno sobre cada url.
 Hacer crawling con profundidades muy grandes requiere de una algoritmia mucho más compleja para evitar loops, y también de muchos más recursos de hardware, pero se podrá obtener mucha más información.
 
-De-referenciamiento de URIs: Igual al web crawling, pero exclusivo de documentos semanticos NO embebidos, ya escritos en un formato nativo de la web semántica como RDF, turtle, n-Triples, etc.
+\item[De-referenciamiento de URIs:] Igual al web crawling, pero exclusivo de documentos semanticos NO embebidos, ya escritos en un formato nativo de la web semántica como RDF, turtle, n-Triples, etc.
 Luego la profundidad puede continuarse realizando lo que se llama un ''follow your nose'', que se realiza de-referenciando los documentos que son objeto de la propiedad owl:sameAs, o rdf:seeAlso.
 
-Descarga de las respuestas de las APIs: Este es otro caso del uso de lso sitios indexadores, SPARQL queries, o motores de búsqueda. Pero en lugar de 
+\item[Descarga de las respuestas de las APIs:] Este es otro caso del uso de lso sitios indexadores, SPARQL queries, o motores de búsqueda. Pero en lugar de 
 que la información  utilizada sean simpelmente las URL de los documentos, se utilizará también la ifnromación cacheada de dichos documentos y evitarse un crawling.
 Como desventaja se puede tener información desactualizada, pero como ventaja se podrá obtener información que ya no esté disponible. Todo dependerá de lo que se busque obtener.
 La información obtenida de estas APIs ya debería encontrarse en un formato de la web semántica por l oque no requerirá tampoco una futura extracción.
 
-Procesamiento de grandes volcados: Este paso requiere de la utilización de recursos minímos de hardware, ya que estos volcados suelen tener volúmenes de varios teras de información, y para procesarlos se requerirá 
+\item[Procesamiento de grandes volcados:] Este paso requiere de la utilización de recursos minímos de hardware, ya que estos volcados suelen tener volúmenes de varios teras de información, y para procesarlos se requerirá 
 de mucha RAM, memoria secundaria y microprocesador.
 La idea de este paso es inspeccionar el volcado o bienpara obtener la URL de los documentos con la información deseada, para luego realizar un crawling de profundidad 1, 
 o directamente utilizar la información contenida en el volcado.
 Esta opción enrealidad es una suma de un paso intermedio con las demás opciones de este paso ya que se estaría realizando el trabajo que hacen los indexadores, que es procesar grandes volúmenes de datos.
+\end{description}
 
 \section{Extracción y almacenaje}
 
@@ -436,24 +196,24 @@ Específicamente a aquellos que estén en un formato de información semántica 
 
 Esto significa, parsear el documento HTML, que como mensionamos anteriormente puede contener información semántica en formato RDF-a, microformatos o microdatos, buscando 
 la información semántica para luego generar un documento RDF (o de otro lenguaje de tripletas puro) que represente esa información semántica encontrada en tripletas que puedan ser almacenadas bajo un triplestore.
-
+\\\\
 Si bien podría escribirse manualmente un algoritmo que realice esta tarea, existen muchas herramientas que lo hacen, por lo que es recomendable la utilización de alguna de ellas.
-
+\\\\
 Los extractores más utilizados son los siguientes:
-
-getSchema: Es una herramienta online que se utiliza a travez de una API Restful para extraer documentos con microdatos. Como respuesta se obtendrán documentos semánticos 
+\begin{itemize}
+\item getSchema: Es una herramienta online que se utiliza a travez de una API Restful para extraer documentos con microdatos. Como respuesta se obtendrán documentos semánticos 
 con la información extraída en formatos N-Triples, JSON, o N3. 
 Es una herramienta rápida y eficaz pero sólo sirve para microdatos.
 
-RDF Translator: Funciona también a travez de una API restful, y además de soportar también docuemntos con formato RDF-a, proveé la funcionalidad de transformar los documentos en sentido inverso, 
+\item RDF Translator: Funciona también a travez de una API restful, y además de soportar también docuemntos con formato RDF-a, proveé la funcionalidad de transformar los documentos en sentido inverso, 
 (de tripletas a información semántica embebida en HTML). 
 También está la posibilidad de descargarse la librería y correr el algoritmo localmente.
 
-Any23: Una herramienta muy potente y completa que cuenta con una comunidad que lo actualiza constantemente. Al igual que las anteriores se puede utilizar de forma online a travez 
+\item Any23: Una herramienta muy potente y completa que cuenta con una comunidad que lo actualiza constantemente. Al igual que las anteriores se puede utilizar de forma online a travez 
 de una API restful. Tiene como ventaja que soporta también microformatos. Es el extractor utilizado por Sindice. 
 También está disponible en forma de librería para utilizar localmente.
 
-Data Linter:Es una herramienta online que parsea documentos RDF-a, microdatos y JSON-LD.  
+\item Data Linter:Es una herramienta online que parsea documentos RDF-a, microdatos y JSON-LD.  
 Muy útil para analizar documentos, ya que dispone de varias ventajas: 
 
 Presenta la información organizada en tablas anidadas que son mucho más amigables para un análisis humano. 
@@ -462,56 +222,73 @@ Posee un mecanismo de inferencia que alerta cuando se viola la sintaxis de los v
 
 Como contrapartida, la información retornada por la herramienta es en texto plano. Por lo que no puede ser utilizado en un triplestore.
 
+\end{itemize}
 
-\subsection{almacenaje}
+\subsection{Almacenaje}
 
 Con la información recolectada de internet en forma de tripletas (o cuadrupletas) ya puede ser almacenada conjuntamente en un triplestore. 
 
 Se disponen de muchas opciones de triplestores en la actualidad, algunos pagos y otros gratuitos. Cada uno con ventajas en algunos aspectos y desventajas en otros.
 
 Muchos son librerías que forman parte de un framework, además algunos mapean tripletas a otros motores de base de datos como por ejemplo MYSQL o POSGRE.
-
+\\\\
 Algunos posibles triplestores pueden ser
+\begin{itemize}
+\item TDB: Componente del framework Jena, que puede ser accedido mediante linea de comandos o a travez de la API de jena. Almacena tanto tripletas como cuadrupletas, y las almacena en varios archivos donde cada uno indexa los datos de distintas formas. Tiene una muy aceptable performance pero pequeños errores en su uso pueden corromper la información facilmente.
 
-TDB: Componente del framework Jena, que puede ser accedido mediante linea de comandos o a travez de la API de jena. Almacena tanto tripletas como cuadrupletas, y las almacena en varios archivos donde cada uno indexa los datos de distintas formas. Tiene una muy aceptable performance pero pequeños errores en su uso pueden corromper la información facilmente.
+\item SDB: Al igual que TDB es un componente de Jena, pero que no almacena la información como archivos en el disco, sino que mapea los datos a un motor de bases de datos subyacente como MYSQL y POSGRE. Su performance está atada a dicho motor de bbdd subyacente pero por lo general no suele dar buenos resultados. 
 
-SDB: Al igual que TDB es un componente de Jena, pero que no almacena la información como archivos en el disco, sino que mapea los datos a un motor de bases de datos subyacente como MYSQL y POSGRE. Su performance está atada a dicho motor de bbdd subyacente pero por lo general no suele dar buenos resultados. 
+\item Sesame triplestore: Componente del framework Sesame, que tiene la opción de almacenar la información en disco o en memoria. Lo que puede significar un improtante beneficio para quienes requieran performance elevada en queries. Soporta no solo SPARQL sino también SeRQL. Tiene además la ventaja de poder integrar Alibaba, que es un mapeador de calses de Java a ontologías RDF.
+\end{itemize}
 
-Sesame triplestore: Componente del framework Sesame, que tiene la opción de almacenar la información en disco o en memoria. Lo que puede significar un improtante beneficio para quienes requieran performance elevada en queries. Soporta no solo SPARQL sino también SeRQL. Tiene además la ventaja de poder integrar Alibaba, que es un mapeador de calses de Java a ontologías RDF.
+\noindent Aquí hay un par de datos extraídos del paper Chris Bizer, Andreas Schultz. The Berlin SPARQL Benchmark. Int. J. Semantic Web Inf. Syst. 5(2): 1-24 (2009) que habla sobre un benchmark que compara triplestores:
 
-Aquí hay un par de datos extraídos del paper Chris Bizer, Andreas Schultz. The Berlin SPARQL Benchmark. Int. J. Semantic Web Inf. Syst. 5(2): 1-24 (2009) que habla sobre un benchmark que compara triplestores:
-
-\begin{lstlisting}[frame=single]  
-    To load 100m triples of evaluation data:
-        Sesame: 3 days 6 hours
-        Jena TDB: 1.5 hours
-        Jena SDB: 1 day 15 hours
-    Complex Query Mixes per Hour (rate of query answering -- higher = better) for 1M triples:
-        Sesame: 18,094
-        Jena TDB: 4,450
-        Jena SDB: 10,421
-    Complex Query Mixes per Hour for 25M triples:
-        Sesame: 1,343
-        Jena TDB: 353
-        Jena SDB: 968
-    Complex Query Mixes per Hour for 100M triples:
-        Sesame: 254
-        Jena TDB: 81
-        Jena SDB: 211
-    Simple Query Mixes per Hour for 1M triples:
-        Sesame: 38,727
-        Jena TDB: 15,842
-        Jena SDB: 15,692
-    Simple Query Mixes per Hour for 25M triples:
-        Sesame: 39,059
-        Jena TDB: 1,856
-        Jena SDB: 4,877
-    Simple Query Mixes per Hour for 100M triples:
-        Sesame: 3,116
-        Jena TDB: 459
-        Jena SDB: 584
-\end{lstlisting}
+\begin{itemize}
+\item To load 100m triples of evaluation data:
+ \begin{description}
+     \item[Sesame:] 3 days 6 hours
+     \item[Jena TDB:] 1.5 hours
+     \item[Jena SDB:] 1 day 15 hours
+ \end{description}
+\item Complex Query Mixes per Hour (rate of query answering -- higher = better) for 1M triples:
+ \begin{description}
+     \item[Sesame:] 18,094
+     \item[Jena TDB:] 4,450
+     \item[Jena SDB:] 10,421
+ \end{description}
+\item Complex Query Mixes per Hour for 25M triples:
+ \begin{description}
+     \item[Sesame:] 1,343
+     \item[Jena TDB:] 353
+     \item[Jena SDB:] 968
+ \end{description}
+\item Complex Query Mixes per Hour for 100M triples:
+ \begin{description}
+     \item[Sesame:] 254
+     \item[Jena TDB:] 81
+     \item[Jena SDB:] 211
+ \end{description}
+\item Simple Query Mixes per Hour for 1M triples:
+ \begin{description}
+     \item[Sesame:] 38,727
+     \item[Jena TDB:] 15,842
+     \item[Jena SDB:] 15,692
+ \end{description}
+\item Simple Query Mixes per Hour for 25M triples:
+ \begin{description}
+     \item[Sesame:] 39,059
+     \item[Jena TDB:] 1,856
+     \item[Jena SDB:] 4,877
+ \end{description}
+\item Simple Query Mixes per Hour for 100M triples:
+ \begin{description}
+     \item[Sesame:] 3,116
+     \item[Jena TDB:] 459
+     \item[Jena SDB:] 584
+ \end{description}
+\end{itemize}
         
+
 No sólo se debería elegir el triplestore en cuanto a su performance, su facilidad de uso y flexibilidad también es un aspecto muy importante a evaluar.
 
 %\input{opcionesDescarga}
@@ -525,28 +302,25 @@ Como sabemos los reviews son creados por usuarios que en su mayoría no están f
 aplicación, esto causa que una parte muy significativa del contenido publicado no esté de la forma adecuada para ser procesado. 
 La falta de calidad en el contenido publicado puede deberse tanto a errores por parte del usuario como por parte del publicador.
 
-
 El publicador deberá asegurarse que los datos respeten rigurosamente las ontologías en las cuales se publican.
-
+\\\\
 El sitio web en el cual el usuario se encuentre realizando el review deberá guiarlo en todo lo posible para lograr que la evaluación
 quede en un formato adecuado.
 
-
 Aunque también existen muchos problemas que no dependen del sitio web, generalmente errores semánticos de calidad, donde lo 
 redactado esta hecho de forma inconsistente o insuficiente.
-
-
+\\\\
 Este paso entonces tiene por objetivo encontrar todos los problemas de calidad que pueda haber en el dataset que acaba de 
 ser descargado y extraído y que generen inconvenientes para una posterior integración/explotación.
-
+\\\\
 La estrategia se divide en dos partes, una formal y otra informal.
-
+\\\\
 La formal se encuentra ligada a la detección de errores sintácticos en el dataset, que son generalmente causados por una mala utilización del vocabulario (Aunque también suelen aparecer problemas causados por malas definiciones de los vocabularios)
 
 El ejemplo típico de este tipo de error es el uso incorrecto del dominio o rango de una propiedad. 
 
 Encontrar este tipo de errores no es una tarea demasiado compleja, disponiendo de los vocabularios se puede hacer inferencia sobre el dataset y determinar automáticamente los errores sintácticos.
-
+\\\\
 Y luego se encuentra la estrategia informal, que intenta encontrar los problemas semánticos del dataset, para los cuales resulta extremadamente difícil su detección automatizada.
 
 Un ejemplo de este caso es la falta de información precisa necesaria para identificar un ítem, por ejemplo poner ``batman'' como nombre, siendo esta la única forma de identificarlo. Como sabemos batman puede referirse a muchos ítem distintos y se necesita un nombre más preciso para su identificación.
@@ -554,11 +328,11 @@ Este problema haría más dificultosa una posible integración, ya que no sería
 
 Otro ejemplo es el de la inconsistencia en la información provista, si por ejemplo se establece schema:Book como tipo de ítem pero el nombre del ítem es ``Samsung SyncMaster 753s'' claramente es el caso de un tipo incorrecto, ya que hay una propiedad que sólo tendría sentido si se tratara de un schema:Product.
 Este último error modificaría el correcto funcionamiento de una posible aplicación resultante además de interferir en la integración. Ya que si esa aplicación por ejemplo, lista reviews según el tipo de ítem, cuando un usuario busque reviews de libros, se encontraría con el review de un monitor.
-
+\\\\
 Estos últimos errores suelen ser muy difíciles de encontrar y prácticamente imposibles de detectar mediante búsquedas automáticas.
 
 Para lograrlo se requiere observar humanamente el vocabulario y reflexionar sobre el mismo, deduciendo errores que podrían aparecer, también ayudaría mucho observar resultados de estadísticas sobre el uso de propiedades en el dataset.
-
+\\\\
 Existen frameworks para realizar estas operaciones.
 
 %\input{estraCur}
@@ -568,7 +342,7 @@ En el paso anterior se describieron los problemas en la calidad del dataset que 
 o que, podrían limitar o imposibilitar la realización de la misma. Dichos problemas pueden ser muchos, y algunos muy difíciles
 de solucionar, será parte entonces del proceso, reconocer aquellos que su resolución sea viable y además encontrar la forma de 
 implementarla.
-
+\\\\
 Cabe destacar que el proceso de evaluar el dataset en búsqueda de problemas y implementar soluciones es iterativo, debido a que 
 una mejora puede conllevar a la detección de nuevos problemas.
 
@@ -578,7 +352,6 @@ una mejora puede conllevar a la detección de nuevos problemas.
 \begin{framed}
 \textcolor{red}{Esto va acá o es parte de Explotación?}
 \end{framed}
-
 
 Los datos recolectados fueron generados por distintos usuarios, en múltiples sitios y bajo distintas ontologías y estándares.
 Estos aún curados, necesitan un último paso para poder realizar una explotación, y es la integración.
