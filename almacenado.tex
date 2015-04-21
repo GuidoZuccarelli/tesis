@@ -1,69 +1,67 @@
 \chapter{Extracción y Almacenamiento de los Datos}
 \label{chapter:extraccion}
 
-Objetivo
+\section{Objetivo}
 
-Convertir los documentos con información semántica embebida en documentos HTML en documentos RDF, que luego puedan ser 
+\noindent Convertir los documentos con información semántica embebida en documentos HTML en documentos RDF, que luego puedan ser 
 almacenados en un triplestore y almacenarlos.
-
+\\\\
 La necesidad de tener la información en un triplestore surge de varios puntos:
+\begin{enumerate}
+ \item Tener la información centralizada, así, por cada paso siguiente a realizar, resulte mucho más simple aplicar un mismo proceso a todos los datos.
+ \item Tener la información en un mismo lenguaje, por la misma razón que el punto anterior.
+ \item Poder realizar queries SPARQL tanto para generar estadísticas como para realizar un curado de la información.
+ \item Poder utilizar el motor de inferencias para detectar errores en los documentos.
+\end{enumerate}
 
-Tener la información centralizada, así, por cada paso siguiente a realizar, resulte mucho más simple aplicar un mismo proceso a todos los datos.
+\section{Estrategia}
 
-Tener la información en un mismo lenguaje, por la misma razón que el punto anterior.
-
-Poder realizar queries SPARQL tanto para generar estadísticas como para realizar un curado de la información.
-
-Poder utilizar el motor de inferencias para detectar errores en los documentos.
-
-Estrategia
-
-El extractor utilizado fue any23 con su librería para java. El motivo es que es el único de los extractores que provee librería para java, y además soporta todos los lenguajes de RDF embebido en HTML.
-Los documentos se guardaron en formato n-Quads ya que son mucho más eficientemente procesables y además se puede conservar el grafo del cual provienen.
-
+\noindent El extractor utilizado fue any23 con su librería para java. El motivo es que es el único de los extractores que provee 
+librería para java, y además soporta todos los lenguajes de RDF embebido en HTML.
+\\\\
+Los documentos se guardaron en formato n-Quads ya que son mucho más eficientemente procesables y además se puede conservar el grafo 
+del cual provienen.
+\\\\
 Como siguiente paso, con el objetivo de tener un backup ligero de los datos que pueda ser levantado a una base de datos fácilmente, se realizó un merge de todos los documentos extraídos en uno solo.
 Para ello utilizó la herramienta RIOT (disponible en la librería any23).
-
+\\\\
 Y por último se determinó utilizar una base de datos TDB, por múltiples razones:
+\begin{itemize}
+\item Es gratuita y opensource. 
+\item Es muy eficiente, ya que no trabaja sobre una base de datos MySQL.
+\item Se encuentra incorporado a jena por lo que se dispone de su utilización en Java.
+\item Para levantar la base de datos, a partir de ese documento nq se utilizó la operación bulkloader2 que la manera más rapida. Con lo que se obtuvo la base de datos TDB.
+\end{itemize}
 
-Es gratuita y opensource. 
+\section{Resultados}
 
-Es muy eficiente, ya que no trabaja sobre una base de datos MySQL.
-
-Se encuentra incorporado a jena por lo que se dispone de su utilización en Java.
-
-Para levantar la base de datos, a partir de ese documento nq se utilizó la operación bulkloader2 que la manera más rapida. Con lo que se obtuvo la base de datos TDB.
-\\
-\\
-Resultados
-
-Any23
-
+\textbf{Any23}
+\\\\
 Extractores utilizados más importantes:\\
-\begin{tabular}{| l | c | r | }
-Extractor & Documentos & Porcentaje \\
+\begin{tabular}{| l | c | r | }\hline
+Extractor & Documentos & Porcentaje \\\hline
 html-head-title & 233.743 & 98,77 \\    
 html-rdfa11 & 156.096 & 65,96 \\
 html-microdata & 110.325 & 46,62 \\    
 html-mf-hreview & 109.096 & 46,10 \\
 html-hcard & 73.197 & 30,93  \\
 html-hreview-aggregated & 48.771 & 20,60 \\
-html-mf-adf & 44.788 & 18,92 \\
+html-mf-adf & 44.788 & 18,92 \\\hline
  \end{tabular}
 \\
 \\
 Errores por documentos mal descargados:
-
+\\\\
 null 4661
 
-invalid property name " 95
+\noindent invalid property name " 95
 
-Error while retrieving mime type 1
+\noindent Error while retrieving mime type 1
 \\ 
- 
+\\ 
 Documentos obtenidos:
 
-\begin{tabular}{| l | c | }
+\begin{tabular}{| l | c | }\hline
 Documentos con review & 187.088 \\
 Documentos sin review & 49.552\\
 Documentos sin tripletas & 2.878\\
@@ -72,54 +70,42 @@ Tripletas promedio por documento & 71.66\\
 Tripletas promedio en documentos con tripletas & 72.56\\
 Tripletas promedio sobre documentos con review & 84.02\\
 Tripletas totales de documentos con review & 15719392\\
-Tripletas promedio sobre documentos sin review & 20.01\\
-Total Documentos & 236640\\
+Tripletas promedio sobre documentos sin review & 20.01\\\hline
+Total Documentos & 236640\\\hline
 \end{tabular}
-
+\\ \\
 Cabe destacar que, ese procentaje de documentos con review 79\% implica que el 21\% restante fueron documentos que sindice tiene indexados como contenedores de 
 alguna de las clases de review mencionadas y ya no los tiene en la actualidad. Ya sea porque:
-
-El documento no existe más
-
-El documento cambió y no habla sobre reviews
-
-El documento dejó de utilizar la web semántica para publicar reviews
-
+\begin{itemize}
+\item El documento no existe más
+\item El documento cambió y no habla sobre reviews
+\item El documento dejó de utilizar la web semántica para publicar reviews
+\end{itemize}
 Pero ese porcentaje no refleja una estadística sobre un muestreo válido de sindice ya que, com ose mencionó anteriormente, los dominios fueron seleccionados 
 dependiendo de si aún existen y además aún tenían publicados documentos de reviews en la web semántica.
 \\
 \\
-Riot:
+\textbf{Riot:}
 
-Múltiples errores detectados en el merge de los documentos extraídos. No queda claro si causados por any23 en la extracción, o el documento ya de origen 
-mal confeccionado. Fueron errores  no detectados por any23:
+\noindent Múltiples errores detectados en el merge de los documentos extraídos. No queda claro si causados por any23 en la extracción, o el documento ya de origen 
+mal confeccionado. Fueron errores  no detectados por any23:\\
+\begin{tabular}{| l | l | }\hline
+Error & Razon \\\hline
+PORT\_SHOULD\_NOT\_BE\_WELL\_KNOWN in PORT & Ports under 1024 should be accessed using the appropieate scheme name. \\
+ILLEGAL\_CHARACTER in FRAGMENT & The character violates the grammar rules for URIs/IRIs.\\
+DEFAULT\_PORT\_SHOULD\_BE\_OMITTED in PORT & If the port is the default one for the scheme it should be omitted. \\
+REQUIRED\_COMPONENT\_MISSING in HOST & A component that is required by the scheme is missing.\\
+DOUBLE\_WHITESPACE in QUERY & Either two or more consecutive whitespace characters, or leading or trailing whitespace. These match no grammar rules of URIs/IRIs. These characters are permitted in RDF URI References, XML system identifiers, but not XML Schema anyURIs.\\
+WHITESPACE in PATH & A single whitespace character. These match no grammar rules of URIs/IRIs. These characters are permitted in RDF URI References, XML system identifiers, and XML Schema anyURIs.\\
+ILLEGAL\_PERCENT\_ENCODING in QUERY & The host component a percent occurred without two following hexadecimal digits.\\
+NOT\_DNS\_NAME in HOST & The host component did not meet the restrictions on DNS names.\\
+DNS\_LABEL\_DASH\_START\_OR\_END in HOST & A DNS name had a - at the beginning or end.\\
+PROHIBITED\_COMPONENT\_PRESENT in USER & A component that is prohibited by the scheme is present.\\
+WHITESPACE in FRAGMENT & A single whitespace character. These match no grammar rules of URIs/IRIs. These characters are permitted in RDF URI References, XML system identifiers, and XML Schema anyURIs.\\
+WHITESPACE in QUERY & A single whitespace character. These match no grammar rules of URIs/IRIs. These characters are permitted in RDF URI References, XML system identifiers, and XML Schema anyURIs.\\\hline
+\end{tabular}
 
-PORT\_SHOULD\_NOT\_BE\_WELL\_KNOWN in PORT: Ports under 1024 should be accessed using the appropieate scheme name. 
-
-ILLEGAL\_CHARACTER in FRAGMENT: The character violates the grammar rules for URIs/IRIs.
-
-DEFAULT\_PORT\_SHOULD\_BE\_OMITTED in PORT: If the port is the default one for the scheme it should be omitted. 
-
-REQUIRED\_COMPONENT\_MISSING in HOST: A component that is required by the scheme is missing.
-
-DOUBLE\_WHITESPACE in QUERY: Either two or more consecutive whitespace characters, or leading or trailing whitespace. These match no grammar rules of URIs/IRIs. These characters are permitted in RDF URI References, XML system identifiers, but not XML Schema anyURIs.
-
-WHITESPACE in PATH: A single whitespace character. These match no grammar rules of URIs/IRIs. These characters are permitted in RDF URI References, XML system identifiers, and XML Schema anyURIs.
-
-ILLEGAL\_PERCENT\_ENCODING in QUERY: The host component a percent occurred without two following hexadecimal digits.
-
-NOT\_DNS\_NAME in HOST: The host component did not meet the restrictions on DNS names.
-
-DNS\_LABEL\_DASH\_START\_OR\_END in HOST: A DNS name had a - at the beginning or end.
-
-PROHIBITED\_COMPONENT\_PRESENT in USER: A component that is prohibited by the scheme is present.
-
-WHITESPACE in FRAGMENT: A single whitespace character. These match no grammar rules of URIs/IRIs. These characters are permitted in RDF URI References, XML system identifiers, and XML Schema anyURIs.
-
-WHITESPACE in QUERY: A single whitespace character. These match no grammar rules of URIs/IRIs. These characters are permitted in RDF URI References, XML system identifiers, and XML Schema anyURIs.
-\\
-\\
-TDB Bulk load
+\subsection{TDB Bulk load}
 
 La base de datos resultante contiene:
 
