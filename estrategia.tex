@@ -2,7 +2,7 @@
 \label{chapter:estrategia}
 
 \section{Estrategia propuesta}
-Con el fin de crear una aplicación que satisfaga los requerimientos mensionados anteriormente, se debe encontrar
+Con el fin de crear una aplicación que satisfaga los requerimientos mencionados anteriormente, se debe encontrar
 un procedimiento que incluya desde obtener los datos relevantes de la web hasta llevarlos a un estado que permita una 
 explotación satisfactoria. 
 
@@ -98,7 +98,7 @@ Para permitir una fácil integración de la funcionalidad vocab.cc, toda la info
 \end{framed}
 
 \section{Recolección}
-
+\label{section:recoleccion}
 %\input{explicacionReco}
 Como se mencionó antes, la web contiene grandes cantidades de documentos publicados con información semántica. Pero la tarea
 de encontrarlos, con el agregado de que sólo una pequeña porción de ellos será relevante para los requerimientos no es trivial
@@ -187,7 +187,7 @@ Esta opción enrealidad es una suma de un paso intermedio con las demás opcione
 \end{description}
 
 \section{Extracción y almacenaje}
-
+\label{section:extraccion}
 Una vez que se logró encontrar la información requerida en la web y contener una copia local, se necesita darle un mínimo procesamiento a determinados datos.
 Específicamente a aquellos que estén en un formato de información semántica embebida, que requeriran un proceso de extracción para luego ser almacenados en un triplestore.
 
@@ -298,6 +298,7 @@ No sólo se debería elegir el triplestore en cuanto a su performance, su facili
  
 
 \section{Evaluación de Calidad de los Datos} 
+\label{section:evaluacion}
 Como sabemos los reviews son creados por usuarios que en su mayoría no están familiarizados con el desarrollo de una 
 aplicación, esto causa que una parte muy significativa del contenido publicado no esté de la forma adecuada para ser procesado. 
 La falta de calidad en el contenido publicado puede deberse tanto a errores por parte del usuario como por parte del publicador.
@@ -349,6 +350,7 @@ una mejora puede conllevar a la detección de nuevos problemas.
 %\input{estraInt}
 
 \section{Integración de los datos}
+\label{section:integracion}
 \begin{framed}
 \textcolor{red}{Esto va acá o es parte de Explotación?}
 \end{framed}
@@ -381,7 +383,28 @@ Esta última opción puede implementarse utilizando algúnas herramientas:
 \item [ARQ:] Componente de Jena que funciona como query engine, y puede ser utilizado para armar el endpoint manualmente, eso singifica realizar a mano la aplicación web.
 \end{description}
 \section{Explotación del Dataset}
+\label{section:explotacion}
 \begin{framed}
 \textcolor{red}{Acá es donde efectivamente se discute que implica cubrir los requerimientos de la aplicación . Puede ser que acá tambien te refieras a como la forma en la que querés explotar los datos impacta en las fases anteriores. Incluso, habría que pensarlo, en este capitulo tal vez conviene primero hablar de explotación y luego de las otras fases - porque explotación determina mucho que es lo que vas a mirar en las fases anteriores, ¿no?}
 \end{framed}
+
+\noindent Por último se llega al paso de explotación. 
+\\\\
+La forma en la que se proceda a implementarlo depende de múltiples factores que dependerán 
+de los recursos de hardware disponibles, el tiempo de desarrollo que se deseé emplear y 
+la calidad del dataset obtenido en los pasos anteriores.
+\\\\
+En general, cualquier aplicación resultante será correcta si logra respetar los requerimientos.
+\\\\
+El único punto a tener en cuenta es el de elegir correctamente un tipo de sistema de recomendación 
+de manera que se pueda aprovechar de la mejor forma posible la información existente en el dataset. \\
+Por ejemplo, si el dataset no contiene demasiados datos descriptivos de los ítems, no sería 
+conveniente utilizar un sistema de recomendación basado en contenido, ya que la aplicación resultante 
+no funcionaría de una forma muy útil.
+De la misma forma que si dispone una gran cantidad de datos acerca de los autores, debería considerarse 
+escoger un enfoque colaborativo para aprovechar de la mejor manera el dataset.
+\\
+\\
+Teniendo eso en consideración, las herramientas/tecnologías/lenguajes/etc utilizados para su 
+construcción y desarrollo.
 

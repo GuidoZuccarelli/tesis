@@ -1,19 +1,20 @@
 \chapter{Evaluación de Calidad de los Datos}
 \label{chapter:evaluacion}
 
-Objetivo:
-Encontrar problemas en el dataset que dificulten una posible integración y modifiquen el correcto resultado de una posible aplicación derivada.
+Aquí se realizarán las evaluaciónes derivadas de la descripción de la sección \ref{section:evaluacion}, 
+donde se describen los análisis de errores sintácticos y semánticos.
 
 \section{Evaluación nº 1 - Vocabularios}
 \label{section:evaluacion-vocabularios}
 
-Objetivo:
+\subsection*{Objetivo}
 Buscar aquellas propiedades y clases ligadas a recursos relevantes (que estén relacionados con algún review mediante property paths) 
 para las cuales no se encuentre representada en ninguna ontología. Y luego verificar que genere algún problema para la aplicación a construir.
 
-Estrategia:
+\subsection*{Estrategia}
 Este primer paso es bastante simple, básicamente se deben conseguir todos los vocabularios utilizados (para saber cuales son estos basta con revisar el namespace 
 de los prefijos) y cargarlos en el dataset.
+
 Una vez con los vocabularios cargados se puede realizar una consulta en SPARQL para las propiedades y leugo otra para las clases:
 
 \begin{lstlisting}[frame=single]
@@ -33,12 +34,12 @@ FILTER NOT EXISTS{
 }GROUP BY ?c ORDER BY DESC(?cantidad)
 \end{lstlisting}
 
-Luego se puede hacer una consulta igual pero buscando por propiedades.
+\noindent Luego se puede hacer una consulta igual pero buscando por propiedades.
 
-Resultados:
+\subsection*{Resultados}
 Los resultados de esta evaluación fueron interesantes. Además de algunas propiedades y clases mal escritas, ya sea por una letra faltante o una minúscula en lugar 
 de una mayúscula, se encontró que todas las propiedades utilizadas de la ontología schema estaban incorrectas.
-
+\\\\
 Ninguna de las propiedades encontradas bajo el namespace http://schema.org/ pertenecían a la ontología schema.
 Esto se debe a que cada propiedad incluía bajo su path su clase dominio de la siguiente manera: http://schema.org/CLASE/Propiedad .
 Por ejemplo:
@@ -46,7 +47,7 @@ http://schema.org/Product/aggregateRating en lugar de http://schema.org/aggregat
 
 Situaciones como ésta generan problemas cuando se intenta realizar consultas generales. Si por ejemplo se requiriera encontrar todos los aggregateRatings de todos los recursos no alcanzaría con 
 una simple querie, habría que realizar tantas queries como clases de la ontología schema existan.
-
+\\\\
 Haciendo un recorrido sobre los datos desde su origen (los documentos html publicados) hasta este punto, se encontró que el problema se 
 originó en el proceso de extracción. 
 Any23 cuando extrae las propiedades de la ontología schema, modifica las mismas adicionando el nombre de la clase de su correspondiente dominio, provocando que éstas queden incorrectas.
@@ -54,40 +55,52 @@ Any23 cuando extrae las propiedades de la ontología schema, modifica las mismas
 \section{Evaluación nº 2 - Duplicados}
 \label{section:evaluacion-duplicados}
 
-Objetivo:
+\subsection*{Objetivo}
 Disponiendo de un gran dataset de información recolectada de la web, un paso muy útil es limpiar aquellos datos innecesarios. 
 Este paso consiste en detectar aquellos reviews en el dataset que se encuentren duplicados.
 
-Estrategia:
+\subsection*{Estrategia}
 La forma más sencilla que a cualquiera normalmente se le ocurriría es comparar los reviews todos con todos. Cuyo algoritmo tiene orden cuadrático que para el tamaño del dataset resulta demasiado denso.
 El algoritmo que se utilizó fue el siguiente:
-1)Por cada ontología de review se escogió arbitrariamente las propiedades más utilizadas y representativas de cada una:
+\begin{enumerate}
+\item Por cada ontología de review se escogió arbitrariamente las propiedades más utilizadas y representativas de cada una:
 
-Purl-Review
-dcterms:date
-rev:text
-rev:title
-rev:rating
+\textbf{Purl-Review}
+\begin{itemize}
+\item dcterms:date
+\item rev:text
+\item rev:title
+\item rev:rating
+\end{itemize}
 
-Schema-Review
-sorg:datePublished
-sorg:description
-sorg:name
-sorg:author
-sorg:reviewBody
 
-Purl-ReviewAggregate
-revagg:average
-revagg:count
-dcterms:date
-rev:title
+\textbf{Schema-Review}
+\begin{itemize}
+\item sorg:datePublished
+\item sorg:description
+\item sorg:name
+\item sorg:author
+\item sorg:reviewBody
+\end{itemize}
 
-Schema-AggregateRating
-sorgagg:ratingCount
-sorgagg:ratingValue
-sorgagg:reviewCount
+\textbf{Purl-ReviewAggregate}
 
-Luego se arma en cada ontología un mapa para cada propiedad escogida, que contiene como clave un valor posible existente para esa propiedad, y 
+\begin{itemize}
+\item revagg:average
+\item revagg:count
+\item dcterms:date
+\item rev:title
+\end{itemize}
+
+\textbf{Schema-AggregateRating}
+
+\begin{itemize}
+\item sorgagg:ratingCount
+\item sorgagg:ratingValue
+\item sorgagg:reviewCount
+\end{itemize}
+
+\item Luego se arma en cada ontología un mapa para cada propiedad escogida, que contiene como clave un valor posible existente para esa propiedad, y 
 como valor un arreglo con todos los reviews que contiene ese valor para dicha propiedad.
 En otras palabras se separaron por cada propiedad, los reviews según su valor para esa propiedad.
 Luego se buscaron qué grupos de reviews se encontraban juntos para más de una propiedad mendiante obtener la intersección de ambos conjuntos. Por ejemplo:
@@ -100,22 +113,24 @@ tiene el mismo nombre en cada uno de los elementos.
 
 Esta comparación se reliza entre todos los conjuntos de reviews de los valores de una propiedad con el resto de los conjuntos de los valores de las restantes propiedades de esa ontología.
 
-Una vez obtenidos los conjuntos de los posibles duplicados se procede ahora sí a analizar minuciosamente los reviews todos con todos pero dentro del conjunto marcado como posible grupo de duplicados
+\item Una vez obtenidos los conjuntos de los posibles duplicados se procede ahora sí a analizar minuciosamente los reviews todos con todos pero dentro del conjunto marcado como posible grupo de duplicados
 para corroborar.
+\end{enumerate}
 
-Resultados:
+\subsection*{Resultados}
 
 Se encontraron en total 17343 reviews replicados en un total de 78705 reviews de los cuales.
 
-1009 estaban duplicados dentro de un mismo documento.
-64991 estaban duplicados entre distintos documento pero dentro de un mismo dominio
-12709 estaban duplicados en documentos pertenecientes a distintos dominios
+\noindent 1009 estaban duplicados dentro de un mismo documento.
 
+\noindent 64991 estaban duplicados entre distintos documento pero dentro de un mismo dominio
+
+\noindent 12709 estaban duplicados en documentos pertenecientes a distintos dominios
+\\\\
 Ésta es la lista con los dominios a los cuales se le encontraron más cantidad de reviews duplicados:
 
-
-\begin{tabular}{| l | c | }
-Dominio & Cantidad de reviews duplicados \\
+\begin{tabular}{| l | c | }\hline
+Dominio & Cantidad de reviews duplicados \\\hline
 4outof10.com &	21582\\
 www.superpages.com &	18756\\
 www.kollermedia.at &	9864\\
@@ -125,63 +140,65 @@ www.reptilecentre.com &	3440\\
 www.querfood.de &	3275\\
 www.carsurvey.org &	2766\\
 www.chip.de &	1526\\
-www.thewinecellarinsider.com &	1491\\
+www.thewinecellarinsider.com &	1491\\\hline
 \end{tabular}
 
 \section{Evaluación nº 3 - RDFUnit-Automatizado}
 \label{section:evaluacion-automatizado}
 
-Objetivo:
+\subsection*{Objetivo}
 Encontrar todos los problemas sintácticos de los datos relevantes del dataset e identificar cuales pueden representar un problema 
 para construir la aplicación.
 
-Estrategia:
+\subsection*{Estrategia}
 El framework crea test automaticamente a partir de las ontologías, buscando una amplia variedad de problemas posibles. Por lo que se 
 instaló el framework, se lo proveyó de las ontologías relevantes y se corrieron los test sobre el dataset.
 
-Resultados:
+\subsection*{Resultados}
 
-\begin{tabular}{| l | c | }
-Total test cases & 2116\\
+\begin{tabular}{| l | c | }\hline
+Total test cases & 2116\\\hline
 Succeeded & 2067\\
-Failed & 49\\
+Failed & 49\\\hline
 \end{tabular}
 
 Los tests fallados más relevantes fueron para schema:
 
-\begin{tabular}{| l | c | r | }
-http://schema.org/datePublished does not have datatype: http://www.w3.org/2001/XMLSchema\#date & 152138 & 152138\\
-http://schema.org/ratingCount does not have datatype: http://www.w3.org/2001/XMLSchema\#decimal & 12509 & 12509\\
-http://schema.org/ratingValue has rdfs:domain different from: http://schema.org/Rating & 6198	 & 181178\\
-http://schema.org/worstRating has rdfs:domain different from: http://schema.org/Rating & 5867 & 108095\\
-http://schema.org/bestRating has rdfs:domain different from: http://schema.org/Rating & 5867 & 122057\\
-http://schema.org/aggregateRating is missing proper range & 4984 & 56890\\
-http://schema.org/reviewRating has different range from: http://schema.org/Rating & 4095 & 144239\\
-http://schema.org/name does not contain a literal value (http://www.w3.org/2001/XMLSchema\#string) & 1310 & 190840\\
-http://schema.org/itemReviewed is missing proper range & 1058 & 1505\\
-http://schema.org/reviewRating has rdfs:domain different from: http://schema.org/Review & 331	 & 144239\\
-http://schema.org/email does not contain a literal value (http://www.w3.org/2001/XMLSchema\#string) & 174 & 174\\
+\begin{tabular}{| l | c | r | }\hline
+Test & Fallos & Casos \\\hline
+schema:datePublished does not have datatype: XMLS:date & 152138 & 152138\\
+schema:ratingCount does not have datatype: XMLS:decimal & 12509 & 12509\\
+schema:ratingValue has rdfs:domain different from: schema:Rating & 6198	 & 181178\\
+schema:worstRating has rdfs:domain different from: schema:Rating & 5867 & 108095\\
+schema:bestRating has rdfs:domain different from: schema:Rating & 5867 & 122057\\
+schema:aggregateRating is missing proper range & 4984 & 56890\\
+schema:reviewRating has different range from: schema:Rating & 4095 & 144239\\
+schema:name does not contain a literal value (XMLS:string) & 1310 & 190840\\
+schema:itemReviewed is missing proper range & 1058 & 1505\\
+schema:reviewRating has rdfs:domain different from: schema:Review & 331	 & 144239\\
+schema:email does not contain a literal value (XMLS:string) & 174 & 174 \hline
 \end{tabular}
 
 Para purl:
 
-\begin{tabular}{| l | c | r | }
-http://purl.org/stuff/rev\#reviewer is missing proper range & 83340 & 157004\\
-http://purl.org/stuff/rev\#reviewer has different range from: http://xmlns.com/foaf/0.1/Person	 & 73664 & 157004\\
-http://purl.org/stuff/rev\#hasReview has different range from: http://purl.org/stuff/rev\#Review & 72398 & 347548\\
-http://purl.org/stuff/rev\#title has rdfs:domain different from: http://purl.org/stuff/rev\#Review & 14705 & 104900\\
+\begin{tabular}{| l | c | r | }\hline
+Test & Fallos & Casos \\\hline
+rev:reviewer is missing proper range & 83340 & 157004\\
+rev:reviewer has different range from: foaf:Person & 73664 & 157004\\
+rev:hasReview has different range from: rev:Review & 72398 & 347548\\
+rev:title has rdfs:domain different from: rev:Review & 14705 & 104900 \hline
 \end{tabular}
 
 \section{Evaluación nº 4 - RDFUnit-Manual}
 \label{section:evaluacion-manual}
 
-Objetivo: Correr test manuales en RDFUnit para evaluar el dataset en busca de errores sintácticos no contemplados por los test
+\subsection*{Objetivo} Correr test manuales en RDFUnit para evaluar el dataset en busca de errores sintácticos no contemplados por los test
 automáticos de la evaluación anterior.
 
-Estrategia: Se configuró RDFUnit utilizando patrones del framework para crear tests manuales. Luego se corrió para obtener resultados
+\subsection*{Estrategia} Se configuró RDFUnit utilizando patrones del framework para crear tests manuales. Luego se corrió para obtener resultados
 de la misma manera que en la evaluación anterior
 
-Resultados:\\
+\subsection*{Resultados}
 \begin{tabular}{| l | c | r | }
 http://purl.org/dc/terms/date has a format different to YYYY-MM-DD & 92580 & 207130\\
 http://schema.org/datePublished has a format different to YYYY-MM-DD & 53740 & 144594\\
@@ -197,11 +214,11 @@ http://schema.org/ratingValue is not in the expected range (1-5) & 1 & 73090
 \section{Evaluación nº 5 - Análisis experto}
 \label{section:evaluacion-analisis}
 
-Objetivo: Encontrar problemas a grandes razgos que son muy difícil de detectar por algoritmos. También indicios indicadores de 
+\subsection*{Objetivo} Encontrar problemas a grandes razgos que son muy difícil de detectar por algoritmos. También indicios indicadores de 
 situaciones que lleven a pensar en otras búsquedas de problemas. Esto debería ayudar a entender mejor el dataset para mejorar el manejo 
 de los datos en posteriores paso, como el de integración e implementación.
 
-Estrategia: Este último paso de evaluación se comienza con un pantallazo general de cómo está la situación de los reviews. Para esto se pueden analizar las propiedades que contienen los reviews, y luego el valor objeto 
+\subsection*{Estrategia} Este último paso de evaluación se comienza con un pantallazo general de cómo está la situación de los reviews. Para esto se pueden analizar las propiedades que contienen los reviews, y luego el valor objeto 
 de las mismas. Dado que los problemas sintácticos deberían estar cubiertos en las evaluaciones anteriores, este paso sólo dejaría establecidos
 algunos problemas semánticos del dataset, que al ser detectados en base al punto de vista racional humano, resultaría improbable poder encontrar
 una solución algoritmica automatizada para el problema.
@@ -218,7 +235,7 @@ WHERE{
 
 Esta query debería devolver las propiedades que poseen los reviews y la cantidad de reviews que la utilizan para una clase de review dada.
 
-Resultados más improtantes:
+\subsection*{Resultados} más improtantes:
 
 Para la clase schema:Review\\
 \begin{tabular}{| l | c | }
