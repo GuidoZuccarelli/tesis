@@ -1,2 +1,75 @@
 \chapter{Conclusiones y trabajo futuro}
 \label{chapter:conclusiones}
+
+Se demostró cómo puede hacerse uso de las tecnologías, frameworks y estándares de la Web 
+Semántica para explotar las contribuciones de los usuarios a lo largo de toda la web dentro 
+del marco de los Sistemas de Recomendaciones.
+\\\\
+A partir de todo el proceso se pueden distinguir dos actores que participan en la publicación 
+de reviews en la web semántica, el usuario que genera la información y el desarrollador
+del sitio que proveé al usuario la plataforma para hacerlo.
+\\\\
+La importancia entonces de la existencia de vocabularios expresivos, concretos y precisos 
+resulta fundamental para ayudar a estos dos a publicar la información correctamente, ya que 
+se demostró que a partir del paso Evaluación, la incorrectitud en la información publicada 
+crea grandes problemas que resultan muy complicados de resolver, al igual que se demostró 
+que muchos de los errores son muy influenciados por los vocabularios.
+\\\\
+Aún con vocabularios completos, correctos y precisos, continuarían presentándose dificultades en 
+el paso de Integración, ya que es muy dependiente de la relación entre los datos publicados 
+por distintos usuarios.
+
+Intentar integrar ítems y autores parece ser entonces una tarea que va de extremadamente compleja 
+a imposible, dado que la mayoría de los reviews poseén de información de los autores sólo un username, 
+en lugar de un identificador global como podría ser una dirección de email.
+
+También ítems, que tampoco poseén identificadores globales, sino nombres escritos en 
+distintos formatos.
+
+Esto parece tener origen en la naturaleza decentralizada de la web semántica, que otorga 
+a los usuarios la libertad de generar recursos sin límite.
+
+La solución no parece encontrarse por el camino de la centralización, ya que rompería con dicha 
+naturaleza, sino con la estandarización más restrictiva en vocabularios y propiedades, intentando 
+llevar a los usuarios a la utilización de esos tan necesarios identificadores.
+\\\\
+Por otro lado se pudo observar la preferencia de los desarrolladores de sitios a la utilización de 
+formatos de código semántico embebido en HTML, en lugar de documentos RDF puros. Aunque cada uno de 
+los formatos poseé ventajas y desventajas para dicho desarrollador del sitio, se notó que uno de ellos 
+(microformatos) sólo contnía desventajas desde el punto de vista del desarrollador de la aplicación 
+semántica. 
+
+Dicha conclusión  se obtiene de verificar que la calidad de los ítems escritos en microformatos del 
+dataset es muy baja, ya que sólo poseén como información un nombre en la mayoría de sus casos.
+
+Esto se debe a que no se disponen de namespaces para la utilización de ontologías que permitan 
+la utilización de propiedades descriptivas necesarias, y sólo cuenten con el uso de V-Cards.
+
+El punto de vista del desarrollador de aplciaciones semánticas por supuesto que no suele ser tenido 
+en cuenta por el desarrollador de sitios, que la mayoría de las veces opta por el uso de 
+microformatos por su simplicidad.
+\\\\
+A pesar de los problemas mencionados, se alcanzó el objetivo de construir un sistema de recomendación, 
+dondé se produjeron satisfactorios resultados en los puntos de evaluación y curación. 
+Y dicha construcción demostró cómo puede ser necesarios combinar vocabularios (como se vió en 
+el capítulo \ref{chapter:integracion} que se aprovechó la simplicidad y correctitud de la 
+Review Ontology para los reviews para los ítems de schema), y mostró interesantes usos 
+de la minería de datos para el proceso.
+
+También mostró la necesidad de conocer las distintas herramientas y aplicaciones como Sindice 
+o RDFUnit, que aportan mucho al proceso, también de la necesidad de conocer la naturaleza de 
+los datos con los que se trabaja.
+\\\\
+Quedan entonces planteados, desafíos en varios de los puntos de este trabajo, comenzando con 
+la proposición de estándares o soluciones que resuelvan el problema de la publicación de información 
+no identificable, siguiendo por el análisis del uso de la minería de datos en varios puntos, y 
+la generación de una estrategia de integración exitosa en este contexto. 
+
+Otro aspecto a investigar es el de la obtención de fuentes de datos, más completa y actual que
+no necesite de la utilización de complejos recur5sos de hardware para un crawling, dado 
+que Sindice a partir de 2015 ha dejado de funcionar como web crawler.
+
+Un punto interesante de partida podría ser la inspección del nuevo LOD Laudromatic.
+
+Por último también queda por mejorar los puntos de Evaluación y Curación, que pueden analizarse 
+cuánto más completo y eficiente pueden lograrse.
