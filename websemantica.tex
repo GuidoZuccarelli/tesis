@@ -7,7 +7,7 @@ Aquí se presentará un panorama descriptivo acerca de la composición de la web
 
 \subsection{Resource Description Framework (RDF)}
 
-Es una familia de especificaciones de WC3 diseñada para modelar datos intercambiables en la web. 
+RDF \cite{Cyganiak2013} es una familia de especificaciones de WC3 diseñada para modelar datos intercambiables en la web. 
 Consta de expresiones hechas por tripletas. Cada tripleta es considerada una sentencia para este lenguaje.
 Una tripleta es un conjunto de un valor de cada uno de los siguientes tipos:
 
@@ -38,7 +38,7 @@ corresponden a las variables de instancia.
 
 \subsection{RDF Schema (RDFS)}
 
-Es una extensión semántica de RDF, que provee elementos básicos para la descripción de ontologías (también llamadas vocabularios RDF) con el objetivo
+Es una extensión semántica de RDF \cite{Guha2014}, que provee elementos básicos para la descripción de ontologías (también llamadas vocabularios RDF) con el objetivo
 de estructurar los recursos RDF. Proporciona la manera de definir las clases y las propiedades específicas de la aplicación en RDF.
 RDFS no proporciona las clases sino que proporciona el marco necesario para poder definirlas.
 
@@ -94,24 +94,24 @@ propiedades que se utilizarán para describir al objeto en cuestión.
 \subsection{OWL}
 
 
-Web Ontology Languaje: Es un vocabulario que funciona como lenguaje para crear ontologías en la web. Fue creado en el 2006 y aceptado 
+Web Ontology Languaje \cite{McGuinness2004}: Es un vocabulario que funciona como lenguaje para crear ontologías en la web. Fue creado en el 2006 y aceptado 
 por WC3 como estándar en 2007 en su versión OWL 1.1. Tiene por objetivo proveer reglas a los vocabualrios para aumentar su expresividad. 
 Estas reglas incluyen: jerarquías de clasess, cardinalidad, relaciones de conjunto, tipologías de propiedades más complejas, etc. Lo que proporciona la posibilidad de crear ontologías que pueden 
 representarse en un paradigma muy parecido a la orientación a objetos. Cabe destacar que OWL no es el único vocabulario con este objetivo, ya que RDFS 
 es también un conjunto de estándares mucho más básico que permite estas características.
-En la actualidad existe la versión 2 de OWL que es mucho más completa.
+En la actualidad existe la versión 2 de OWL \cite{W3C} que es mucho más completa.
 
 \subsection{Ontologías}
 
 La aparición de OWL permitió darle mucha más expresividad y restricciones a los vocabularios, que ahora no sólo eran un conjunto de 
 propiedades y clases, sino que podían tener una definición mucho más completa, que permitía describir taxonomías y relaciones entre clases que pueden formar axiomas.
-``An ontology is a formal specification of a shared conceptualization'' Tom Grubber (cita requerida)
+``An ontology is a formal specification of a shared conceptualization'' \cite{Gruber1993} .
 Las ontologías se han convertido en uno de los pilares de la web semántica, esto se debe a que es uno de los principales componentes que permiten 
 cumplir con el objetivo de ésta, que fue planteado en la introducción: ``La Web Semántica promete facilitar el desarrollo de la web social y la inteligencia colectiva, a través de mecanismos de clasificación, relación y descripción del contenido de la información publicada mejorando su interoperabilidad.''
 
 \subsection{Motores de inferencias.}
 
-Son componentes de software que pertimente establecer consecuencias lógicas en base a los axiomas definidos tanto por OWL como por RDFS
+Son componentes de software que pertimente establecer consecuencias lógicas en base a los axiomas definidos tanto por OWL como por RDFS \cite{C.Trim}
 Estos componentes tienen como objetivo enriquecer las ontologías, creando reglas de inferencia. 
 Dichas inferencias pueden ser más o menos complejas dependiendo de la capacidad y la configuración del motor utilizado. Existen tanto gratuitos 
 como pagos.
