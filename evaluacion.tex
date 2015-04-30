@@ -166,28 +166,31 @@ Los tests fallados más relevantes fueron para schema:
 
 \begin{tabular}{| l | c | r | }\hline
 Test & Fallos & Casos \\\hline
-schema:datePublished does not have datatype: XMLS:date & 152138 & 152138\\
-schema:ratingCount does not have datatype: XMLS:decimal & 12509 & 12509\\
-schema:ratingValue has rdfs:domain different from: schema:Rating & 6198 & 181178\\
-schema:worstRating has rdfs:domain different from: schema:Rating & 5867 & 108095\\
-schema:bestRating has rdfs:domain different from: schema:Rating & 5867 & 122057\\
-schema:aggregateRating is missing proper range & 4984 & 56890\\
-schema:reviewRating has different range from: schema:Rating & 4095 & 144239\\
-schema:name does not contain a literal value (XMLS:string) & 1310 & 190840\\
-schema:itemReviewed is missing proper range & 1058 & 1505\\
-schema:reviewRating has rdfs:domain different from: schema:Review & 331 & 144239\\
-schema:email does not contain a literal value (XMLS:string) & 174 & 174 \hline
+ schema:datePublished does not have datatype:XMLS:date & 152138 & 152138\\
+ schema:ratingCount does not have datatype: XMLS:decimal & 12509 & 12509\\
+ schema:ratingValue has rdfs:domain different from: schema:Rating & 6198 & 181178\\
+ schema:worstRating has rdfs:domain different from: schema:Rating & 5867 & 108095\\
+ schema:bestRating has rdfs:domain different from: schema:Rating & 5867 & 122057\\
+ schema:aggregateRating is missing proper range & 4984 & 56890\\
+ schema:reviewRating has different range from: schema:Rating & 4095 & 144239\\
+ schema:name does not contain a literal value (XMLS:string) & 1310 & 190840\\
+ schema:itemReviewed is missing proper range & 1058 & 1505\\
+ schema:reviewRating has rdfs:domain different from: schema:Review & 331 & 144239\\
+ schema:email does not contain a literal value (XMLS:string) & 174  & 174 \\ \hline
 \end{tabular}
 
-Para purl:
-
+La Tabla \ref{table:RDFUnitPurlAutomatic} muestra el resultado de correr el framework RDFUnit automático sobre la ontología de PURL.
+\begin{table}[h]
 \begin{tabular}{| l | c | r | }\hline
 Test & Fallos & Casos \\\hline
-rev:reviewer is missing proper range & 83340 & 157004\\
-rev:reviewer has different range from: foaf:Person & 73664 & 157004\\
-rev:hasReview has different range from: rev:Review & 72398 & 347548\\
-rev:title has rdfs:domain different from: rev:Review & 14705 & 104900 \hline
+ rev:reviewer is missing proper range & 83340 & 157004\\
+ rev:reviewer has different range from: foaf:Person & 73664 & 157004\\
+ rev:hasReview has different range from: rev:Review & 72398 & 347548\\
+ rev:title has rdfs:domain different from: rev:Review & 14705 & 104900 \\ \hline
 \end{tabular}
+\caption{Resultados del test RDFUnit automático}
+\label{table:RDFUnitPurlAutomatic}
+\end{table}
 
 \section{Evaluación nº 4 - RDFUnit-Manual}
 \label{section:evaluacion-manual}
