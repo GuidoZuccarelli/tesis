@@ -137,7 +137,7 @@ Con la posibilidad de contar con una web en la cual los datos son interpretados 
 
 Ahora bien, si en lugar de requerir reviews de un ítem en particular, se necesitan reviews para una aplicación que recomiende ítems a usuarios, ya no sería una tarea realizable humanamente. Para ello haría falta una aplicación que haga crawling en la web y de alguna manera identifique reviews y a su vez identifique el ítem al cual el review hace referencia. 
 Parece algo muy difícil de lograr, salvo que se trabaje sobre sitios conocidos con documentos estructuralmente dominados los cuales se pueda recorrer el DOM automáticamente y acceder a los reviews.
-De nuevo, la Web Semántica promete solucionar este problema \cite{Heitmann}, con el uso de metadatos que dan información sobre los datos, haciendo que una aplicación pueda fácilmente identificar reviews y navegar por la hipermedia de los datos para conseguir información sobre el ítem y usuario referenciados.
+De nuevo, la Web Semántica promete solucionar este problema \cite{Heitmann}, con el uso de metadatos que dan información sobre los datos, haciendo que una aplicación pueda fácilmente identificar reviews y navegar por la hipermedia de los datos para conseguir información sobre el ítem y usuario referenciados.\cite{Zhou2005}
 
 La figura \ref{figure:semanticwebreview} muestra un ejemplo concreto de un review publicado en la web, respetando los lineamientos de la web semántica. 
 
@@ -147,6 +147,9 @@ La figura \ref{figure:semanticwebreview} muestra un ejemplo concreto de un revie
     \caption{Ejemplo de review en la web semántica}
     \label{figure:semanticwebreview}
 \end{figure}
+
+En \cite{Heath2006} se presenta un sistema con el objetivo de publicar reviews en la web semántica. Dicho sistema no tuvo éxito
+y la funcionalidad del mismo actualmente inoperable.
 
 \begin{framed}
 \textcolor{red}{Acá es donde presentas el problema a resolver. Ya contaste que son los reviews y por que alguien querría integrarlos. Ya contaste que es la web semántica y linked open data. Ahora tenés que contar que ha habido iniciativas para darle semántica a los reviews y que existen datos; ahora hay una posibilidad de aprovechar esa información. Y ahí decís algo como lo que dijiste al final de la propuesta: \textit{El objetivo principal de esta tesis es evaluar la viabilidad, y entender los desafíos de la utilización de la información contenida en la web semántica en la construcción de sistemas de recomendación. Para eso, y con foco en el caso particular de opiniones de usuarios sobre distintos tipos de recursos se buscará: capturar, extraer, validar calidad, curar, integrar, publicar y explotar los datos disponibles}.}
