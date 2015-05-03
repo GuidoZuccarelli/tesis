@@ -66,7 +66,7 @@ que puedan cubrir todos los casos de uso.
 Para esto, se puede aprovechar que las propiedades de un vocabulario, no necesariamente tienen que ser utilizadas estrictamente dentro del mismo.
 Lo único que debe respetarse es el dominio y rango de cada una, si no se explicita, puede utilizarse en otros vocabularios.
 
-Goodrelations es un ejemplo del uso de propiedades de múltiples vocabulairos para crear uno nuevo.
+Goodrelations\cite{Hepp2008} es un ejemplo del uso de propiedades de múltiples vocabulairos para crear uno nuevo.
 \\\\
 Y por último se debería intentar buscar ejemplos reales que muestren el uso que le dieron los usuarios a la ontología, para 
 determinar qué propiedades están incorrectamente interpretadas o también para los casos donde las propiedades que se encuentren 
@@ -77,7 +77,7 @@ Existen dos buscadores específicos para esta tarea:
 
 \subsection{Linked Open Vocabulary (LOV)}
 
-Proporciona una plataforma técnica de búsqueda y evaluación de calidad sobre un dataset extraído de linked data cloud que contiene descripciones de vocabularios RDFS 
+\cite{Vandenbussche2012} Proporciona una plataforma técnica de búsqueda y evaluación de calidad sobre un dataset extraído de linked data cloud que contiene descripciones de vocabularios RDFS 
 y ontologías OWL. Esas descripciones están en forma de metadatos y pueden ser generados tanto por los autores de los vocabularios como por curadores de LOV.
 Posee además de la búsqueda las funciones de estadística o sugerencia.
 
@@ -86,7 +86,7 @@ Actualmente el dataset está integrado por 475 namespaces distintos que contiene
 \subsection{Vocab.cc}
 Vocabcc es un proyecto opensource que permite a los desarolladores de RDF realizar búsquedas de vocabularios de Linked Data.
 
-Para facilitar la decisión de seleccionar un vocabulario deseado, proporciona además información estadística de cada uno sobre el dataset Billon Triple Challenge (BTCD). 
+Para facilitar la decisión de seleccionar un vocabulario deseado, proporciona además información estadística de cada uno sobre el dataset Billon Triple Challenge (BTCD)\cite{btc-2012}. 
  Esta información incluye el número de apariciones globales de la URI dada en el BTCD, así como el número de documentos dentro de la BTCD, que contiene el URI dado. Estos números permiten una clasificación de propiedades y clases, respectivamente, con respecto a su uso. También se proporciona información acerca de la posición de una URI dada en estos rankings.
 
 Los desarrolladores pueden buscar las URIs con queries arbitrarias o búsquedas de URIs específicos (prefijos comunes se resuelven automáticamente con datos de prefix.cc).
@@ -241,7 +241,8 @@ Algunos posibles triplestores pueden ser
 \item Sesame triplestore: Componente del framework Sesame, que tiene la opción de almacenar la información en disco o en memoria. Lo que puede significar un improtante beneficio para quienes requieran performance elevada en queries. Soporta no solo SPARQL sino también SeRQL. Tiene además la ventaja de poder integrar Alibaba, que es un mapeador de calses de Java a ontologías RDF.
 \end{itemize}
 
-\noindent Aquí hay un par de datos extraídos del paper Chris Bizer, Andreas Schultz. The Berlin SPARQL Benchmark. Int. J. Semantic Web Inf. Syst. 5(2): 1-24 (2009) que habla sobre un benchmark que compara triplestores:
+\noindent En el capítulo 6 de \cite{Bizer2001} se observan los siguientes resultados comparativos entre las distintas bases de 
+datos semánticas.
 
 \begin{itemize}
 \item To load 100m triples of evaluation data:
