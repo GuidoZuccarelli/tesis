@@ -127,8 +127,8 @@ Se encontraron en total 17343 reviews replicados en un total de 78705 reviews de
 
 \noindent 12709 estaban duplicados en documentos pertenecientes a distintos dominios
 \\\\
-Ésta es la lista con los dominios a los cuales se le encontraron más cantidad de reviews duplicados:
-
+En el cuadro \ref{table:DominioDup} se observa una lista con los dominios a los cuales se le encontraron más cantidad de reviews duplicados:
+\begin{table}[h]
 \begin{tabular}{| l | c | }\hline
 Dominio & Cantidad de reviews duplicados \\\hline
 4outof10.com &	21582\\
@@ -142,6 +142,9 @@ www.carsurvey.org &	2766\\
 www.chip.de &	1526\\
 www.thewinecellarinsider.com &	1491\\\hline
 \end{tabular}
+\caption{Cantidad de documentos duplicados por dominio}
+\label{table:DominioDup}
+\end{table}
 
 \section{Evaluación nº 3 - RDFUnit-Automatizado}
 \label{section:evaluacion-automatizado}
@@ -155,15 +158,18 @@ El framework crea test automaticamente a partir de las ontologías, buscando una
 instaló el framework, se lo proveyó de las ontologías relevantes y se corrieron los test sobre el dataset.
 
 \subsection*{Resultados}
-
+\begin{table}[h]
 \begin{tabular}{| l | c | }\hline
 Total test cases & 2116\\\hline
 Succeeded & 2067\\
 Failed & 49\\\hline
 \end{tabular}
+\caption{Resultados del test RDFUnit automático}
+\label{table:RDFUnitAutomatic}
+\end{table}
 
-Los tests fallados más relevantes fueron para schema:
-
+El cuadro \ref{table:RDFUnitSchemaAutomatic} muestra los principales errores encontrados para la ontología schema.
+\begin{table}[h]
 \begin{tabular}{| l | c | r | }\hline
 Test & Fallos & Casos \\\hline
  schema:datePublished does not have datatype:XMLS:date & 152138 & 152138\\
@@ -178,6 +184,9 @@ Test & Fallos & Casos \\\hline
  schema:reviewRating has rdfs:domain different from: schema:Review & 331 & 144239\\
  schema:email does not contain a literal value (XMLS:string) & 174  & 174 \\ \hline
 \end{tabular}
+\caption{Resultados del test RDFUnit automático para la ontología Schema}
+\label{table:RDFUnitSchemaAutomatic}
+\end{table}
 
 La Tabla \ref{table:RDFUnitPurlAutomatic} muestra el resultado de correr el framework RDFUnit automático sobre la ontología de PURL.
 \begin{table}[h]
@@ -202,6 +211,9 @@ automáticos de la evaluación anterior.
 de la misma manera que en la evaluación anterior
 
 \subsection*{Resultados}
+
+En el Cuadro \ref{table:RDFUnitManual} se visualizan los resultados de aplicar la evaluación manual.
+\begin{table}[h]
 \begin{tabular}{| l | c | r | }
 http://purl.org/dc/terms/date has a format different to YYYY-MM-DD & 92580 & 207130\\
 http://schema.org/datePublished has a format different to YYYY-MM-DD & 53740 & 144594\\
@@ -213,6 +225,9 @@ http://schema.org/ratingValue is smaller than http://schema.org/worstRating & 41
 http://schema.org/ratingValue is not a natural number & 33 & 60682\\
 http://schema.org/ratingValue is not in the expected range (1-5) & 1 & 73090 
 \end{tabular}
+\caption{Resultados del test RDFUnit manual}
+\label{table:RDFUnitManual}
+\end{table}
 
 \section{Evaluación nº 5 - Análisis experto}
 \label{section:evaluacion-analisis}
@@ -240,7 +255,9 @@ Esta query debería devolver las propiedades que poseen los reviews y la cantida
 
 \subsection*{Resultados} más improtantes:
 
-Para la clase schema:Review\\
+La clase Review de la ontología schema utilizaba 15 propiedades. 
+
+\begin{table}[h]
 \begin{tabular}{| l | c | }
  Propiedad & Cantidad \\
  http://schema.org/author & 146243 \\
@@ -259,8 +276,11 @@ Para la clase schema:Review\\
  http://schema.org/itemReviewed & 2071 \\
  http://schema.org/itemreviewed & 67 
 \end{tabular}
+\caption{Estadística de las propiedades de la clase schema:Review}
+\label{table:PropertiesStatisticsSchema}
+\end{table}
 
- Mirando la tabla de resultados, el primer error semántico que salta a la vista son las 2292 propiedades review dentro de un review. 
+ Mirando el cuadro \ref{table:PropertiesStatisticsSchema}, el primer error semántico que salta a la vista son las 2292 propiedades review dentro de un review. 
  Es claramente un error en la producción del documento. 
  Una rápida búsqueda de los documentos con este problema mostró que son 2 los dominios que repiten el error a lo largo de sus documentos
  http://www.ilgiardinodeilibri.it/ y http://www.iplaysoft.com/
@@ -344,6 +364,7 @@ Para la clase schema:Review\\
  \\
  \\
  Para la clase purl:Review\\
+ \begin{table}[h]
  \begin{tabular}{| l | c | }
  Propiedad & Cantidad \\
  \verb|http://purl.org/stuff/rev#text| & 207259\\
@@ -357,12 +378,16 @@ Para la clase schema:Review\\
  \verb|http://www.w3.org/2006/vcard/ns#url| & 6420\\
  \verb|http://www.w3.org/2006/vcard/ns#geo| & 6123
 \end{tabular}
+\caption{Propiedades de la clase purl:Review}
+\label{table:PropertiesStatisticsPurl}
+\end{table}
 \\ 
 
-Los resultados más llamativos son la aparición de propiedades que normalmente se encuentran en el ítem, dado que no tienen sentido para un review
-que son hasReview (un review dentro de un review), n (nombre para un review), fn (idem n), geo (posición geográfica de un review).
-El hecho de que todas se encuentren en cantidades similares es el gran indicador de que es un dominio repitiendo algún problema a lo largo de sus documentos.
-Una inspección de los dominios donde se encuentra cada uan muestra que todas están incluídas en http://hoteles.hotelopia.es y http://hotels.hotelopia.it/
+Los resultados más llamativos son la aparición de propiedades que normalmente se encuentran en el ítem, como puede observarse en el cuadro \ref{table:PropertiesStatisticsPurl},
+dado que no tienen sentido para un review que son hasReview (un review dentro de un review), n (nombre para un review), fn (idem n),
+geo (posición geográfica de un review). El hecho de que todas se encuentren en cantidades similares es el gran indicador de que es 
+un dominio repitiendo algún problema a lo largo de sus documentos. Una inspección de los dominios donde se encuentra cada uan muestra
+que todas están incluídas en http://hoteles.hotelopia.es y http://hotels.hotelopia.it/ .
 Básicamente el problema es que le asignaron el tipo purl:Review a ítems.
  
 %Estrategia:

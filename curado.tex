@@ -85,16 +85,18 @@ where{
 }GROUP BY ?dominio
 \end{lstlisting}
 
-Y los resultados fueron
-
+\begin{table}[h]
 \begin{tabular}{| l | c |}
  <http://schema.org/Rating> & 120165\\
  <http://schema.org/AggregateRating> & 54815 \\
  <http://schema.org/Review> & 5867 \\
  <http://schema.org/Product> & 331 \\
 \end{tabular}
+\caption{Dominio de los recursos con propiedad schema:ratingValue}
+\label{table:ratingValueDomains}
+\end{table}
 
-Se puede apreciar que en la mayor parte de los casos de error, se dieron porque se incluyó la propiedad ratingValue directamente en 
+En el cuadro \ref{table:ratingValueDomains} se puede apreciar que en la mayor parte de los casos de error, se dieron porque se incluyó la propiedad ratingValue directamente en 
 el Review. Ahora surge la necesidad de saber si esos casos donde el Review tiene la propiedad ratingValue, existe una propiedad reviewRating 
 con su respectivo Rating.
 Se relizó la consulta:
@@ -149,15 +151,15 @@ puede ser resuelto, primer hubo que evaluar qué clase de recursos contienen com
 Resultado:
 La evaluación encontró que, todos esos recursos eran URIs de un dominio web 411ca.com para ser derreferenciados. La solución podría haber sido 
 descargar dichos recursos y anexarlos a la propiedad, pero lamentablemente dichos recursos no se encontraban disponibles de forma online.
-
+\\\\
 http://purl.org/stuff/rev\#hasReview has different range from: http://purl.org/stuff/rev\#Review 
 En este caso no hay error, el inconvieniente surge porque los recursos de tipo purl:ReviewAggregate utilizan también la propiedad hasReview
 que no esta contemplado en la ontología de purl.
-
+\\\\
 http://purl.org/stuff/rev\#reviewer is missing proper range
 Este caso se da porque se genera un recurso vació, específicamente el reviewer. El reviewer no fue provisto en lso documentos orginales donde 
 se derivó este problema, simplemente establecían el metadato reviewer dejándolo vacío.
-
+\\\\
 http://purl.org/stuff/rev\#reviewer has different range from: http://xmlns.com/foaf/0.1/Person
 En estos casos analizando qué clase contenian si no era foaf:Person, se observó que la clase era http://www.w3.org/2006/vcard/ns\#VCard.
 En todos los casos donde el reviewer no se encontraba vacío, se utilizó un v:card en lugar de un foaf:Person, y esto tiene una explicación, 
@@ -205,10 +207,12 @@ queden 0 resultados.
 
 Resultados:
 
-Se descubrieron los siguientes patrones
+En los cuadros \ref{table:RegExpressionsDate} \ref{table:RegExpressionsDatePublished} \ref{table:RegExpressionsPublishDate} \ref{table:RegExpressionsDtreviewed} se muestran los patrones de expresiones regulares que cubrieron con todos los casos de formatos 
+de fechas.
 \\
 \\
 http://schema.org/datePublished\\
+\begin{table}[h]
 \begin{tabular}{| l | c |}
 Expresión regular & Cantidad de reviews\\
 \verb|^[A-z]+ [0-9]{2}, [0-9]{4}$ &| 14715 \\
@@ -222,9 +226,13 @@ Expresión regular & Cantidad de reviews\\
 \verb|[0-9]{2}/[0-9]{2}/[0-9]{2} &| 67\\
 \verb|^[0-9]{1}\\.[0-9]{2}\\.[0-9]{4}$ &| 30
 \end{tabular}
+\caption{Expresiones regulares que representan los formatos de las fechas de la propiedad datePublished}
+\label{table:RegExpressionsDatePublished}
+\end{table}
 \\
 \\
 http://purl.org/dc/terms/date\\
+\begin{table}[h]
 \begin{tabular}{| l | c |}
 Expresión regular & Cantidad de reviews\\
 \verb|^[0-9]{4}-[0-9]{2}-[0-9]{2}.+| & 33833\\
@@ -243,16 +251,22 @@ Expresión regular & Cantidad de reviews\\
 \verb|^[0-9]{2}-[0-9]{2}-[0-9]{4}$| & 1024\\
 \verb|^[A-z]+ [0-9]{1}[a-z]{2} [0-9]{4}\\.$| & 746\\
 \verb|^[0-9]{1}((?!-).)[0-9]{2}((?!-).)[0-9]{4}$| & 279\\
-\end{tabular}\\
+\end{tabular}
+\caption{Expresiones regulares que representan los formatos de las fechas de la propiedad purl:date}
+\label{table:RegExpressionsDate}
+\end{table}\\
 \\
-http://schema.org/publishDate\\
+\begin{table}[h]
 \begin{tabular}{| l | c |}
 Expresión regular & Cantidad de reviews\\
 \verb|[0-9]{2}/[0-9]{2}/[0-9]{2} &| 2511\\
 \verb|^[0-9]{2}\\.[0-9]{2}\\.[0-9]{4}$ &| 2207
-\end{tabular}\\
+\end{tabular}
+\caption{Expresiones regulares que representan los formatos de las fechas de la propiedad publishDate}
+\label{table:RegExpressionsPublishDate}
+\end{table}\\
 \\
-http://schema.org/dtreviewed\\
+\begin{table}[h]
 \begin{tabular}{| l | c |}
 Expresión regular & Cantidad de reviews\\
 \verb|^[0-9]{1}((?!-).)[0-9]{2}((?!-).)[0-9]{4}$| & 14762\\
@@ -260,6 +274,9 @@ Expresión regular & Cantidad de reviews\\
 \verb|^[0-9]{2}((?!-).)[0-9]{2}((?!-).)[0-9]{4}$| & 4193\\
 \verb|^[0-9]{2}((?!-).)[0-9]{1}((?!-).)[0-9]{4}$| & 1590
 \end{tabular}
+\caption{Expresiones regulares que representan los formatos de las fechas de la propiedad  dtreviewed}
+\label{table:RegExpressionsDtreviewed}
+\end{table}
 
 Una vez encontrados los patrones, sólo fue cuestion de correr un algoritmo en Java dónde se contemplan todo los patrones y se 
 le aplica la correción apropiada al String y se vuelve a almacenar en el review.
@@ -314,12 +331,17 @@ Resultados:
 El mapa resultante de esta evaluación fue el siguiente.
 
 Dominio: www.yellowbot.com\\
+\begin{table}[h]
 \begin{tabular}{| l | c |}
  Valor & Cantidad\\
  0 & 13\\
 \end{tabular}
+\caption{Resultados del test RDFUnit automático}
+\label{table:RDFUnitAutomatic}
+\end{table}
 
 Dominio: www.chip.de\\
+\begin{table}[h]
 \begin{tabular}{| l | c |}
  Valor & Cantidad\\
  6 & 1\\
@@ -397,27 +419,43 @@ Dominio: www.chip.de\\
  96 & 34\\
  97 & 27
 \end{tabular}
+\caption{Resultados del test RDFUnit automático}
+\label{table:RDFUnitAutomatic}
+\end{table}
 
 Dominio: www.gamezebo.com\\
+\begin{table}[h]
 \begin{tabular}{| l | c |}
  Valor & Cantidad\\
  0 & 5\\
 \end{tabular}
+\caption{Resultados del test RDFUnit automático}
+\label{table:RDFUnitAutomatic}
+\end{table}
 
 Dominio: www.gogobot.com\\
+\begin{table}[h]
 \begin{tabular}{| l | c |}
  Valor & Cantidad\\
  0 & 1\\
 \end{tabular}
+\caption{Resultados del test RDFUnit automático}
+\label{table:RDFUnitAutomatic}
+\end{table}
 
 Dominio: www.ormigo.com\\
+\begin{table}[h]
 \begin{tabular}{| l | c |}
  Valor & Cantidad\\
  0 & 9\\
  -1 & 24
 \end{tabular}
+\caption{Resultados del test RDFUnit automático}
+\label{table:RDFUnitAutomatic}
+\end{table}
 
 Dominio: www.chroniclesofchaos.com\\
+\begin{table}[h]
 \begin{tabular}{| l | c |}
  Valor & Cantidad\\
  0 & 17\\
@@ -427,8 +465,12 @@ Dominio: www.chroniclesofchaos.com\\
  9 & 497\\
  10 & 101\\
 \end{tabular}
+\caption{Resultados del test RDFUnit automático}
+\label{table:RDFUnitAutomatic}
+\end{table}
 
 Dominio: www.kollermedia.at\\
+\begin{table}[h]
 \begin{tabular}{| l | c |}
  Valor & Cantidad\\
  6 & 19\\
@@ -437,9 +479,13 @@ Dominio: www.kollermedia.at\\
  9 & 7\\
  10 & 7\\
 \end{tabular}
+\caption{Resultados del test RDFUnit automático}
+\label{table:RDFUnitAutomatic}
+\end{table}
  
 En base a esta información se infirieron los siugientes rangos:
 
+\begin{table}[h]
 \begin{tabular}{| l | c | r | }
  Dominio & Rango mínimo & Rango máximo \\
  www.gamezebo.com & 0 & 5 \\
@@ -448,6 +494,9 @@ En base a esta información se infirieron los siugientes rangos:
  www.kollermedia.at & 1 & 10 \\
  www.chip.de & 1 & 100 
 \end{tabular}
+\caption{Resultados del test RDFUnit automático}
+\label{table:RDFUnitAutomatic}
+\end{table}
 
 Luego estos resultados se corroboraron manualmente revisando todos los valores que poseía el dominio tanto dentro del rango 1-5 como fuera .
 Desde ya que no se puede asegurar la veracidad de los rangos encontrados, dado que por ejemplo, podría suceder que para el dominio 
@@ -465,6 +514,7 @@ maneja con rangos diferentes y el valor real del rating cambiaría (no es lo mis
 
 Resultados:\\
 Se le asignaron propiedades a:\\
+\begin{table}[h]
 \begin{tabular}{| l | c |}
  www.gamezebo.com & 3905\\
  www.yellowbot.com & 8955\\
@@ -472,21 +522,32 @@ Se le asignaron propiedades a:\\
  www.kollermedia.at & 9968\\
  www.chip.de & 13751\\
  Total & 41545
-\end{tabular}\\
+\end{tabular}
+\caption{Resultados del test RDFUnit automático}
+\label{table:RDFUnitAutomatic}
+\end{table}\\
 \\
 \section{Curado nº 5 - Análisis experto}
 \label{section:curado-analisis}
 Propiedades inexistentes o semánticamente incorrectas\\
 Son los casos de itemreviewed, dtreviewed, publishDate y reviewBody, ya analizados en la evaluación.
-Estrategia: En este caso para todas el procedimiento es exactamente el mismo, y es bastante sensillo, crear una nueva propiedad con 
-el mismo sujeto y objeto, pero la propiedad indicada para cada caso y luego borrar la tripleta incorrecta\\
+Estrategia: En este caso para todas el procedimiento es exactamente el mismo, y es bastante sencillo, crear una nueva propiedad con 
+el mismo sujeto y objeto, pero la propiedad indicada para cada caso y luego borrar la tripleta incorrecta.\\
+
+\begin{table}[h]
 \begin{tabular}{| l | c |}
+ Propiedad Inexistente & Propiedad correcta \\
  itemreviewed & itemReviewed\\
  dtreviewed, publishDate & datePublished\\
  description & reviewBody
-\end{tabular}\\
+\end{tabular}
+\caption{Propiedades inexistentes}
+\label{table:UndefinedProps}
+\end{table}\\
 \\
 
+El Cuadro \ref{table:UndefinedProps} lista las propiedades incorrectas encontradas con su correspondiente indicado.
+\\
 Comentarios en forma de reviews\\
 Objetivo:
 Corregir la clase de los recursos que son de tipo schema:UserComments pero fueron clasificados como schema:Review
@@ -503,7 +564,8 @@ Por lo que primero se debe inspeccionar qué propiedades continen dichos recurso
  ?review ?p ?o .
  }
 \end{lstlisting}
-Las propiedades resultantes fueron\\
+
+\begin{table}[h]
 \begin{tabular}{| l | c |}
 Propiedad encontrada & Equivalente en Comment\\
 http://schema.org/description & http://schema.org/commentText \\
@@ -511,7 +573,11 @@ http://schema.org/reviewBody & http://schema.org/commentText \\
 http://schema.org/datePublished & http://schema.org/commentTime \\
 http://schema.org/author & http://schema.org/creator
 \end{tabular}
+\caption{Equivalencia de propiedades de la clase Review con UserComments}
+\label{table:PropertyEqRevCom}
+\end{table}
 
+En el cuadro \ref{table:PropertyEqRevCom} se muestran las propiedades encontradas junto con su equivalente en la clase requerida. 
 Entonces simplemente para solucionar el problema alcanza con la siguiente consulta SPARQL:\\
 \begin{lstlisting}[frame=single]
  DELETE { 

@@ -40,7 +40,9 @@ Y por último se determinó utilizar una base de datos TDB, por múltiples razon
 
 \textbf{Any23}
 \\\\
-Extractores utilizados más importantes:\\
+En el cuadro \ref{table:Extractors} puede observarse una lista de los principales extractores utilizados por Any23 para realizar el 
+procedimiento.
+\begin{table}[h]
 \begin{tabular}{| l | c | r | }\hline
 Extractor & Documentos & Porcentaje \\\hline
 html-head-title & 233.743 & 98,77 \\    
@@ -51,6 +53,9 @@ html-hcard & 73.197 & 30,93  \\
 html-hreview-aggregated & 48.771 & 20,60 \\
 html-mf-adf & 44.788 & 18,92 \\\hline
  \end{tabular}
+\caption{Extractores utilizados más importantes}
+\label{table:Extractors}
+\end{table}
 \\
 \\
 Errores por documentos mal descargados:
@@ -62,8 +67,9 @@ null 4661
 \noindent Error while retrieving mime type 1
 \\ 
 \\ 
-Documentos obtenidos:
+El cuadro \ref{table:SemanticaEnDocumentows} define un panorama de las tripletas semánticas extraídas en los documentos obtenidos.
 
+\begin{table}[h]
 \begin{tabular}{| l | c | }\hline
 Documentos con review & 187.088 \\
 Documentos sin review & 49.552\\
@@ -76,7 +82,10 @@ Tripletas totales de documentos con review & 15719392\\
 Tripletas promedio sobre documentos sin review & 20.01\\\hline
 Total Documentos & 236640\\\hline
 \end{tabular}
-\\ \\
+\caption{Estadística del contenido semántico en los documentos}
+\label{table:SemanticaEnDocumentows}
+\end{table}
+
 Cabe destacar que, ese procentaje de documentos con review 79\% implica que el 21\% restante fueron documentos que sindice tiene indexados como contenedores de 
 alguna de las clases de review mencionadas y ya no los tiene en la actualidad. Ya sea porque:
 \begin{itemize}
@@ -91,22 +100,28 @@ dependiendo de si aún existen y además aún tenían publicados documentos de r
 \textbf{Riot:}
 
 \noindent Múltiples errores detectados en el merge de los documentos extraídos. No queda claro si causados por any23 en la extracción, o el documento ya de origen 
-mal confeccionado. Fueron errores  no detectados por any23:\\
+mal confeccionado. 
+
+El cuadro \ref{table:BulkLoadErrors} muestra los errores detectados en el proceso de bulk load que no fueron advertidos por any23.\\
+\begin{table}[h]
 \begin{tabular}{| l | l | }\hline
 Error & Razon \\\hline
-PORT\_SHOULD\_NOT\_BE\_WELL\_KNOWN in PORT & Ports under 1024 should be accessed using the appropieate scheme name. \\
-ILLEGAL\_CHARACTER in FRAGMENT & The character violates the grammar rules for URIs/IRIs.\\
-DEFAULT\_PORT\_SHOULD\_BE\_OMITTED in PORT & If the port is the default one for the scheme it should be omitted. \\
-REQUIRED\_COMPONENT\_MISSING in HOST & A component that is required by the scheme is missing.\\
-DOUBLE\_WHITESPACE in QUERY & Either two or more consecutive whitespace characters, or leading or trailing whitespace. These match no grammar rules of URIs/IRIs. These characters are permitted in RDF URI References, XML system identifiers, but not XML Schema anyURIs.\\
-WHITESPACE in PATH & A single whitespace character. These match no grammar rules of URIs/IRIs. These characters are permitted in RDF URI References, XML system identifiers, and XML Schema anyURIs.\\
-ILLEGAL\_PERCENT\_ENCODING in QUERY & The host component a percent occurred without two following hexadecimal digits.\\
-NOT\_DNS\_NAME in HOST & The host component did not meet the restrictions on DNS names.\\
-DNS\_LABEL\_DASH\_START\_OR\_END in HOST & A DNS name had a - at the beginning or end.\\
-PROHIBITED\_COMPONENT\_PRESENT in USER & A component that is prohibited by the scheme is present.\\
-WHITESPACE in FRAGMENT & A single whitespace character. These match no grammar rules of URIs/IRIs. These characters are permitted in RDF URI References, XML system identifiers, and XML Schema anyURIs.\\
-WHITESPACE in QUERY & A single whitespace character. These match no grammar rules of URIs/IRIs. These characters are permitted in RDF URI References, XML system identifiers, and XML Schema anyURIs.\\\hline
+PORT\_SHOULD\_NOT\_BE\_& Ports under 1024 should be accessed \\ WELL\_KNOWN  in PORT  & using the appropieate scheme name. \\\hline
+ILLEGAL\_CHARACTER & The character violates the \\  in FRAGMENT & grammar rules for URIs/IRIs.\\\hline
+DEFAULT\_PORT\_SHOULD\_& If the port is the default one \\ BE\_OMITTED in PORT  & for the scheme it should be omitted. \\\hline
+REQUIRED\_COMPONENT\_& A component that is required by \\ MISSING in HOST & the scheme is missing.\\\hline
+DOUBLE\_WHITESPACE& Either two or more consecutive whitespace characters, \\  in QUERY  & or leading or trailing whitespace. These match no \\ & grammar rules of URIs/IRIs. These characters \\ & are permitted in RDF URI References, XML system \\ & identifiers, but not XML Schema anyURIs.\\\hline
+WHITESPACE in PATH & A single whitespace character. These match \\ & no grammar rules of URIs/IRIs. These characters are \\ & permitted in RDF URI References, XML \\ & system identifiers, and XML Schema anyURIs.\\\hline
+ILLEGAL\_PERCENT\_& The host component a percent occurred \\ ENCODING in QUERY  & without two following hexadecimal digits.\\\hline
+NOT\_DNS\_NAME& The host component did not meet \\  in HOST  & the restrictions on DNS names.\\\hline
+DNS\_LABEL\_DASH\_START& A DNS name had a - at the beginning or end.\\ \_OR\_END in HOST  & \\\hline
+PROHIBITED\_COMPONENT\_& A component that is prohibited by the scheme \\ PRESENT in USER  & is present.\\\hline
+WHITESPACE in FRAGMENT & A single whitespace character. These match no grammar \\ & rules of URIs/IRIs. These characters are permitted \\ & in RDF URI References, XML system identifiers \\ &, and XML Schema anyURIs.\\\hline
+WHITESPACE in QUERY & A single whitespace character. These match no \\ & grammar rules of URIs/IRIs. These characters are permitted \\ & in RDF URI References, XML system identifiers,\\ & and XML Schema anyURIs.\\\hline
 \end{tabular}
+\caption{Errores en el proceso de bulk load}
+\label{table:BulkLoadErrors}
+\end{table}
 
 \subsection{TDB Bulk load}
 

@@ -51,8 +51,8 @@ resultados se planificó la siguiente estrategia:
  \item De los 236697 51 documentos tenían una url de más de 255 caracteres por lo que no se pudo almacenar en el disco utilizando la url como nombre del archivo. Y 6 documentos malformados.
 \end{itemize}
 
-\noindent La estadística fue la siguiente:
-
+\noindent El cuadro \ref{table:ObtencionResults} muestra la estadística resultante de la implementación de este proceso.
+\begin{table}[h]
 \begin{tabular}{| l | c | }\hline
    Respuesta HTTP & Cantidad de documentos \\\hline
    200 & 236697 \\
@@ -67,4 +67,6 @@ resultados se planificó la siguiente estrategia:
    504 & 7 \\\hline
    Total & 254950 \\\hline
  \end{tabular}
-
+\caption{Resultados del proceso de obtención}
+\label{table:ObtencionResults}
+\end{table}
