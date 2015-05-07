@@ -149,7 +149,7 @@ muy alto.
 Para resolver este problema, existen etiquetas de marcado en HTML que le proporcionan información semántica al documento, que copmo se verá más adelante 
 puede ser extraída para generar documentos RDF. Existen distintos tipos:
 \begin{description}
-  \item[Microdatos:] Son un grupo de pares nombre-valor anidados dentro del documento, en paralelo con el contenido existente. Dichos grupo son 
+  \item[Microdatos:]\cite{Hickson2012} Son un grupo de pares nombre-valor anidados dentro del documento, en paralelo con el contenido existente. Dichos grupo son 
 también llamados ítems y cada par nombre-valor es la propiedad. Los atributos más utilizados son:
   \begin{itemize}
     \item itemscope: Se utiliza para crear un ítem
@@ -173,7 +173,7 @@ una serie de atributos de las etiquetas de XHTML:
 Con el uso del atributo class se puede entonces especificar un microformato a utilizar. Existen muchos tipos como por ejemplo: hCard (para describir 
 personas), hreview (para describir reviews), geo (para describir posiciones), etc. Cada uno de ellos con distintas propiedades.
 
-\item[RDF-a:] Permite directamente embeber tripletas (sujeto-predicado-objeto) utilizando namespaces de XML. Modela la información en forma de grafo, 
+\item[RDF-a:]\cite{Celik}Permite directamente embeber tripletas (sujeto-predicado-objeto) utilizando namespaces de XML. Modela la información en forma de grafo, 
 a diferencia de microdatos y microformatos que lo hacen en forma de árbol, lo que hace que el mapeo a RDF sea claro, ya que en los otros casos puede ser problemático.
 También tiene la opción de darle tipo a los literales. Como contrapartida tiene la desventaja de ser mucho más complejo de utilizar. 
 \end{description}
@@ -197,7 +197,7 @@ También tiene la opción de darle tipo a los literales. Como contrapartida tien
 \subsection{Extractores}
 
 Son herramientas que permiten extraer tripletas de los lenguajes de metadatos semánticos embebidos en HTML vistos anteriormente. 
-Utilizan estándares como GRDDL, parseando todo el documento HTML y buscan sentencias para traducir a RDF y generar un nuevo documento 
+Utilizan estándares como GRDDL\cite{Connolly2007}, parseando todo el documento HTML y buscan sentencias para traducir a RDF y generar un nuevo documento 
 que contiene sólo las tripletas de información semántica. 
 Muchas veces (sobre todo con microformatos) los extractores tienen que tomar decisiones sobre cómo traducir a RDF, por lo que 
 un mismo documento HTML puede ser extraído de distintas maneras según el extractor. Esto no ocurre con RDFa, ya que la equivalencia a RDF es mucho 
@@ -205,7 +205,7 @@ más clara.
 
 \subsection{Dublin core}
 
-Es un vocabulario ampliamente utilizado para describir tanto recursos web como recursos físicos creado en 2012. Comenzó siento un conjunto de 15 
+\cite{Dublin} Es un vocabulario ampliamente utilizado para describir tanto recursos web como recursos físicos creado en 2012. Comenzó siento un conjunto de 15 
 propiedades 
 
 \begin{lstlisting}
@@ -230,7 +230,7 @@ En la actualidad, se ha extendido a 55 propiedades y 22 clases.
 La aplicación más importante de la Web Semántica, que tiene como objetivo extraer información de wikipedia, y crear una versión semántica 
 de la información. Para ello creó una serie de ontologías, donde modelan y relacionan la información extraída de wikipedia.
 
-Dbpedia en la actualidad es reconocido como el sitio autoritativo de recursos de la web semántica, siendo las URIs de estos recursos 
+Dbpedia \cite{dbpedia-swj} en la actualidad es reconocido como el sitio autoritativo de recursos de la web semántica, siendo las URIs de estos recursos 
 la mejor forma de identificarlos.
 Es por eso que la gran mayoría de las aplicaciones de la web semántica utilizan la información de dbpedia para enriquecer sus datasets.
 En Septiembre de 2013, se contaron mas de 45 millones de links entre DBpedia y datasets externos como  Freebase, OpenCyc, UMBEL, GeoNames,
@@ -244,7 +244,7 @@ Musicbrainz, etc.
 
 \subsection{Revyu}
 
-Es una aplicación que se utiliza para publicar reviews de cualquier tipo en RDF. Alentando al usuario a generar reviews en la Web Semántica 
+\cite{Heath} Es una aplicación que se utiliza para publicar reviews de cualquier tipo en RDF. Alentando al usuario a generar reviews en la Web Semántica 
 sin la necesidad de conocimiento sobre la misma.
 
 Tiene el objetivo de proveer información reusable para otras aplicaciones, y generar datos de confianza y recomendación en las redes sociales.
@@ -254,7 +254,7 @@ También alienta el uso de links a distintos dataset semánticos, como el de DBp
 
 \subsection{Sindice} 
 
-Es una herramienta creada en conjunto por la Universidad de Deri,  Fondazione Bruno Kessler y Openlink Software que propociona 
+\cite{Oren2008} Es una herramienta creada en conjunto por la Universidad de Deri,  Fondazione Bruno Kessler y Openlink Software que propociona 
 múltiples tipos de API ofreciendo acceso a su dataset de la web de datos. 
 
 Este dataset contiene información recolectada de la web en múltiples formatos de la web semántica y puede ser accedido a travez 
@@ -295,3 +295,11 @@ Strings de JSON.
 
 Framework para Java que proveé una API que extiende las herramientas JAX-RS que simplifican el 
 desarrollo de una API Restful. 
+
+\subsection{RDFUnit}
+
+RDFUnit \cite{Kontokostas2014} es un framework creado con el objetivo de presentar una metodología para realizar una evaluación 
+de calidad sobre un dataset semántico.
+
+Dicho framework proveé una serie de patrones que ayudarán a testear posibles errores comunes en los dataset, brindando la posibilidad 
+al usuario de crear los propios. También poseé un mecanismo para detectar posibles test en un dataset.
