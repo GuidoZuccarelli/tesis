@@ -110,14 +110,14 @@ PORT\_SHOULD\_NOT\_BE\_& Ports under 1024 should be accessed \\ WELL\_KNOWN  in 
 ILLEGAL\_CHARACTER & The character violates the \\  in FRAGMENT & grammar rules for URIs/IRIs.\\\hline
 DEFAULT\_PORT\_SHOULD\_& If the port is the default one \\ BE\_OMITTED in PORT  & for the scheme it should be omitted. \\\hline
 REQUIRED\_COMPONENT\_& A component that is required by \\ MISSING in HOST & the scheme is missing.\\\hline
-DOUBLE\_WHITESPACE& Either two or more consecutive whitespace characters, \\  in QUERY  & or leading or trailing whitespace. These match no \\ & grammar rules of URIs/IRIs. These characters \\ & are permitted in RDF URI References, XML system \\ & identifiers, but not XML Schema anyURIs.\\\hline
-WHITESPACE in PATH & A single whitespace character. These match \\ & no grammar rules of URIs/IRIs. These characters are \\ & permitted in RDF URI References, XML \\ & system identifiers, and XML Schema anyURIs.\\\hline
-ILLEGAL\_PERCENT\_& The host component a percent occurred \\ ENCODING in QUERY  & without two following hexadecimal digits.\\\hline
+DOUBLE\_WHITESPACE& Either two or more consecutive \\  in QUERY  &  whitespace characters, or leading or \\ & trailing whitespace.These match no \\ & grammar rules  of URIs/IRIs. These \\ &  characters are  permitted in RDF URI \\ &  References, XML  system identifiers,\\ & but not XML Schema  anyURIs.\\\hline
+WHITESPACE in PATH & A single whitespace character. These \\ &  match no grammar rules of URIs/IRIs. \\ &  These characters are permitted in \\ & RDF URI References, XML system \\ & identifiers, and XML Schema \\ & anyURIs.\\\hline
+ILLEGAL\_PERCENT\_& The host component a percent occurred \\ ENCODING in QUERY  & without two following hexadecimal \\ & digits.\\\hline
 NOT\_DNS\_NAME& The host component did not meet \\  in HOST  & the restrictions on DNS names.\\\hline
-DNS\_LABEL\_DASH\_START& A DNS name had a - at the beginning or end.\\ \_OR\_END in HOST  & \\\hline
-PROHIBITED\_COMPONENT\_& A component that is prohibited by the scheme \\ PRESENT in USER  & is present.\\\hline
-WHITESPACE in FRAGMENT & A single whitespace character. These match no grammar \\ & rules of URIs/IRIs. These characters are permitted \\ & in RDF URI References, XML system identifiers \\ &, and XML Schema anyURIs.\\\hline
-WHITESPACE in QUERY & A single whitespace character. These match no \\ & grammar rules of URIs/IRIs. These characters are permitted \\ & in RDF URI References, XML system identifiers,\\ & and XML Schema anyURIs.\\\hline
+DNS\_LABEL\_DASH\_START& A DNS name had a - at the beginning \\ \_OR\_END in HOST  & or end.\\\hline
+PROHIBITED\_COMPONENT\_& A component that is prohibited by the \\ PRESENT in USER  & scheme is present.\\\hline
+WHITESPACE in FRAGMENT & A single whitespace character. These \\ & match no grammar  rules of URIs/IRIs. \\ & These characters are permitted in RDF \\ & URI References, XML system \\ & identifiers, and XML Schema anyURIs.\\\hline
+WHITESPACE in QUERY &A single whitespace character. These \\ & match no grammar  rules of URIs/IRIs. \\ & These characters are permitted in RDF \\ & URI References, XML system \\ & identifiers, and XML Schema anyURIs.\\\hline
 \end{tabular}
 \caption{Errores en el proceso de bulk load}
 \label{table:BulkLoadErrors}

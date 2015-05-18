@@ -2,7 +2,7 @@
 \label{chapter:seleccion}
 La selección de vocabularios es el primer paso en la estrategia propuesta en el capítulo \ref{chapter:estrategia} para explotar la web semántica. En esté capitulo, mostramos como fue aplicada a nuestro caso de estudio.
 \\\\
-Como se dijo anteriormente, seleccionar vocabularios implica reconocer qué propiedades mínimamente se requerirán para así poder comprobar 
+Como se dijo anteriormente, seleccionar vocabularios implica reconocer qué \\\noindent propiedades mínimamente se requerirán para así poder comprobar 
 si un vocabulario/ontología es suficiente en cuanto a su covertura de las mismas.\\\\
 
 En la actualidad existen cuatro vocabularios que cumplen los requerimientos mínimos para modelar el dominio de problema planteado.
@@ -73,7 +73,7 @@ Consta de tres clases y trece propiedades.
   Su domino es rdfs:Resource (siendo ésta la clase del ítem evaluado) y su rango no se encuentra especificado. 
   
   Es una propiedad muy útil pero actualmente se encuentra en desuso.
-  \item [date:] Si bien no está definida dentro del vocabulario, es correcto utilizar http://purl.org/dc/terms/date, implica la fecha
+  \item [date:] Si bien no está definida dentro del vocabulario, es correcto utilizar \\\noindent http://purl.org/dc/terms/date, implica la fecha
   en la que se realizó el review.
 \end{description}
 
@@ -140,7 +140,7 @@ En general si bien este vocabulario bien utilizado puede ser efectivo, resulta p
 de quien quiera explotarlos, el motivo por el cual se ha vuelto muy popular es su facilidad para generarlos, dado que 
 microformatos es un lenguaje muy sencillo y cualquier persona con un relativamente mínimo ocnocimiento de HTML puede generar 
 sin problemas un hReview, teniendo además herramientas online como opción, que generan el código a travez de un formulario. 
-Como es el caso de http://microformats.org/code/hreview/creator. 
+Como es el caso de \\\noindent http://microformats.org/code/hreview/creator. 
 
 
 \section{RDF Data Vocabulary}
@@ -156,7 +156,7 @@ notoriamente improvisada llamada http://rdf.datavocabulary.org/ .
 
 En ella se establecían modelos de clases para varios tipos de ítems, tales como Persona, Organización o Producto y también para los Reviews.
 \\\\
-La clase Review, quedó definida bajo el namespace http://data-vocabulary.org/Review e incluía las siguientes propiedades:
+La clase Review, quedó definida bajo el namespace \\\noindent http://data-vocabulary.org/Review e incluía las siguientes propiedades:
 \begin{itemize}
  \item itemreviewed: Enlace al ítem que está siendo evaluado.
  \item rating: El valor numérico con el cual el usuario expresa su satisfacción con el ítem, tiene como rango un valor numérico bajo la clase 
@@ -191,21 +191,19 @@ en conjunto con Bing y Yahoo crearon en el 2011 Schema.org, con el objetivo de o
 organizado para la implementación de los snippets con RDFa y microdata.
 \\\\
 Su lanzamiento provocó la inmediata obsoletización de data-vocabulary cuyas clases fueron todas reemplazadas por equivalentes 
-dentro de la nueva ontología:
-\begin{itemize}
- \item http://www.data-vocabulary.org/Address -> http://schema.org/PostalAddress
- \item http://www.data-vocabulary.org/Geo -> http://schema.org/GeoCoordinates
- \item http://www.data-vocabulary.org/Organization -> http://schema.org/Organization
- \item http://www.data-vocabulary.org/Person -> http://schema.org/Person
- \item http://www.data-vocabulary.org/Event -> http://schema.org/Event
- \item http://www.data-vocabulary.org/Product -> http://schema.org/Product
- \item http://www.data-vocabulary.org/Review -> http://schema.org/Review
- \item http://www.data-vocabulary.org/Offer -> http://schema.org/Offer
-\end{itemize}
-
-\noindent Este nuevo vocabulario, recibe constantes actualizaciones, al punto que, al día de la fecha, la ontología cuenta con 946 clases. 
+dentro de la nueva ontología:\\\\
+http://www.data-vocabulary.org/Address -\verb|>| http://schema.org/PostalAddress
+\\\\ http://www.data-vocabulary.org/Geo -\verb|>| http://schema.org/GeoCoordinates
+\\\\ http://www.data-vocabulary.org/Organization -\verb|>| http://schema.org/Organizat
+\\\\ http://www.data-vocabulary.org/Person -\verb|>| http://schema.org/Person
+\\\\ http://www.data-vocabulary.org/Event -\verb|>| http://schema.org/Event
+\\\\ http://www.data-vocabulary.org/Product -\verb|>| http://schema.org/Product
+\\\\ http://www.data-vocabulary.org/Review -\verb|>| http://schema.org/Review
+\\\\ http://www.data-vocabulary.org/Offer -\verb|>| http://schema.org/Offer
 \\\\
-En particular, la clase review, definida bajo el namespace http://schema.org/Review y es subclase de schema:CreativeWork 
+Este nuevo vocabulario, recibe constantes actualizaciones, al punto que, al día de la fecha, la ontología cuenta con 946 clases. 
+\\\\
+En particular, la clase review, definida bajo el namespace \\\noindent http://schema.org/Review y es subclase de schema:CreativeWork 
 que a su vez es subclase de schema:Thing.\\\\
 \textbf{Propiedades de Review}
  \begin{itemize}
@@ -218,10 +216,10 @@ que a su vez es subclase de schema:Thing.\\\\
  \begin{itemize}
   \item about: El tema del contenido. Rango schema:Thing. 
   \item aggregateRating: El promedio de la acumulación de uno o más ratings dentro de un review. Tiene rango schema:AggregateRating 
-  \item author: El autor del contenido. Tiene rango schema:Person o schema:Organization
+  \item author: El autor del contenido. Tiene rango schema:Person o \\\noindent schema:Organization
   \item comment: Comentarios sobre el contenido. De rango schema:Comment o schema:UserComments.
   \item commentCount: Cantidad de comentarios. Rango schema:Integer . 
-  \item creator: El autor del contenido. Tiene rango schema:Person o schema:Organization
+  \item creator: El autor del contenido. Tiene rango schema:Person o \\\noindent schema:Organization
   \item dateCreated: Fecha en la que fue creado. Rango schema:Date .
   \item dateModified: Fecha en la que fue modificado por última vez. Rango schema:Date .
   \item datePublished: Fecha en de la primer publicación. Rango schema:Date .
@@ -232,7 +230,7 @@ que a su vez es subclase de schema:Thing.\\\\
 
 \noindent \textbf{Properties de Thing}\\
  \begin{itemize}
-  \item additionalType: Tipos adicionales para el ítem que en general son utilizados para especificar tipos externos, como podría ser por ejemplo una película de clase http://schema.org/Movie con el tipo adicional  http://dbpedia.org/ontology/ . Tiene rango schema:URL .
+  \item additionalType: Tipos adicionales para el ítem que en general son utilizados para especificar tipos externos, como podría ser por ejemplo una película de clase http://schema.org/Movie con el tipo adicional \\\noindent  http://dbpedia.org/ontology/ . Tiene rango schema:URL .
   \item alternateName: Especifica un alias. Rango schema:Text .
   \item description: Una descripción corta del ítem. Rango schema:Text 
   \item name: Establece el nombre. Rango schema:Text .
@@ -244,7 +242,7 @@ que a su vez es subclase de schema:Thing.\\\\
 también heredan de CreativeWork. Lo importante aquí es remarcar un par de situaciones interesantes:
 
 \begin{itemize}
- \item Las propiedades Review:reviewBody, CreativeWork:text y Thing:description podrían contener el valor textual de la evaluación del review semánticamente correcta por la definición de cada una.
+ \item Las propiedades Review:reviewBody, CreativeWork:text y \\\noindent Thing:description podrían contener el valor textual de la evaluación del review semánticamente correcta por la definición de cada una.
 
  \item Las propiedades CreativeWork:author y CreativeWork:creator son exactamente iguales. 
 

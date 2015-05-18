@@ -41,9 +41,9 @@ Los resultados de esta evaluación fueron interesantes. Además de algunas propi
 de una mayúscula, se encontró que todas las propiedades utilizadas de la ontología schema estaban incorrectas.
 \\\\
 Ninguna de las propiedades encontradas bajo el namespace http://schema.org/ pertenecían a la ontología schema.
-Esto se debe a que cada propiedad incluía bajo su path su clase dominio de la siguiente manera: http://schema.org/CLASE/Propiedad .
-Por ejemplo:
-http://schema.org/Product/aggregateRating en lugar de http://schema.org/aggregateRating
+Esto se debe a que cada propiedad incluía bajo su path su clase dominio de la siguiente manera: \\\noindent http://schema.org/CLASE/Propiedad .
+Por ejemplo: \\\noindent
+http://schema.org/Product/aggregateRating en lugar de \\\noindent http://schema.org/aggregateRating
 
 Situaciones como ésta generan problemas cuando se intenta realizar consultas generales. Si por ejemplo se requiriera encontrar todos los aggregateRatings de todos los recursos no alcanzaría con 
 una simple querie, habría que realizar tantas queries como clases de la ontología schema existan.
@@ -172,17 +172,17 @@ El cuadro \ref{table:RDFUnitSchemaAutomatic} muestra los principales errores enc
 \begin{table}[h]
 \begin{tabular}{| l | c | r | }\hline
 Test & Fallos & Casos \\\hline
- schema:datePublished does not have datatype:XMLS:date & 152138 & 152138\\
- schema:ratingCount does not have datatype: XMLS:decimal & 12509 & 12509\\
- schema:ratingValue has rdfs:domain different from: schema:Rating & 6198 & 181178\\
- schema:worstRating has rdfs:domain different from: schema:Rating & 5867 & 108095\\
- schema:bestRating has rdfs:domain different from: schema:Rating & 5867 & 122057\\
- schema:aggregateRating is missing proper range & 4984 & 56890\\
- schema:reviewRating has different range from: schema:Rating & 4095 & 144239\\
- schema:name does not contain a literal value (XMLS:string) & 1310 & 190840\\
- schema:itemReviewed is missing proper range & 1058 & 1505\\
- schema:reviewRating has rdfs:domain different from: schema:Review & 331 & 144239\\
- schema:email does not contain a literal value (XMLS:string) & 174  & 174 \\ \hline
+ schema:datePublished does not have datatype:& 152138 & 152138\\ XMLS:date & & \\\hline
+ schema:ratingCount does not have datatype: & 12509 & 12509\\ XMLS:decimal & & \\\hline
+ schema:ratingValue has rdfs:domain different from:& 6198 & 181178\\ schema:Rating & & \\\hline
+ schema:worstRating has rdfs:domain different from:& 5867 & 108095\\ schema:Rating & & \\\hline
+ schema:bestRating has rdfs:domain different from:& 5867 & 122057\\ schema:Rating & & \\\hline
+ schema:aggregateRating is missing proper range & 4984 & 56890\\\hline
+ schema:reviewRating has different range from: & 4095 & 144239\\ schema:Rating & & \\\hline
+ schema:name does not contain a literal value & 1310 & 190840\\ (XMLS:string) & & \\\hline
+ schema:itemReviewed is missing proper range & 1058 & 1505\\\hline
+ schema:reviewRating has rdfs:domain different from:& 331 & 144239\\ schema:Review & & \\\hline
+ schema:email does not contain a literal value & 174  & 174 \\ (XMLS:string) & & \\\hline
 \end{tabular}
 \caption{Resultados del test RDFUnit automático para la ontología Schema}
 \label{table:RDFUnitSchemaAutomatic}
@@ -214,16 +214,16 @@ de la misma manera que en la evaluación anterior
 
 En el Cuadro \ref{table:RDFUnitManual} se visualizan los resultados de aplicar la evaluación manual.
 \begin{table}[h]
-\begin{tabular}{| l | c | r | }
-http://purl.org/dc/terms/date has a format different to YYYY-MM-DD & 92580 & 207130\\
-http://schema.org/datePublished has a format different to YYYY-MM-DD & 53740 & 144594\\
-http://schema.org/publishDate has a format different to YYYY-MM-DD & 50070 & 59825\\
-http://schema.org/dtreviewed has a format different to YYYY-MM-DD & 26903 & 26903\\ 
-http://purl.org/stuff/rev\#rating is not in the expected range (1-5) & 15319 & 298458\\
-http://purl.org/stuff/rev\#rating is not a natural number & 2866 & 301322\\
-http://schema.org/ratingValue is smaller than http://schema.org/worstRating & 41 & 108088 \\
-http://schema.org/ratingValue is not a natural number & 33 & 60682\\
-http://schema.org/ratingValue is not in the expected range (1-5) & 1 & 73090 
+\begin{tabular}{| l | c | r | }\hline
+Test & Fallos & Casos \\\hline
+http://purl.org/dc/terms/date has a & 92580 & 207130\\ format different to YYYY-MM-DD & & \\\hline
+http://schema.org/datePublished has a & 53740 & 144594\\ format different to YYYY-MM-DD   & & \\\hline
+http://schema.org/publishDate has a & 50070 & 59825\\ format different to YYYY-MM-DD  & & \\\hline
+http://schema.org/dtreviewed has a & 26903 & 26903\\ format different to YYYY-MM-DD & & \\\hline
+http://purl.org/stuff/rev\#rating is & 15319 & 298458\\ not in the expected range (1-5) & & \\\hline
+http://purl.org/stuff/rev\#rating is & 2866 & 301322\\ not a natural number & & \\\hline
+http://schema.org/ratingValue is & 41 & 108088 \\ smaller than http://schema.org/worstRating & & \\\hline
+http://schema.org/ratingValue is & 1 & 73090 \\ not in the expected range (1-5) & & \\\hline
 \end{tabular}
 \caption{Resultados del test RDFUnit manual}
 \label{table:RDFUnitManual}
@@ -323,7 +323,7 @@ La clase Review de la ontología schema utilizaba 15 propiedades.
  correcto utilizarla en un review porque forma parte de la clase CreativeWork), pero no tiene sentido utilizar palabras para describir un review, claramente 
  son palabras que utilizaron para describir al ítem.
  Una observación de los valores verifican lo descripto anteriormente y además muestran que esta propiedad es sólo utilizada en lso reviews por el dominio 
- http://www.kennstdueinen.de/ que además utiliza el idioma danés.
+ \\\noindent http://www.kennstdueinen.de/ que además utiliza el idioma danés.
  
  También hay que mencionar la superpoblación de propiedades que establecen la fecha del review: datePublished, publishDate y dtreviewed.
  El motivo por el cual aparecen tres propiedades distintas para referirse a lo mismo es básicamente porque publishDate y dtreviewed no existen bajo la 

@@ -22,7 +22,8 @@ INSERT{
   }
 }
 WHERE{
-  SELECT ?g ?s (IRI(CONCAT("http://schema.org/", ?prop)) AS ?p) ?o
+  SELECT ?g ?s 
+  (IRI(CONCAT("http://schema.org/", ?prop)) AS ?p) ?o
   WHERE{
     GRAPH ?g{
       ?s ?t ?o .
@@ -71,7 +72,7 @@ falta el tipo al recurso objeto, pero no necesariamente significa que esté mal,
 y será verificado en la consulta manual, en este caso por ejemplo, lo importante es que la fecha tenga el formato apropiado.
 Se decidió entonces atacar los problemas más específicos:
 
-http://schema.org/ratingValue has rdfs:domain different from: http://schema.org/Rating
+http://schema.org/ratingValue has rdfs:domain different from: \\\noindent http://schema.org/Rating
 
 Estrategia:
 Primero hubo que investigar, cuáles son todos los dominios para esa propiedad que aparecen en el dataset, para ver si se pueden 
@@ -152,16 +153,16 @@ Resultado:
 La evaluación encontró que, todos esos recursos eran URIs de un dominio web 411ca.com para ser derreferenciados. La solución podría haber sido 
 descargar dichos recursos y anexarlos a la propiedad, pero lamentablemente dichos recursos no se encontraban disponibles de forma online.
 \\\\
-http://purl.org/stuff/rev\#hasReview has different range from: http://purl.org/stuff/rev\#Review 
+http://purl.org/stuff/rev\#hasReview has different range from:\\\noindent http://purl.org/stuff/rev\#Review 
 En este caso no hay error, el inconvieniente surge porque los recursos de tipo purl:ReviewAggregate utilizan también la propiedad hasReview
 que no esta contemplado en la ontología de purl.
 \\\\
 http://purl.org/stuff/rev\#reviewer is missing proper range
-Este caso se da porque se genera un recurso vació, específicamente el reviewer. El reviewer no fue provisto en lso documentos orginales donde 
+Este caso se da \\\noindent porque se genera un recurso vació, específicamente el reviewer. El reviewer no fue provisto en lso documentos orginales donde 
 se derivó este problema, simplemente establecían el metadato reviewer dejándolo vacío.
 \\\\
-http://purl.org/stuff/rev\#reviewer has different range from: http://xmlns.com/foaf/0.1/Person
-En estos casos analizando qué clase contenian si no era foaf:Person, se observó que la clase era http://www.w3.org/2006/vcard/ns\#VCard.
+http://purl.org/stuff/rev\#reviewer has different range from:\\\noindent http://xmlns.com/foaf/0.1/Person
+En estos casos analizando qué clase contenian si no era foaf:Person, se observó que la clase era \\\noindent http://www.w3.org/2006/vcard/ns\#VCard.
 En todos los casos donde el reviewer no se encontraba vacío, se utilizó un v:card en lugar de un foaf:Person, y esto tiene una explicación, 
 y es que al haberse utilizado hreview con microformatos es imposible crear un recurso de esa clase, dado que no se posee un namespace, para que 
 eso sea posible, la clase foaf debería encontrarse dentro de los estándares de los microformatos. 
@@ -190,7 +191,8 @@ SELECT distinct ?date
 WHERE{
 ?review <http://local.org/id> ?id .
 ?review {DateProperty} ?date .
-FILTER (!REGEX(str(?date), "^[0-9]{4}-[0-9]{2}-[0-9]{2}$", "i")) .
+FILTER (!REGEX(str(?date), 
+"^[0-9]{4}-[0-9]{2}-[0-9]{2}$", "i")) .
 FILTER NOT EXISTS{
 ?review <http://local.org/deplicateOf> ?dup.
 }
@@ -213,18 +215,18 @@ de fechas.
 \\
 http://schema.org/datePublished\\
 \begin{table}[h]
-\begin{tabular}{| l | c |}
-Expresión regular & Cantidad de reviews\\
-\verb|^[A-z]+ [0-9]{2}, [0-9]{4}$ &| 14715 \\
-\verb|^[0-9]{4}-[0-9]{2}-[0-9]{2}.+ &| 17700 \\
-\verb|^[0-9]{4}-[0-9]{2}-[0-9]{1} [0-9]{2}:[0-9]{2}:[0-9]{2}$ &| 7179 \\
-\verb|^[0-9]{2}\\.[0-9]{2}\\.[0-9]{4}$ &| 7172\\
-\verb|^[A-z]+ [0-9]{2}, [0-9]{4}.+ &| 5049\\
-\verb|^[A-z]{3} [0-9]{1}, [0-9]{4} &| 1847\\
-\verb|^[0-9]{2}\\.[0-9]{1}\\.[0-9]{4}$ &| 410\\
-\verb|^[0-9]{1}\\.[0-9]{1}\\.[0-9]{4}$ &| 120\\
-\verb|[0-9]{2}/[0-9]{2}/[0-9]{2} &| 67\\
-\verb|^[0-9]{1}\\.[0-9]{2}\\.[0-9]{4}$ &| 30
+\begin{tabular}{| l | c |} \hline
+Expresión regular & Cantidad de reviews\\\hline
+\verb|^[A-z]+ [0-9]{2}, [0-9]{4}$ |& 14715 \\\hline
+\verb|^[0-9]{4}-[0-9]{2}-[0-9]{2}.+ |& 17700 \\\hline
+\verb|^[0-9]{4}-[0-9]{2}-[0-9]{1} |& 7179 \\ \verb|[0-9]{2}:[0-9]{2}:[0-9]{2}$| & \\\hline
+\verb|^[0-9]{2}\\.[0-9]{2}\\.[0-9]{4}$ |& 7172\\\hline
+\verb|^[A-z]+ [0-9]{2}, [0-9]{4}.+ |& 5049\\\hline
+\verb|^[A-z]{3} [0-9]{1}, [0-9]{4} |& 1847\\\hline
+\verb|^[0-9]{2}\\.[0-9]{1}\\.[0-9]{4}$ |& 410\\\hline
+\verb|^[0-9]{1}\\.[0-9]{1}\\.[0-9]{4}$ |& 120\\\hline
+\verb|[0-9]{2}/[0-9]{2}/[0-9]{2} |& 67\\\hline
+\verb|^[0-9]{1}\\.[0-9]{2}\\.[0-9]{4}$ |& 30 \\\hline
 \end{tabular}
 \caption{Expresiones regulares que representan los formatos de las fechas de la propiedad datePublished}
 \label{table:RegExpressionsDatePublished}
@@ -233,8 +235,8 @@ Expresión regular & Cantidad de reviews\\
 \\
 http://purl.org/dc/terms/date\\
 \begin{table}[h]
-\begin{tabular}{| l | c |}
-Expresión regular & Cantidad de reviews\\
+\begin{tabular}{| l | c |}\hline
+Expresión regular & Reviews\\\hline
 \verb|^[0-9]{4}-[0-9]{2}-[0-9]{2}.+| & 33833\\
 \verb|^[A-z]+.[A-z]{2}.[0-9]{4}-[0-9]{2}-[0-9]{2}$| & 33058\\
 \verb|^[A-z]{3}\\n.*[0-9]{1}\\n.*[0-9]{4}$| & 25543\\
@@ -250,29 +252,29 @@ Expresión regular & Cantidad de reviews\\
 \verb|^[0-9]{1}((?!-).)[0-9]{1}((?!-).)[0-9]{4}$.| & 1103\\
 \verb|^[0-9]{2}-[0-9]{2}-[0-9]{4}$| & 1024\\
 \verb|^[A-z]+ [0-9]{1}[a-z]{2} [0-9]{4}\\.$| & 746\\
-\verb|^[0-9]{1}((?!-).)[0-9]{2}((?!-).)[0-9]{4}$| & 279\\
+\verb|^[0-9]{1}((?!-).)[0-9]{2}((?!-).)[0-9]{4}$| & 279\\\hline
 \end{tabular}
 \caption{Expresiones regulares que representan los formatos de las fechas de la propiedad purl:date}
 \label{table:RegExpressionsDate}
 \end{table}\\
 \\
 \begin{table}[h]
-\begin{tabular}{| l | c |}
-Expresión regular & Cantidad de reviews\\
-\verb|[0-9]{2}/[0-9]{2}/[0-9]{2} &| 2511\\
-\verb|^[0-9]{2}\\.[0-9]{2}\\.[0-9]{4}$ &| 2207
+\begin{tabular}{| l | c |}\hline
+Expresión regular & Cantidad de reviews\\\hline
+\verb|[0-9]{2}/[0-9]{2}/[0-9]{2} |& 2511\\
+\verb|^[0-9]{2}\\.[0-9]{2}\\.[0-9]{4}$ |& 2207\\\hline
 \end{tabular}
 \caption{Expresiones regulares que representan los formatos de las fechas de la propiedad publishDate}
 \label{table:RegExpressionsPublishDate}
 \end{table}\\
 \\
 \begin{table}[h]
-\begin{tabular}{| l | c |}
-Expresión regular & Cantidad de reviews\\
+\begin{tabular}{| l | c |}\hline
+Expresión regular & Cantidad de reviews\\\hline
 \verb|^[0-9]{1}((?!-).)[0-9]{2}((?!-).)[0-9]{4}$| & 14762\\
 \verb|^[0-9]{1}((?!-).)[0-9]{1}((?!-).)[0-9]{4}$| & 6358\\
 \verb|^[0-9]{2}((?!-).)[0-9]{2}((?!-).)[0-9]{4}$| & 4193\\
-\verb|^[0-9]{2}((?!-).)[0-9]{1}((?!-).)[0-9]{4}$| & 1590
+\verb|^[0-9]{2}((?!-).)[0-9]{1}((?!-).)[0-9]{4}$| & 1590\\\hline
 \end{tabular}
 \caption{Expresiones regulares que representan los formatos de las fechas de la propiedad  dtreviewed}
 \label{table:RegExpressionsDtreviewed}
@@ -285,7 +287,7 @@ También en varios casos hubo que verificar dónde se encontraba el día y dónd
 Manualmente se observan los resultados de ese patrón y se puede observar si los primeros 2 números son mes o día.
 También hubo casos no tratables como \verb|^[A-z]+ [0-9]{2}| donde no estaba explicitado el año.
 
-\verb|http://purl.org/stuff/rev#rating is not in the expected range (1-5)|\\
+\noindent\verb|http://purl.org/stuff/rev#ratingis not in the expected range(1-5)|\\
 
 
 {RatingProperty} is not in the expected range (1-5):
@@ -316,7 +318,8 @@ Para implementarlo, lo primero que se realizó fue la siguiente consulta
  FILTER NOT EXISTS{
  ?rat <http://purl.org/stuff/rev#minRating>  ?worst .
  }
- FILTER ((xsd:integer(?rating) > 5) || (xsd:integer(?rating) < 1)).
+ FILTER ((xsd:integer(?rating) > 5) ||
+ (xsd:integer(?rating) < 1)).
  }
  }
 \end{lstlisting}
@@ -328,171 +331,116 @@ A partir de esta información, puede obtenerse el dominio de la URL, y almacenar
 guarde los valores de los ratings encontrados, y la cantidad de veces que se encontró cada valor de rating.
 
 Resultados:
-El mapa resultante de esta evaluación fue el siguiente.
+Los cuadros \ref{table:Chip}, \ref{table:Chronic}, \ref{table:Gamezbo}, \ref{table:Gogobot}, \ref{table:Kollermedia}, \ref{table:Ormigo}, \ref{table:YellowBot} muestran 
+los valores incorrectos de rango de reviews encontrados para cada domino y la cantidad de reviews del mismo.
 
-Dominio: www.yellowbot.com\\
 \begin{table}[h]
-\begin{tabular}{| l | c |}
- Valor & Cantidad\\
- 0 & 13\\
+\begin{tabular}{| l | c |}\hline
+ Valor & Cantidad\\\hline
+ 0 & 13\\\hline
 \end{tabular}
-\caption{Resultados del test RDFUnit automático}
-\label{table:RDFUnitAutomatic}
+\caption{Rangos incorrectos del dominio www.yellowbot.com}
+\label{table:YellowBot}
 \end{table}
 
-Dominio: www.chip.de\\
 \begin{table}[h]
-\begin{tabular}{| l | c |}
- Valor & Cantidad\\
- 6 & 1\\
- 8 & 2\\
- 9 & 1\\
- 19 & 1\\
- 25 & 1\\
- 27 & 1\\
- 29 & 1\\
- 31 & 1\\
- 30 & 1\\
- 34 & 1\\
- 33 & 2\\
- 38 & 1\\
- 36 & 3\\
- 37 & 1\\
- 42 & 1\\
- 43 & 3\\
- 40 & 1\\
- 46 & 1\\
- 47 & 4\\
- 44 & 1\\
- 45 & 4\\
- 51 & 9\\
- 50 & 10\\
- 49 & 8\\
- 48 & 6\\
- 55 & 7\\
- 54 & 15\\
- 53 & 5\\
- 52 & 12\\
- 59 & 8\\
- 58 & 18\\
- 57 & 11\\
- 56 & 19\\
- 63 & 25\\
- 62 & 23\\
- 61 & 12\\
- 60 & 12\\
- 68 & 62\\
- 69 & 34\\
- 70 & 50\\
- 71 & 62\\
- 64 & 24\\
- 65 & 39\\
- 66 & 35\\
- 67 & 32\\
- 76 & 82\\
- 77 & 82\\
- 78 & 81\\
- 79 & 86\\
- 72 & 81\\
- 73 & 70\\
- 74 & 72\\
- 75 & 73\\
- 85 & 120\\
- 84 & 92\\
- 87 & 128\\
- 86 & 91\\
- 81 & 97\\
- 80 & 117\\
- 83 & 115\\
- 82 & 136\\
- 93 & 52\\
- 92 & 68\\
- 95 & 49\\
- 94 & 58\\
- 89 & 98\\
- 88 & 103\\
- 91 & 91\\
- 90 & 93\\
- 100 & 101\\
- 98 & 11\\
- 99 & 8\\
- 96 & 34\\
- 97 & 27
+\begin{tabular}{| l | c || l | c || l | c |}\hline
+ Valor & Cantidad & Valor & Cantidad & Valor & Cantidad\\\hline
+ 6 & 1 & 48 & 6 & 79 & 86\\
+ 8 & 2 & 55 & 7 & 72 & 81\\
+ 9 & 1 & 54 & 15 & 73 & 70\\
+ 19 & 1 & 53 & 5 & 74 & 72\\
+ 25 & 1 & 52 & 12 & 82 & 136\\
+ 27 & 1 & 59 & 8 & 85 & 120\\
+ 29 & 1 & 58 & 18 & 84 & 92\\
+ 31 & 1 & 57 & 11 & 87 & 128\\
+ 30 & 1 & 56 & 19 & 86 & 91\\
+ 34 & 1 & 63 & 25 & 81 & 97\\
+ 33 & 2 & 62 & 23 & 80 & 117\\
+ 38 & 1 & 61 & 12 & 83 & 115\\
+ 36 & 3 & 60 & 12 & 96 & 34\\
+ 37 & 1 & 68 & 62 & 93 & 52\\
+ 42 & 1 & 69 & 34 & 92 & 68\\
+ 43 & 3 & 70 & 50 & 95 & 49\\
+ 40 & 1 & 71 & 62 & 94 & 58\\
+ 46 & 1 & 64 & 24 & 89 & 98\\
+ 47 & 4 & 65 & 39 & 88 & 103\\
+ 44 & 1 & 66 & 35 & 91 & 91\\
+ 45 & 4 & 67 & 32 & 90 & 93\\
+ 51 & 9 & 76 & 82 & 100 & 101\\
+ 50 & 10 & 77 & 82 & 98 & 11\\
+ 49 & 8 & 78 & 81 & 99 & 8\\
+ 48 & 7 & 75 & 73 & 97 & 27 \\\hline
 \end{tabular}
-\caption{Resultados del test RDFUnit automático}
-\label{table:RDFUnitAutomatic}
+\caption{Rangos incorrectos del dominio www.chip.de}
+\label{table:Chip}
+\end{table}
+ 
+\begin{table}[h]
+\begin{tabular}{| l | c |}\hline
+ Valor & Cantidad\\\hline
+ 0 & 5\\\hline
+\end{tabular}
+\caption{Rangos incorrectos del dominio www.gamezebo.com}
+\label{table:Gamezbo}
 \end{table}
 
-Dominio: www.gamezebo.com\\
 \begin{table}[h]
-\begin{tabular}{| l | c |}
- Valor & Cantidad\\
- 0 & 5\\
+\begin{tabular}{| l | c |}\hline
+ Valor & Cantidad\\\hline
+ 0 & 1\\\hline
 \end{tabular}
-\caption{Resultados del test RDFUnit automático}
-\label{table:RDFUnitAutomatic}
+\caption{Rangos incorrectos del dominio www.gogobot.com}
+\label{table:Gogobot}
 \end{table}
 
-Dominio: www.gogobot.com\\
 \begin{table}[h]
-\begin{tabular}{| l | c |}
- Valor & Cantidad\\
- 0 & 1\\
-\end{tabular}
-\caption{Resultados del test RDFUnit automático}
-\label{table:RDFUnitAutomatic}
-\end{table}
-
-Dominio: www.ormigo.com\\
-\begin{table}[h]
-\begin{tabular}{| l | c |}
- Valor & Cantidad\\
+\begin{tabular}{| l | c |}\hline
+ Valor & Cantidad\\\hline
  0 & 9\\
- -1 & 24
+ -1 & 24\\\hline
 \end{tabular}
-\caption{Resultados del test RDFUnit automático}
-\label{table:RDFUnitAutomatic}
+\caption{Rangos incorrectos del dominio www.ormigo.com}
+\label{table:Ormigo}
 \end{table}
 
-Dominio: www.chroniclesofchaos.com\\
 \begin{table}[h]
-\begin{tabular}{| l | c |}
- Valor & Cantidad\\
+\begin{tabular}{| l | c |}\hline
+ Valor & Cantidad\\\hline
  0 & 17\\
  6 & 391\\
  7 & 776\\
  8 & 851\\
  9 & 497\\
- 10 & 101\\
+ 10 & 101\\\hline
 \end{tabular}
-\caption{Resultados del test RDFUnit automático}
-\label{table:RDFUnitAutomatic}
+\caption{Rangos incorrectos del dominio www.chroniclesofchaos.com}
+\label{table:Chronic}
 \end{table}
 
-Dominio: www.kollermedia.at\\
 \begin{table}[h]
-\begin{tabular}{| l | c |}
- Valor & Cantidad\\
+\begin{tabular}{| l | c |}\hline
+ Valor & Cantidad\\\hline
  6 & 19\\
  7 & 26\\
  8 & 26\\
  9 & 7\\
- 10 & 7\\
+ 10 & 7\\\hline
 \end{tabular}
-\caption{Resultados del test RDFUnit automático}
-\label{table:RDFUnitAutomatic}
+\caption{Rangos incorrectos del dominio www.kollermedia.at}
+\label{table:Kollermedia}
 \end{table}
  
 En base a esta información se infirieron los siugientes rangos:
 
 \begin{table}[h]
-\begin{tabular}{| l | c | r | }
- Dominio & Rango mínimo & Rango máximo \\
+\begin{tabular}{| l | c | r | }\hline
+ Dominio & Rango mínimo & Rango máximo \\\hline
  www.gamezebo.com & 0 & 5 \\
  www.yellowbot.com & 0 & 5 \\
  www.chroniclesofchaos.como & 0 & 10 \\
  www.kollermedia.at & 1 & 10 \\
- www.chip.de & 1 & 100 
+ www.chip.de & 1 & 100 \\\hline
 \end{tabular}
 \caption{Resultados del test RDFUnit automático}
 \label{table:RDFUnitAutomatic}
@@ -543,8 +491,7 @@ el mismo sujeto y objeto, pero la propiedad indicada para cada caso y luego borr
 \end{tabular}
 \caption{Propiedades inexistentes}
 \label{table:UndefinedProps}
-\end{table}\\
-\\
+\end{table}
 
 El Cuadro \ref{table:UndefinedProps} lista las propiedades incorrectas encontradas con su correspondiente indicado.
 \\
@@ -604,10 +551,14 @@ Entonces simplemente para solucionar el problema alcanza con la siguiente consul
  GRAPH ?g {
  ?s a <http://schema.org/Review> .
  ?s <http://schema.org/review> ?review .
- OPTIONAL {  ?review <http://schema.org/description> ?description . }
- OPTIONAL { ?review <http://schema.org/reviewBody> ?body . }
- OPTIONAL { ?review <http://schema.org/datePublished> ?date . }
- OPTIONAL { ?review <http://schema.org/author> ?author . }
+ OPTIONAL {
+  ?review <http://schema.org/description> ?description . }
+ OPTIONAL {
+  ?review <http://schema.org/reviewBody> ?body . }
+ OPTIONAL {
+  ?review <http://schema.org/datePublished> ?date . }
+ OPTIONAL {
+  ?review <http://schema.org/author> ?author . }
  }
  }
 \end{lstlisting}
