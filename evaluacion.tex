@@ -253,13 +253,13 @@ WHERE{
 
 Esta query debería devolver las propiedades que poseen los reviews y la cantidad de reviews que la utilizan para una clase de review dada.
 
-\subsection*{Resultados} más improtantes:
+\subsection*{Resultados}
 
 La clase Review de la ontología schema utilizaba 15 propiedades. 
 
 \begin{table}[h]
-\begin{tabular}{| l | c | }
- Propiedad & Cantidad \\
+\begin{tabular}{| l | c | }\hline
+ Propiedad & Cantidad \\\hline
  http://schema.org/author & 146243 \\
  http://schema.org/datePublished & 144594 \\
  http://schema.org/reviewRating & 143908 \\
@@ -274,13 +274,13 @@ La clase Review de la ontología schema utilizaba 15 propiedades.
  http://schema.org/keywords & 7119 \\
  http://schema.org/review & 2292 \\
  http://schema.org/itemReviewed & 2071 \\
- http://schema.org/itemreviewed & 67 
+ http://schema.org/itemreviewed & 67 \\\hline
 \end{tabular}
 \caption{Estadística de las propiedades de la clase schema:Review}
 \label{table:PropertiesStatisticsSchema}
 \end{table}
 
- Mirando el cuadro \ref{table:PropertiesStatisticsSchema}, el primer error semántico que salta a la vista son las 2292 propiedades review dentro de un review. 
+ \noindent Mirando el cuadro \ref{table:PropertiesStatisticsSchema}, el primer error semántico que salta a la vista son las 2292 propiedades review dentro de un review. 
  Es claramente un error en la producción del documento. 
  Una rápida búsqueda de los documentos con este problema mostró que son 2 los dominios que repiten el error a lo largo de sus documentos
  http://www.ilgiardinodeilibri.it/ y http://www.iplaysoft.com/
@@ -365,8 +365,8 @@ La clase Review de la ontología schema utilizaba 15 propiedades.
  \\
  Para la clase purl:Review\\
  \begin{table}[h]
- \begin{tabular}{| l | c | }
- Propiedad & Cantidad \\
+ \begin{tabular}{| l | c | }\hline
+ Propiedad & Cantidad \\\hline
  \verb|http://purl.org/stuff/rev#text| & 207259\\
  \verb|http://purl.org/stuff/rev#rating| & 195005\\
  \verb|http://purl.org/stuff/rev#reviewer| & 154663\\
@@ -376,7 +376,7 @@ La clase Review de la ontología schema utilizaba 15 propiedades.
  \verb|http://www.w3.org/2006/vcard/ns#n| & 6424\\
  \verb|http://www.w3.org/2006/vcard/ns#fn| & 6424\\
  \verb|http://www.w3.org/2006/vcard/ns#url| & 6420\\
- \verb|http://www.w3.org/2006/vcard/ns#geo| & 6123
+ \verb|http://www.w3.org/2006/vcard/ns#geo| & 6123\\\hline
 \end{tabular}
 \caption{Propiedades de la clase purl:Review}
 \label{table:PropertiesStatisticsPurl}

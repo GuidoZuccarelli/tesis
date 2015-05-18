@@ -34,15 +34,15 @@ Un libro, puede estar clasificado como schema:Product, por lo que necesitaría q
 \\
 Por razones de que la tesis ya cubrió el desarrollo suficiente, sólo se intentarán implementar los puntos 1, 3 y 4 de la integración. Ya que 
 los otros dos poseén una complejidad muy alta y su implementación llevaría mucho tiempo.\\
-\\
+
 \section{Unificación de vocabularios}
 \label{section:unificacion-vocabularios}
 
-Objetivo: Conservar los reviews del dataset en una única ontología. Lo que simplificará las búsquedas, agregaciones y otras operaciones.
+\subsection*{Objetivo} Conservar los reviews del dataset en una única ontología. Lo que simplificará las búsquedas, agregaciones y otras operaciones.
 Además de contener datos semánticamente más parecidos. Y también facilitará la comprensión del dataset a quienes quieran hacer uso del mismo
 en un futuro (ya que sólo deberán concentrarse en una sola ontología)
-\\
-Estrategia: Deberá como primer paso realizarse una selección de vocabulario, en la cual se escoja uno para que quede como el único en el dataset.
+
+\subsection*{Estrategia} Deberá como primer paso realizarse una selección de vocabulario, en la cual se escoja uno para que quede como el único en el dataset.
 En este caso de estudio el vocabulario elejido es Review Ontology, ya que todas sus propiedades son suficientes para cumplir los requerimientos y 
 este es mucho más simple, lo que facilitará su utilización. El vocabulario de schema poseé demasiadas propiedades que son irrelevantes para este caso de estudio. 
 Además vale la pena recordar los problemas encontrados en el capítulo evaluación causados por la ontología.
@@ -65,10 +65,12 @@ El problema se encuentra en lo analizado en la etapa de curado, que se observó 
 Y no existe una propiedad dentro del vocabulario de foaf:Person que sea tan genérico como para contemplar todo slos casos posibles, como sí existe en vCard.
 Además de que todos los previos valores de reviewer están conformados por un vCard, como también ya se analizó en la etapa de curado.
 Por estos motivos se determinó continuar utilizando vCards en lugar de recursos de tipo foaf, y dichos vCards utilizarán la propiedad
-fn (que contempla todos los casos mencionados).
-Finalmente el mapeo de propiedades quedó:\\
-\begin{tabular}{| l | c |}
-Propiedad schema & Propiedad de reemplazo\\
+fn (que contempla todos los casos mencionados).En el cuadro \ref{table:PropertyEquiv} pueden analizarse las equivalencias encontradas entre 
+las clases de Review de las ontologías de Schema y Purl.
+
+\begin{table}[h]
+\begin{tabular}{| l | c |}\hline
+Propiedad schema & Propiedad de reemplazo\\\hline
 name & title \\
 reviewBody & text \\
 datePublished & dc:date \\
@@ -82,25 +84,28 @@ keywords & dc:subject\\
 name (author) & vcard:fn (reviewer)\\
 comments & hasComment\\
 author (comment) & commenter \\
-text (comment) & text 
+text (comment) & text \\\hline
 \end{tabular}
-
+\caption{Equivalencia de propiedades entre las clases schema:Review y rev:Review}
+\label{table:PropertyEquiv}
+\end{table}
 No hubo problemas con el algoritmo que realizaba el procedimiento.
 \\
 \\
 \section{Unificación de formatos de ratings}
 \label{section:unificacion-ratings}
 
-Objetivo: Disponer de todos los ratings de los reviews, con el mismo formato. Un número sin decimales, para facilitar la implementación 
+\subsection*{Objetivo} Disponer de todos los ratings de los reviews, con el mismo formato. Un número sin decimales, para facilitar la implementación 
 de operaciones como: ``Listar los reviews más populares de determinada fecha'' o ``Hacer un promedio de puntaje para un ítem determinado''
-\\
-Estrategia: Exactamente el mismo principio que para corregir los formatos de las fechas, sólo que un poco más simple porque sólo se realizará 
+
+\subsection*{Estrategia} Exactamente el mismo principio que para corregir los formatos de las fechas, sólo que un poco más simple porque sólo se realizará 
 para una propiedad en lugar de 4.
 \\
 Primero se realizó una consulta SPARQL buscando los valores de ratings que no estén dentro de los correctos. \\
 
  \begin{lstlisting}[frame=single]
- SELECT distinct ?value (count (distinct ?review) as ?cantidad)
+ SELECT distinct ?value (count (distinct ?review)
+ as ?cantidad)
  WHERE{ 
  ?review <http://local.org/id> ?id .
  ?review <http://purl.org/stuff/rev#rating> ?value .
@@ -114,21 +119,21 @@ Primero se realizó una consulta SPARQL buscando los valores de ratings que no e
  \end{lstlisting}
  Y luego analizando los resultados se fueron agregando los siguientes filtros a la consulta:\\
  \begin{lstlisting}[frame=single]
- FILTER (!REGEX(str(?value), "^[0-9]{1}½$", "i")) . 
- FILTER (!REGEX(str(?value), "^[0-9]{2}\\.[0-9]{1}$", "i")) .
- FILTER (!REGEX(str(?value), "^[0-9]{1}\\.[0-9]{1}$", "i")) . 
- FILTER (!REGEX(str(?value), "^[0-9]{1},[0-9]{1}$", "i")) .
- FILTER (!REGEX(str(?value), "^[0-9]{1} ", "i")) .  
- FILTER (!REGEX(str(?value), "^Rating [0-9]{1}", "i")) .  
- FILTER (!REGEX(str(?value), "^About.com Rating  [0-9]{1}", "i")) . 
- FILTER (!REGEX(str(?value), "^[0-9]{1}\\.[0-9]{1} ", "i")) .  
- FILTER (!REGEX(str(?value), "Rating [0-9]{1}", "i")) .
- FILTER (!REGEX(str(?value), "\\([0-9]{1} ", "i")) .
+ FILTER(!REGEX(str(?value),"^[0-9]{1}½$", "i"))
+ FILTER(!REGEX(str(?value),"^[0-9]{2}\\.[0-9]{1}$", "i"))
+ FILTER(!REGEX(str(?value),"^[0-9]{1}\\.[0-9]{1}$", "i"))
+ FILTER(!REGEX(str(?value),"^[0-9]{1},[0-9]{1}$", "i"))
+ FILTER(!REGEX(str(?value),"^[0-9]{1} ", "i"))
+ FILTER(!REGEX(str(?value),"^Rating [0-9]{1}", "i"))
+ FILTER(!REGEX(str(?value),"^About Rating [0-9]{1}","i"))
+ FILTER(!REGEX(str(?value),"^[0-9]{1}\\.[0-9]{1} ", "i"))
+ FILTER(!REGEX(str(?value),"Rating [0-9]{1}", "i"))
+ FILTER(!REGEX(str(?value),"\\([0-9]{1} ", "i"))
  \end{lstlisting}
  Una vez que los resultados arrojados por la consulta fueron 0. Se realizó el algoritmo que lleve el rating al formato correspondiente 
  según su expresión regular.\\
- \\
- Resultados:\\
+ 
+ \subsection*{Resultados}
  \begin{tabular}{| l | c |}
  Expresión regular & Cantidad de ratings \\
  \verb|^[0-9]{1}½$| & 3722\\

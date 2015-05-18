@@ -1,13 +1,13 @@
 \chapter{Curado de los Datos}
 \label{chapter:curado}
 
-Objetivo:
+\subsection*{Objetivo}
 Corregir todos los problemas viables encontrados en el paso anterior que se pueda.
 
 \section{Curado nº 1 - Vocabularios}
 \label{section:curado-vocabularios}
 
-Estrategia:
+\subsection*{Estrategia}
 Con una consulta SPARQL, se eliminó la propiedad incorrecta y se agregó la misma en la forma que corresponde.
 Todo se realizó con una simple consulta SPARQL
 \begin{lstlisting}[frame=single]  
@@ -35,14 +35,14 @@ WHERE{
 \end{lstlisting}
 
 
-Resultados:
+\subsection*{Resultados}
 Se crearon 2498221 propiedades nuevas de forma correcta correspondientes a cada una de las propiedades incorrectas de la ontología 
 schema.
 
 \section{Curado nº 2 - Duplicados}
 \label{section:curado-duplicados}
 
-Estrategia: 
+\subsection*{Estrategia}
 
 Se recorrieron todos los grupos de duplicados y se procedió a realizar la siguiente operación:
 Se le asignó a cada grupo un id único, al cual llamaremos groupId.
@@ -59,7 +59,7 @@ como objeto de la propiedad el groupId.
 Y para todos los recursos restantes del grupo de duplicados, se les asignó una propiedad http://local.org/duplicatedOf con objeto 
 el groupId.
 
-Resultados:
+\subsection*{Resultados}
 
 Se asignaron 78705 propiedades duplicatedOf y 17343 representantOf
 
@@ -74,7 +74,7 @@ Se decidió entonces atacar los problemas más específicos:
 
 http://schema.org/ratingValue has rdfs:domain different from: \\\noindent http://schema.org/Rating
 
-Estrategia:
+\subsection*{Estrategia}
 Primero hubo que investigar, cuáles son todos los dominios para esa propiedad que aparecen en el dataset, para ver si se pueden 
 acomodar. Esto se realizó con la siguiente consulta sparql:
 
@@ -140,7 +140,7 @@ schema:worstRating and schema:bestRating has rdfs:domain different from: http://
 Estrategia:
 El proceso es igual al anterior y los dominios disintos de rating eran Review, la misma cantidad que en el anterior 5867
 
-Resultados: 
+\subsection*{Resultados}
 Idem los anteriores.
 
 http://schema.org/itemReviewed is missing proper range
@@ -171,7 +171,7 @@ En este caso al no haber alternativa por parte del creador del review, se consid
 \section{Curado nº 4 - RDFUnit-Manual}
 \label{section:curado-manual}
 
-{DateProperty} has a format different to YYYY-MM-DD:
+\subsection*{\textit{DateProperty} has a format different to YYYY-MM-DD}
 Para todas las propiedades que indiquen una fecha, los pasos para reparar este caso son los mismos.
 
 Cuando nos encontramos con este caso, se requiere de otra evaluación para entender cómo encarar el problema. Es una evaluación cuyo resultado
@@ -181,8 +181,8 @@ Si no tiene formato YYYY-MM-DD, ¿Qué formato tiene?
 
 La idea en esta evaluación entonces, es encontrar qué formatos distintos contienen los datos, para poder trasladarlos al correcto.
 
-Estrategia:
-
+~\\\\ 
+\textbf{Estrategia}\\
 Comenzando con la siguiente consulta:
 
 
@@ -207,13 +207,12 @@ Luego observando los resultados manualmente, se prsta atención also primeros re
 para luego anotarlo y realizar la misma consulta esta vez filtrando los reusltados ocn dicho patrón. Iterando este proceso hasta que 
 queden 0 resultados.
 
-Resultados:
+~\\\\\textbf{Resultados}\\
 
 En los cuadros \ref{table:RegExpressionsDate} \ref{table:RegExpressionsDatePublished} \ref{table:RegExpressionsPublishDate} \ref{table:RegExpressionsDtreviewed} se muestran los patrones de expresiones regulares que cubrieron con todos los casos de formatos 
 de fechas.
 \\
 \\
-http://schema.org/datePublished\\
 \begin{table}[h]
 \begin{tabular}{| l | c |} \hline
 Expresión regular & Cantidad de reviews\\\hline
@@ -231,9 +230,6 @@ Expresión regular & Cantidad de reviews\\\hline
 \caption{Expresiones regulares que representan los formatos de las fechas de la propiedad datePublished}
 \label{table:RegExpressionsDatePublished}
 \end{table}
-\\
-\\
-http://purl.org/dc/terms/date\\
 \begin{table}[h]
 \begin{tabular}{| l | c |}\hline
 Expresión regular & Reviews\\\hline
@@ -290,13 +286,13 @@ También hubo casos no tratables como \verb|^[A-z]+ [0-9]{2}| donde no estaba ex
 \noindent\verb|http://purl.org/stuff/rev#ratingis not in the expected range(1-5)|\\
 
 
-{RatingProperty} is not in the expected range (1-5):
+\subsection*{\textit{RatingProperty} is not in the expected range (1-5)}
 Cuando nos encontramos con un review en esta situación, resulta casi imposible incluso manualmente corregir este error con la información 
 provista por el review o el documento que contiene el review. Si el rating del review es 7, ¿Cuál es el máximo valor que el autor tenía en mente cuando  
 generó la evaluación?. Uno podría pensar que lo más lógico sería 10, pero no se puede saber a ciencia cierta, por lo menos con la información del entorno al review.
 Para encontrar la respuesta, se necesita la información de todos los reviews del dominio que contiene el review problemático. 
 
-Estrategia:
+~\\\\\textbf{Estrategia}\\
 Para resolver el problema de rango en los ratings de los reviews entonces, lo primero que hay que hacer es una evaluación, en la cual 
 se pueda observar qué valores tomaron los ratings de otros reviews correspondientes al mismo sitio web hosting del review. 
 Esto sólo se aplicó par ala ontología purl, dado que apra schema los valores erróneos eran muy pocos y no se jsutificaba.
@@ -330,9 +326,10 @@ rating correspondiente a dicho review.
 A partir de esta información, puede obtenerse el dominio de la URL, y almacenarse toda la información en un mapa de Java, donde para cada dominio se 
 guarde los valores de los ratings encontrados, y la cantidad de veces que se encontró cada valor de rating.
 
-Resultados:
+~\\\\\textbf{Resultados}\\
 Los cuadros \ref{table:Chip}, \ref{table:Chronic}, \ref{table:Gamezbo}, \ref{table:Gogobot}, \ref{table:Kollermedia}, \ref{table:Ormigo}, \ref{table:YellowBot} muestran 
-los valores incorrectos de rango de reviews encontrados para cada domino y la cantidad de reviews del mismo.
+los valores incorrectos de rango de reviews encontrados para cada domino y la cantidad de reviews del mismo. Y en base a esos datos 
+se pudo inferir el rango correcto para cada uno de los dominios como muestra el cuadro \ref{table:DetectedRanges}
 
 \begin{table}[h]
 \begin{tabular}{| l | c |}\hline
@@ -430,8 +427,6 @@ los valores incorrectos de rango de reviews encontrados para cada domino y la ca
 \caption{Rangos incorrectos del dominio www.kollermedia.at}
 \label{table:Kollermedia}
 \end{table}
- 
-En base a esta información se infirieron los siugientes rangos:
 
 \begin{table}[h]
 \begin{tabular}{| l | c | r | }\hline
@@ -442,8 +437,8 @@ En base a esta información se infirieron los siugientes rangos:
  www.kollermedia.at & 1 & 10 \\
  www.chip.de & 1 & 100 \\\hline
 \end{tabular}
-\caption{Resultados del test RDFUnit automático}
-\label{table:RDFUnitAutomatic}
+\caption{Rangos detectados automáticamente para cada dominio}
+\label{table:DetectedRanges}
 \end{table}
 
 Luego estos resultados se corroboraron manualmente revisando todos los valores que poseía el dominio tanto dentro del rango 1-5 como fuera .
@@ -453,26 +448,27 @@ Nota: Manualmente se verificó que ormigo poseía simplemente reviews mal genera
 
 Una vez con estos resultados se puede proceder a corregir los valores de los reviews del dataset.
 
-Estrategia:
+~\\\\\textbf{Estrategia}\\
 Disponiendo de los rango correctos para cada dominio se recorrieron todos los reviews de cada dominio resultante, y se les adicionaron 
 las propiedades rev:minRating y rev:maxRating con los valores correspondientes.
 Esto no sólo para los reviews con ratings erróneos encontrados en la etapa de evaluación (fuera del rango 1-5) dado que, para los reviews de 
 cada dominio con rango encontrado, por más que el rating se encuentre dentro del rango 1-5 y aparente ser correcto,  ya se sabe que dicho dominio se 
 maneja con rangos diferentes y el valor real del rating cambiaría (no es lo mismo el valor 3 en un rango 1-100 que en un rango 1-5)
 
-Resultados:\\
-Se le asignaron propiedades a:\\
+~\\\\\textbf{Resultados}\\
+El cuadro \ref{table:DomainRangeCorrections} muestra la cantidad de reviews corregidos de cada dominio habiéndose agregado las 
+propiedades necesarias según los rangos inferidos anteriormente.
 \begin{table}[h]
-\begin{tabular}{| l | c |}
- www.gamezebo.com & 3905\\
+\begin{tabular}{| l | c |}\hline
+ www.gamezebo.com & 3905\\\hline
  www.yellowbot.com & 8955\\
  www.chroniclesofchaos.como & 4966\\
  www.kollermedia.at & 9968\\
- www.chip.de & 13751\\
- Total & 41545
+ www.chip.de & 13751\\\hline
+ Total & 41545\\\hline
 \end{tabular}
-\caption{Resultados del test RDFUnit automático}
-\label{table:RDFUnitAutomatic}
+\caption{Cantidad de correcciones de rango de ratings por dominio}
+\label{table:DomainRangeCorrections}
 \end{table}\\
 \\
 \section{Curado nº 5 - Análisis experto}
@@ -483,11 +479,11 @@ Estrategia: En este caso para todas el procedimiento es exactamente el mismo, y 
 el mismo sujeto y objeto, pero la propiedad indicada para cada caso y luego borrar la tripleta incorrecta.\\
 
 \begin{table}[h]
-\begin{tabular}{| l | c |}
- Propiedad Inexistente & Propiedad correcta \\
+\begin{tabular}{| l | c |}\hline
+ Propiedad Inexistente & Propiedad correcta \\\hline
  itemreviewed & itemReviewed\\
  dtreviewed, publishDate & datePublished\\
- description & reviewBody
+ description & reviewBody\\\hline
 \end{tabular}
 \caption{Propiedades inexistentes}
 \label{table:UndefinedProps}
@@ -496,10 +492,10 @@ el mismo sujeto y objeto, pero la propiedad indicada para cada caso y luego borr
 El Cuadro \ref{table:UndefinedProps} lista las propiedades incorrectas encontradas con su correspondiente indicado.
 \\
 Comentarios en forma de reviews\\
-Objetivo:
+\subsection*{Objetivo}
 Corregir la clase de los recursos que son de tipo schema:UserComments pero fueron clasificados como schema:Review
 
-Estrategia: 
+\subsection*{Estrategia}
 Lo que se intentará es cambiar la clase Review del recurso, y transferir todas las propiedades a una equivalente en la clase UserComments.
 Por lo que primero se debe inspeccionar qué propiedades continen dichos recursos.
 
@@ -513,12 +509,12 @@ Por lo que primero se debe inspeccionar qué propiedades continen dichos recurso
 \end{lstlisting}
 
 \begin{table}[h]
-\begin{tabular}{| l | c |}
-Propiedad encontrada & Equivalente en Comment\\
+\begin{tabular}{| l | c |} \hline
+Propiedad encontrada & Equivalente en Comment\\\hline
 http://schema.org/description & http://schema.org/commentText \\
 http://schema.org/reviewBody & http://schema.org/commentText \\
 http://schema.org/datePublished & http://schema.org/commentTime \\
-http://schema.org/author & http://schema.org/creator
+http://schema.org/author & http://schema.org/creator \\\hline
 \end{tabular}
 \caption{Equivalencia de propiedades de la clase Review con UserComments}
 \label{table:PropertyEqRevCom}
@@ -565,7 +561,7 @@ Entonces simplemente para solucionar el problema alcanza con la siguiente consul
 
 Por último, el problema encontrado con los objetos de la propiedad author, que deberían ser recursos de tipo schema:Person o schema:Organization, 
 necesitan un arreglo.
-Estrategia: 
+\subsection*{Estrategia}
 Primero es necesario saber qué representan esos textos utilizados como objeto de author, una observación de esos valores mostró que 
 en su gran mayoría representan usernames dentro de la página publicadora, y el resto nombre y apellido.
 Esto genera un problema a la hora de llevar a cabo la corrección, ya que de por sí, schema:Person utilizada una propiedad para el nombre (givenName) 
