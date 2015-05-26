@@ -1,11 +1,16 @@
 \chapter{Curado de los Datos}
 \label{chapter:curado}
 
+\noindent En este capítulo se mostrarán los procedimientos implementados para resolver los problemas encontrados derivados de la evaluación 
+del capítulo anterior \ref{chapter:evaluacion}.
+
 \subsection*{Objetivo}
 Corregir todos los problemas viables encontrados en el paso anterior que se pueda.
 
 \section{Curado nº 1 - Vocabularios}
 \label{section:curado-vocabularios}
+
+\noindent Esta es la implementación del paso de curado del dataset correspondiente a los resultados adquiridos de la sección \ref{section:evaluacion-vocabularios}.
 
 \subsection*{Estrategia}
 Con una consulta SPARQL, se eliminó la propiedad incorrecta y se agregó la misma en la forma que corresponde.
@@ -44,6 +49,8 @@ schema.
 \section{Curado nº 2 - Duplicados}
 \label{section:curado-duplicados}
 
+\noindent Aquí se resolverá mediante una estrategia manual el problema de los reviews duplicados encontrados en la sección \ref{section:evaluacion-duplicados}.
+
 \subsection*{Estrategia}
 
 Se recorrieron todos los grupos de duplicados y se procedió a realizar la siguiente operación:
@@ -68,18 +75,26 @@ Se asignaron 78705 propiedades duplicatedOf y 17343 representantOf
 \section{Curado nº 3 - RDFUnit-Automatizado}
 \label{section:curado-automatizado}
 
-Muchos de los problemas detectados por el framework, no otorgaban demasiada información, como por ejemplo
-http://schema.org/datePublished does not have datatype: http://www.w3.org/2001/XMLSchema\#date el cual sólo especifica que le 
-falta el tipo al recurso objeto, pero no necesariamente significa que esté mal, esto da un indicio de que algo puede andar mal
-y será verificado en la consulta manual, en este caso por ejemplo, lo importante es que la fecha tenga el formato apropiado.
-Se decidió entonces atacar los problemas más específicos:
+\noindent En la sección \ref{section:evaluacion-automatizado} se presentaron mediante una tabla, los resultados de la evaluación realizada
+utilizando el framework RDFUnit de forma automática. 
 
+En esta sección entonces se citará cada problema resuelto de la tabla incluyendo la estrategia utilizada y los reusltados obtenidos.
+\\\\
+Muchos de los problemas detectados por el framework, no otorgaban demasiada información, como por ejemplo
+\textit{http://schema.org/datePublished does not have datatype: http://www.w3.org/2001/XMLSchema\#date} el cual sólo especifica que le 
+falta el tipo al recurso objeto, pero no necesariamente significa que esté mal, sino que da un indicio de que algo PUEDE andar mal
+y será verificado en la consulta manual. En este caso por ejemplo, lo importante es que la fecha tenga el formato apropiado.
+
+Se decidió entonces atacar los problemas más específicos.
+\subsection{RDFUnit-Automatizado para la ontología Schema.org}
+Primero se resolvieron los problemas correspondientes a la ontología schema, derivados del Cuadro \ref{table:RDFUnitSchemaAutomatic}
+\\\\
 \textbf{http://schema.org/ratingValue has rdfs:domain different from: \\\noindent http://schema.org/Rating}
 
-\subsection*{Estrategia}
+\subsubsection*{Estrategia}
 Primero hubo que investigar, cuáles son todos los dominios para esa propiedad que aparecen en el dataset, para ver si se pueden 
 acomodar. Esto se realizó con la siguiente consulta sparql:
-
+\newpage
 \begin{lstlisting}[frame=single]  
 select distinct ?dominio (count (?s) as ?cantidad) 
 where{
@@ -117,7 +132,7 @@ where{
 El resultado fue 0.
 
 Por lo tanto ese problema se solucionó con la siguiente consulta:
-
+\newpage
 \begin{lstlisting}[frame=single]  
 DELETE { 
 GRAPH ?g{ 
@@ -142,11 +157,10 @@ GRAPH ?g {
 ~\\\\
 
 
-\textbf{\noindent schema:worstRating and schema:bestRating has rdfs:domain different from: http://schema.org/Rating}
+\noindent\textbf{ schema:worstRating and schema:bestRating has rdfs:domain different from: http://schema.org/Rating}
 
 El proceso es igual al anterior y los dominios distintos de rating eran Review, la misma cantidad que en el anterior 5867
 \\\\
-
 \textbf{http://schema.org/itemReviewed is missing proper range}
 
 Esta evaluación se refiere a que existen recursos objeto de dicha propiedad, que no tienen un tipo específico. Para ver si 
@@ -154,16 +168,22 @@ puede ser resuelto, primer hubo que evaluar qué clase de recursos contienen com
 
 La evaluación encontró que, todos esos recursos eran URIs de un dominio web 411ca.com para ser derreferenciados. La solución podría haber sido 
 descargar dichos recursos y anexarlos a la propiedad, pero lamentablemente dichos recursos no se encontraban disponibles de forma online.
+
+\subsection{RDFUnit-Automatizado para la ontología PURL}
+Luego se corrigieron los problemas correspondientes a la ontología PURL provenientes de del Cuadro \ref{table:RDFUnitPurlAutomatic}
 \\\\
 \textbf{http://purl.org/stuff/rev\#hasReview has different range from:\\\noindent http://purl.org/stuff/rev\#Review }
+
 En este caso no hay error, el inconvieniente surge porque los recursos de tipo purl:ReviewAggregate utilizan también la propiedad hasReview
 que no esta contemplado en la ontología de purl.
 \\\\
 \textbf{http://purl.org/stuff/rev\#reviewer is missing proper range}
+
 Este caso se da \\\noindent porque se genera un recurso vació, específicamente el reviewer. El reviewer no fue provisto en los documentos originales donde 
 se derivó este problema, simplemente establecían el metadato reviewer dejándolo vacío.
 \\\\
 \textbf{http://purl.org/stuff/rev\#reviewer has different range from:\\\noindent http://xmlns.com/foaf/0.1/Person}
+
 En estos casos analizando qué clase contenian si no era foaf:Person, se observó que la clase era \\\noindent http://www.w3.org/2006/vcard/ns\#VCard.
 En todos los casos donde el reviewer no se encontraba vacío, se utilizó un v:card en lugar de un foaf:Person, y esto tiene una explicación, 
 y es que al haberse utilizado hreview con microformatos es imposible crear un recurso de esa clase, dado que no se posee un namespace, para que 
@@ -172,6 +192,10 @@ En este caso al no haber alternativa por parte del creador del review, se consid
 
 \section{Curado nº 4 - RDFUnit-Manual}
 \label{section:curado-manual}
+
+\noindent En esta iteración de corrección del dataset, se atacarán los problemas encontrados utilizando el framework RDFUnit de forma manual 
+en la sección \ref{section:evaluacion-manual}, nuevamente citando las filas que indican los problemas resueltos correspondiente al
+Cuadro \ref{table:RDFUnitManual}, incluyendo también la estrategia utilizada y los resultados obtenidos.
 
 \subsection*{\textit{DateProperty} has a format different to YYYY-MM-DD}
 Para todas las propiedades que indiquen una fecha, los pasos para reparar este caso son los mismos.
@@ -356,7 +380,9 @@ propiedades necesarias según los rangos inferidos anteriormente.
 
 \section{Curado nº 5 - Análisis experto}
 \label{section:curado-analisis}
-Propiedades inexistentes o semánticamente incorrectas\\
+\noindent Por último se realizó el curado correspondiente a la evaluación resultante de la sección \ref{section:evaluacion-analisis}.
+\\\\
+\textbf{Propiedades inexistentes o semánticamente incorrectas}\\
 Son los casos de itemreviewed, dtreviewed, publishDate y reviewBody, ya analizados en la evaluación.
 Estrategia: En este caso para todas el procedimiento es exactamente el mismo, y es bastante sencillo, crear una nueva propiedad con 
 el mismo sujeto y objeto, pero la propiedad indicada para cada caso y luego borrar la tripleta incorrecta.\\
@@ -373,8 +399,8 @@ el mismo sujeto y objeto, pero la propiedad indicada para cada caso y luego borr
 \end{table}
 
 El Cuadro \ref{table:UndefinedProps} lista las propiedades incorrectas encontradas con su correspondiente indicado.
-\\
-Comentarios en forma de reviews\\
+\\\\
+\textbf{Comentarios en forma de reviews}\\
 \subsection*{Objetivo}
 Corregir la clase de los recursos que son de tipo schema:UserComments pero fueron clasificados como schema:Review
 
@@ -405,7 +431,7 @@ http://schema.org/author & http://schema.org/creator \\\hline
 
 En el cuadro \ref{table:PropertyEqRevCom} se muestran las propiedades encontradas junto con su equivalente en la clase requerida. 
 Entonces simplemente para solucionar el problema alcanza con la siguiente consulta SPARQL:
-\newpage
+
 \begin{lstlisting}[frame=single]
  DELETE { 
  GRAPH ?g{ 
