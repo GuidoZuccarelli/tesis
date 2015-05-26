@@ -14,9 +14,9 @@ para las cuales no se encuentre representada en ninguna ontología. Y luego veri
 \subsection*{Estrategia}
 Este primer paso es bastante simple, básicamente se deben conseguir todos los vocabularios utilizados (para saber cuales son estos basta con revisar el namespace 
 de los prefijos) y cargarlos en el dataset.
-
-Una vez con los vocabularios cargados se puede realizar una consulta en SPARQL para las propiedades y leugo otra para las clases:
-
+\\\\
+Una vez con los vocabularios cargados se puede realizar una consulta en SPARQL para las propiedades y luego otra para las clases:
+\newpage
 \begin{lstlisting}[frame=single]
 SELECT ?c (count (distinct ?o) as ?cantidad)
 WHERE{
@@ -45,8 +45,8 @@ Esto se debe a que cada propiedad incluía bajo su path su clase dominio de la s
 Por ejemplo: \\\noindent
 http://schema.org/Product/aggregateRating en lugar de \\\noindent http://schema.org/aggregateRating
 
-Situaciones como ésta generan problemas cuando se intenta realizar consultas generales. Si por ejemplo se requiriera encontrar todos los aggregateRatings de todos los recursos no alcanzaría con 
-una simple querie, habría que realizar tantas queries como clases de la ontología schema existan.
+Situaciones como ésta generan problemas cuando se intenta realizar consultas generales. Si por ejemplo se requiriera encontrar todos los individuos de la clase schema:aggregateRating no alcanzaría con 
+una simple querie, habría que realizar tantas queries como clases de la ontología schema con esa propiedad existan.
 \\\\
 Haciendo un recorrido sobre los datos desde su origen (los documentos html publicados) hasta este punto, se encontró que el problema se 
 originó en el proceso de extracción. 
@@ -100,8 +100,8 @@ El algoritmo que se utilizó fue el siguiente:
 \item sorgagg:reviewCount
 \end{itemize}
 
-\item Luego se arma en cada ontología un mapa para cada propiedad escogida, que contiene como clave un valor posible existente para esa propiedad, y 
-como valor un arreglo con todos los reviews que contiene ese valor para dicha propiedad.
+\item Luego para cada ontología se arma un mapa para cada propiedad escogida, que contiene como clave todos los objetos existentes para esa propiedad, y 
+como valor un array con todos los reviews que contiene ese objeto para dicha propiedad.
 En otras palabras se separaron por cada propiedad, los reviews según su valor para esa propiedad.
 Luego se buscaron qué grupos de reviews se encontraban juntos para más de una propiedad mendiante obtener la intersección de ambos conjuntos. Por ejemplo:
 
@@ -111,7 +111,7 @@ Entonces la intersección entre el conjunto de reviews para el primer conjunto c
 Ahora para marcar ese conjunto como posible grupo de duplicados deben cumplir la condición de que, el ítem sobre el cuál el review habla
 tiene el mismo nombre en cada uno de los elementos.
 
-Esta comparación se reliza entre todos los conjuntos de reviews de los valores de una propiedad con el resto de los conjuntos de los valores de las restantes propiedades de esa ontología.
+Esta comparación se realiza entre todos los conjuntos de reviews de los valores de una propiedad con el resto de los conjuntos de los valores de las restantes propiedades de esa ontología.
 
 \item Una vez obtenidos los conjuntos de los posibles duplicados se procede ahora sí a analizar minuciosamente los reviews todos con todos pero dentro del conjunto marcado como posible grupo de duplicados
 para corroborar.
@@ -154,19 +154,10 @@ Encontrar todos los problemas sintácticos de los datos relevantes del dataset e
 para construir la aplicación.
 
 \subsection*{Estrategia}
-El framework crea test automaticamente a partir de las ontologías, buscando una amplia variedad de problemas posibles. Por lo que se 
+El framework crea test automáticamente a partir de las ontologías, buscando una amplia variedad de problemas posibles. Por lo que se 
 instaló el framework, se lo proveyó de las ontologías relevantes y se corrieron los test sobre el dataset.
 
 \subsection*{Resultados}
-\begin{table}[h]
-\begin{tabular}{| l | c | }\hline
-Total test cases & 2116\\\hline
-Succeeded & 2067\\
-Failed & 49\\\hline
-\end{tabular}
-\caption{Resultados del test RDFUnit automático}
-\label{table:RDFUnitAutomatic}
-\end{table}
 
 El cuadro \ref{table:RDFUnitSchemaAutomatic} muestra los principales errores encontrados para la ontología schema.
 \begin{table}[h]
@@ -188,7 +179,7 @@ Test & Fallos & Casos \\\hline
 \label{table:RDFUnitSchemaAutomatic}
 \end{table}
 
-La Tabla \ref{table:RDFUnitPurlAutomatic} muestra el resultado de correr el framework RDFUnit automático sobre la ontología de PURL.
+El cuadro \ref{table:RDFUnitPurlAutomatic} muestra el resultado de correr el framework RDFUnit automático sobre la ontología de PURL.
 \begin{table}[h]
 \begin{tabular}{| l | c | r | }\hline
 Test & Fallos & Casos \\\hline
@@ -232,14 +223,14 @@ http://schema.org/ratingValue is & 1 & 73090 \\ not in the expected range (1-5) 
 \section{Evaluación nº 5 - Análisis experto}
 \label{section:evaluacion-analisis}
 
-\subsection*{Objetivo} Encontrar problemas a grandes razgos que son muy difícil de detectar por algoritmos. También indicios indicadores de 
+\subsection*{Objetivo} Encontrar problemas a grandes rasgos que son muy difícil de detectar por algoritmos. También indicios indicadores de 
 situaciones que lleven a pensar en otras búsquedas de problemas. Esto debería ayudar a entender mejor el dataset para mejorar el manejo 
 de los datos en posteriores paso, como el de integración e implementación.
 
 \subsection*{Estrategia} Este último paso de evaluación se comienza con un pantallazo general de cómo está la situación de los reviews. Para esto se pueden analizar las propiedades que contienen los reviews, y luego el valor objeto 
 de las mismas. Dado que los problemas sintácticos deberían estar cubiertos en las evaluaciones anteriores, este paso sólo dejaría establecidos
 algunos problemas semánticos del dataset, que al ser detectados en base al punto de vista racional humano, resultaría improbable poder encontrar
-una solución algoritmica automatizada para el problema.
+una solución algorítmica automatizada para el problema.
 
 Primera query:
 
@@ -280,27 +271,27 @@ La clase Review de la ontología schema utilizaba 15 propiedades.
 \label{table:PropertiesStatisticsSchema}
 \end{table}
 
- \noindent Mirando el cuadro \ref{table:PropertiesStatisticsSchema}, el primer error semántico que salta a la vista son las 2292 propiedades review dentro de un review. 
+ \noindent Mirando el cuadro \ref{table:PropertiesStatisticsSchema}, el primer error semántico que salta a la vista son las 2292 propiedades schema:review dentro un individuo de clase schema:Review. 
  Es claramente un error en la producción del documento. 
  Una rápida búsqueda de los documentos con este problema mostró que son 2 los dominios que repiten el error a lo largo de sus documentos
  http://www.ilgiardinodeilibri.it/ y http://www.iplaysoft.com/
  Más en detalle la intención de los autores del documento fue realizar comentarios para los reviews (situación que tiene una solución específica 
- y es el uso de la propiedad <http://schema.org/comments>). 
+ y es el uso de la propiedad schema:comments). 
  La causa principal de que existan errores de este tipo es la ontología schema que aunque no tenga sentido, propone que sea sintácticamente válido
  escribir un review de un review. Dado que la clase Review es subclase de Creative Work, y esta última contiene la propiedad review.
  
  Por otro lado otra propiedad en el listado que llama la atención es description. Analizando la propiedad semánticamente, significaría describir 
  el review en sí mismo, y no el ítem, dado que si ese fuese el objetivo, dicha propiedad estaría en el ítem y no en el review.
  Observando varios de los valores otorgados a esa propiedad en el contexto del review, muestran que se trata de la opinión textual del ítem, 
- para lo cual al igual que en la situación anterior existe una propiedad específica para eso: reviewBody. 
- La causa de que se utilice description en lugar de reviewBody (incluso con mayor frecuencia) proviene de la ontología de data vocabulary, en la cuál 
+ para lo cual al igual que en la situación anterior existe una propiedad específica para eso: schema:reviewBody. 
+ La causa de que se utilice schema:description en lugar de schema:reviewBody (incluso con mayor frecuencia) proviene de la ontología de data vocabulary, en la cuál 
  como se explicó al principio de la tesis utiliza la propiedad description como propiedad específica para realizar el review textual.
  Puede suceder que sean dominios que migraron sus reviews desde data vocabulary hacia schema y usaron como propiedad equivalente la que 
- era literalmente igual (lo cual es incorrecto). También puede deberse a la custumbre de haber utilizado aquella ontología que hizo que no se le 
+ era literalmente igual (lo cual es incorrecto). También puede deberse a la costumbre de haber utilizado aquella ontología que hizo que no se le 
  preste atención a este detalle, o simplemente que hayan visto que es también sintácticamente correcto realizar una descripción de un review 
  y creyeron que era correcto utilizarlo para plantear el review textual.
  De cualquier manera la ontología vuelve a generar inconvenientes debido a la jerarquía propuesta (Review hereda description de la clase Thing).
- Vale la pena aclarar que también existe otra propiedad proveniente de Creative Work que es <http://schema.org/text> cuya descripción de la ontología es `
+ Vale la pena aclarar que también existe otra propiedad proveniente de Creative Work que es schema:text cuya descripción de la ontología es `
  ``El contenido textual de este trabajo creativo'' la cuál sería sintáctica y semánticamente correcto utilizarla en lugar de reviewBody, aunque 
  no sería la más específica.
  
@@ -310,19 +301,19 @@ La clase Review de la ontología schema utilizaba 15 propiedades.
  Y al no haber una propiedad provista por parte de la ontología para titular un review el uso de la propiedad name en su lugar si bien 
  es semánticamente incorrecto, no es una mala idea implementarlo.
  
- Puede observarse tambien que se utiliza la propiedad itemreviewed, la cual no existe en la ontología schema, pero claramente es un 
+ Puede observarse también que se utiliza la propiedad itemreviewed, la cual no existe en la ontología schema, pero claramente es un 
  error de tipeo en un intento de utilizar la propiedad itemReviewed. Éste al parecer es un error sintáctico no cubierto en las evaluaciones 
  anteriores.
  
- Una propiedad curiosa que aparece en el listado es <http://schema.org/about>. Esta propiedad debería describir el tema en el cual 
- se está tratando en el review. Pero un simple vistazo a los valores que toma la propiedad mediante una consulta sparql muestran que 
+ Una propiedad curiosa que aparece en el listado es schema:about. Esta propiedad debería describir el tema en el cual 
+ se está tratando en el review. Pero un simple vistazo a los valores que toma la propiedad mediante una consulta SPARQL muestran que 
  el único valor es ``This is required''
  
- Otra propiedad que vale la pena analizar es <http://schema.org/keywords>. Es una propiedad que debería contener palabras que describan al recurso, 
+ Otra propiedad que vale la pena analizar es schema:keywords. Es una propiedad que debería contener palabras que describan al recurso, 
  el recurso en cuestión es el review y no el ítem, por lo que nuevamente nos encontramos con un error semántico en el uso de la propiedad (ya que es sintácticamente 
  correcto utilizarla en un review porque forma parte de la clase CreativeWork), pero no tiene sentido utilizar palabras para describir un review, claramente 
  son palabras que utilizaron para describir al ítem.
- Una observación de los valores verifican lo descripto anteriormente y además muestran que esta propiedad es sólo utilizada en lso reviews por el dominio 
+ Una observación de los valores verifican lo descripto anteriormente y además muestran que esta propiedad es sólo utilizada en los reviews por el dominio 
  \\\noindent http://www.kennstdueinen.de/ que además utiliza el idioma danés.
  
  También hay que mencionar la superpoblación de propiedades que establecen la fecha del review: datePublished, publishDate y dtreviewed.
@@ -337,7 +328,7 @@ La clase Review de la ontología schema utilizaba 15 propiedades.
  También la misma ontología en su documentación aclaraba que tanto datePublished como publishDate eran indistintas.
  Exactamente esto mismo sucede con la propiedad reviewer, la cual ya no está disponible.
  
- Por último, un vistazo a la propiedad más popular de la clase Review, author, mostró que todos los valores de dicha propiedad están compuestos 
+ Por último, un vistazo a la propiedad más popular de la clase schema:Review, schema:author, mostró que todos los valores de dicha propiedad están compuestos 
  por un string o más específicamente un Literal. Esto contradice la definición de la ontología schema, tanto la documentación como la implementación, que
  establecen que le rango de la propiedad author es Organization o Person. 
  El asunto más relevante en este caso es entender porqué este error sintáctico de rango de propiedades no fue contemplado en los test 
@@ -358,8 +349,8 @@ La clase Review de la ontología schema utilizaba 15 propiedades.
  Al parecer la definición del rango de la propiedad author utiliza estructuras de lista y conjuntos que parecen requerir más inferencia de la 
  que el framework RDFUnit puede realizar.
  
- Conclusión: La mayoría de los problemas son ocacionados por la inconsistencia, inestabilidad e incoherencia de la ontología. Principalmente 
- en el afán de hacerla elegante, crearon a Review como subclase de CreativeWork que normalmente suele ser suplerclase de clases que son ítems de reviews
+ Conclusión: La mayoría de los problemas son ocasionados por la inconsistencia, inestabilidad e incoherencia de la ontología. Principalmente 
+ en el afán de hacerla elegante, crearon a Review como subclase de CreativeWork que normalmente suele ser superclase de clases que son ítems de reviews
  lo que concluye en una ontología demasiado larga y redundante.
  \\
  \\
@@ -392,9 +383,8 @@ Básicamente el problema es que le asignaron el tipo purl:Review a ítems.
  
 %Estrategia:
 
-%Como base se utilizó el framework RDFUnit que provee funcionalidades que asisten tanto a la búsuqeda de problemas sintácticos como semánticos.
+%Como base se utilizó el framework RDFUnit que provee funcionalidades que asisten tanto a la búsqueda de problemas sintácticos como semánticos.
 
-%Para encontrar los errores sintácticos se utilizaró una herramienta del framework que genera test automáticos sobre un vocabulario, y ésto se realizó sobre PURL y SCHEMA.
+%Para encontrar los errores sintácticos se utilizaró una herramienta del framework que genera test automáticos sobre un vocabulario, y esto se realizó sobre PURL y SCHEMA.
 
 %RDFUnit también dispone de una serie de patrones de tests que pueden ser aplicados al contexto e implementados, algunos de los cuales pueden ser utilizados para detectar errores semánticos. 
-

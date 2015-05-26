@@ -25,9 +25,11 @@ de otro tipo de datos primitivo definido por XML. En términos RDF, un literal p
 pero no se evalúa aún más por el procesador de RDF.
 \end{description}
 
-
+Los recursos declarados en forma de sujeto-predicado-objeto se conocen como tripletas.
 Esta estructura forma una vinculación dirigida de un gráfico etiquetado, donde las aristas representan el enlace entre dos 
 recursos (propiedad), representados por los nodos del grafo.
+Las tripletas también pueden incluir el identificador del grafo que las contiene, agregando un valor más a la estructura y formando así 
+las denominadas cuadrupletas (grafo-sujeto-predicado-objeto).
 
 Su representación puede ser asociada tanto a un modelo entidad-relación como a un diagrama de clases de objetos.
 Las Propiedades RDF pueden ser considerados como atributos de los recursos y en este sentido corresponden a pares 
@@ -38,7 +40,7 @@ corresponden a las variables de instancia.
 
 \subsection{RDF Schema (RDFS)}
 
-Es una extensión semántica de RDF \cite{Guha2014}, que provee elementos básicos para la descripción de ontologías (también llamadas vocabularios RDF) con el objetivo
+RDFS es una extensión semántica de RDF \cite{Guha2014}, que provee elementos básicos para la descripción de ontologías (también llamadas vocabularios RDF) con el objetivo
 de estructurar los recursos RDF. Proporciona la manera de definir las clases y las propiedades específicas de la aplicación en RDF.
 RDFS no proporciona las clases sino que proporciona el marco necesario para poder definirlas.
 
@@ -51,7 +53,7 @@ instancias de clases y subclases de las clases.
   \item 
     rdfs:Class permite declarar recursos como clases para otros recursos. 
     
-    Atravez de la propiedad rdf:type, se puede asignar un tipo al recurso, un rucurso de tipo rdfs:Class puede entonces ser tipo de otro recurso. 
+    A través de la propiedad rdf:type, se puede asignar un tipo al recurso, un rucurso de tipo rdfs:Class puede entonces ser tipo de otro recurso. 
     Por ejemplo, podemos definir el recurso Auto como un rdfs:Class, y a su vez podemos definir el recurso Volkswagen Gol con la propiedad rdf:type 
     y siendo el objeto de esa propiedad el recurso Auto, entonces el tipo de Volkswagen Gol será auto.
     
@@ -85,9 +87,9 @@ instancias de clases y subclases de las clases.
 
 \subsection{Vocabularios}
 
-Son una colección de clases y propiedades con sus respectivas URIs, que son utilizadas para describir significado. Dichos vocabularios 
+Los vocabularios son una colección de clases y propiedades con sus respectivas URIs, que son utilizadas para describir significado. Dichos vocabularios 
 pueden ser fácilmente creados por cualquier usuario, sólo es necesario darle uso a la URI y documentarlo en algún lado. 
-Por lo general, son estándares de uso no restrictivos de propiedades y clases que poseén una documentación.
+Por lo general, son estándares de uso no restrictivos de propiedades y clases que poseen una documentación.
 El objetivo de los vocabularios es poder describir el significado de los recursos web y del mundo real, modelándolos en clases y 
 propiedades que se utilizarán para describir al objeto en cuestión.
 
@@ -96,7 +98,7 @@ propiedades que se utilizarán para describir al objeto en cuestión.
 
 Web Ontology Languaje \cite{McGuinness2004}: Es un vocabulario que funciona como lenguaje para crear ontologías en la web. Fue creado en el 2006 y aceptado 
 por WC3 como estándar en 2007 en su versión OWL 1.1. Tiene por objetivo proveer reglas a los vocabualrios para aumentar su expresividad. 
-Estas reglas incluyen: jerarquías de clasess, cardinalidad, relaciones de conjunto, tipologías de propiedades más complejas, etc. Lo que proporciona la posibilidad de crear ontologías que pueden 
+Estas reglas incluyen: jerarquías de clases, cardinalidad, relaciones de conjunto, tipologías de propiedades más complejas, etc. Lo que proporciona la posibilidad de crear ontologías que pueden 
 representarse en un paradigma muy parecido a la orientación a objetos. Cabe destacar que OWL no es el único vocabulario con este objetivo, ya que RDFS 
 es también un conjunto de estándares mucho más básico que permite estas características.
 En la actualidad existe la versión 2 de OWL \cite{W3C} que es mucho más completa.
@@ -111,7 +113,7 @@ cumplir con el objetivo de ésta, que fue planteado en la introducción: ``La We
 
 \subsection{Motores de inferencias.}
 
-Son componentes de software que pertimente establecer consecuencias lógicas en base a los axiomas definidos tanto por OWL como por RDFS \cite{C.Trim}
+Los motores de inferencia son componentes de software que permiten establecer consecuencias lógicas en base a los axiomas definidos tanto por OWL como por RDFS \cite{C.Trim}.
 Estos componentes tienen como objetivo enriquecer las ontologías, creando reglas de inferencia. 
 Dichas inferencias pueden ser más o menos complejas dependiendo de la capacidad y la configuración del motor utilizado. Existen tanto gratuitos 
 como pagos.
@@ -119,12 +121,18 @@ como pagos.
 
 \subsection{SPARQL}
 
-Se trata de un lenguaje estandarizado de consulta de grafos RDF.
-SPARQL se puede utilizar para expresar consultas que permiten interrogar diversas fuentes de datos (si es que los datos fueron almacenados 
-de forma nativa como RDF o fueron definidos mediante vistas a RDF a travez de algún middleware). Tiene capacidades para la consulta
+SPARQL se trata de un lenguaje estandarizado de consulta de grafos RDF.
+Se puede utilizar para expresar consultas que permiten interrogar diversas fuentes de datos (si es que los datos fueron almacenados 
+de forma nativa como RDF o fueron definidos mediante vistas a RDF a través de algún middleware). Tiene capacidades para la consulta
 de los patrones obligatorios y opciones de grafo, junto con sus conjunciones y disyunciones. SPARQL también soporta 
 la ampliación o restricción del ámbito de las consultas indicando los grafos sobre los que opera (grafos con nombre). Los resultados de las consultas
 SPARQL pueden ser conjuntos de resultados o grafos RDF.
+
+\subsection{Triplestore}
+Un triplestore es una base de datos construida con el propósito de almacenar y recuperar tripletas \cite{Rusher} a través de consultas semánticas.
+
+Al igual que en las bases de datos relacionales, almacena la información en el triplestore y las recupera vía un lenguaje de consultas que en este caso es generalmente SPARQL. 
+Pero por otro lado, además de las consultas, las tripletas pueden usualmente ser importadas/exportadas utilizando RDF y otros formatos.
 
 \subsubsection{Términos de conjuntos de colecciones de datos semánticos}
 
@@ -142,15 +150,15 @@ SPARQL pueden ser conjuntos de resultados o grafos RDF.
 
 \subsection{HTML semántico}
 
-El uso y participación en la Web Semántica a travez de documentos RDF no es atractivo para la mayoría, porque no parece proveer un beneficio 
+El uso y participación en la Web Semántica a través de documentos RDF no es atractivo para la mayoría, porque no parece proveer un beneficio 
 directo, ya que esto implica, aprender un lenguaje nuevo para generar documentos que sólo le será de utilidad a usuarios con un grado de conocimiento 
 muy alto. 
 
-Para resolver este problema, existen etiquetas de marcado en HTML que le proporcionan información semántica al documento, que copmo se verá más adelante 
+Para resolver este problema, existen etiquetas de marcado en HTML que le proporcionan información semántica al documento, que como se verá más adelante 
 puede ser extraída para generar documentos RDF. Existen distintos tipos:
 \begin{description}
-  \item[Microdatos:]\cite{Hickson2012} Son un grupo de pares nombre-valor anidados dentro del documento, en paralelo con el contenido existente. Dichos grupo son 
-también llamados ítems y cada par nombre-valor es la propiedad. Los atributos más utilizados son:
+  \item[Microdatos:] Son un grupo de pares nombre-valor anidados dentro del documento, en paralelo con el contenido existente. Dichos grupo son 
+también llamados ítems y cada par nombre-valor es la propiedad \cite{Hickson2012}. Los atributos más utilizados son:
   \begin{itemize}
     \item itemscope: Se utiliza para crear un ítem
     \item itemprop: Se utiliza para crear una propiedad
@@ -159,7 +167,8 @@ también llamados ítems y cada par nombre-valor es la propiedad. Los atributos 
     \item itemtype: Se utiliza para establecer el tipo a un ítem.
   \end{itemize}
 
-  \item[Microformatos:] Nacen con la intención acercar más personas al uso de la web semántica a travez de una forma sensilla de utilizar 
+  La figura \ref{figure:microdata} muestra un ejemplo real del uso de microdatos con su resultado extraído.
+  \item[Microformatos:] Nacen con la intención acercar más personas al uso de la web semántica a través de una forma sencilla de utilizar 
 una serie de atributos de las etiquetas de XHTML:
 
   \begin{itemize}
@@ -167,37 +176,43 @@ una serie de atributos de las etiquetas de XHTML:
 
     \item rel: Se utiliza en los enlaces para indicar relaciones en los documentos.
 
-    \item rev: Igual al rev pero en sentido inverso.
+    \item rev: Igual al rel pero en sentido inverso.
   \end{itemize}
   
 Con el uso del atributo class se puede entonces especificar un microformato a utilizar. Existen muchos tipos como por ejemplo: hCard (para describir 
 personas), hreview (para describir reviews), geo (para describir posiciones), etc. Cada uno de ellos con distintas propiedades.
 
-\item[RDF-a:]\cite{Celik}Permite directamente embeber tripletas (sujeto-predicado-objeto) utilizando namespaces de XML. Modela la información en forma de grafo, 
+La figura \ref{figure:microformats} muestra un ejemplo real del uso de microformatos con su resultado extraído.
+\item[RDF-a:]Permite directamente embeber tripletas (sujeto-predicado-objeto) utilizando namespaces de XML \cite{Celik}. Modela la información en forma de grafo, 
 a diferencia de microdatos y microformatos que lo hacen en forma de árbol, lo que hace que el mapeo a RDF sea claro, ya que en los otros casos puede ser problemático.
 También tiene la opción de darle tipo a los literales. Como contrapartida tiene la desventaja de ser mucho más complejo de utilizar. 
+
+La figura \ref{figure:rdfa} muestra un ejemplo real del uso de rdf-a con su resultado extraído.
 \end{description}
 
 \begin{figure}
     \centering
     \includegraphics[width=0.8\textwidth,natwidth=610,natheight=642]{microdata}
     \caption{Ejemplo de marcado de microdatos y resultado}
+    \label{figure:microdata}
 \end{figure}
 \begin{figure}
     \centering
     \includegraphics[width=0.8\textwidth,natwidth=610,natheight=642]{microformats}
     \caption{Ejemplo de marcado de microformatos y resultado}
+    \label{figure:microformats}
 \end{figure}
 \begin{figure}
     \centering
     \includegraphics[width=0.8\textwidth,natwidth=610,natheight=642]{rdfa}
     \caption{Ejemplo de marcado de rdf-a y resultado}
+    \label{figure:rdfa}
 \end{figure}
 
 \subsection{Extractores}
 
-Son herramientas que permiten extraer tripletas de los lenguajes de metadatos semánticos embebidos en HTML vistos anteriormente. 
-Utilizan estándares como GRDDL\cite{Connolly2007}, parseando todo el documento HTML y buscan sentencias para traducir a RDF y generar un nuevo documento 
+Los extractores son herramientas que permiten extraer tripletas de los lenguajes de metadatos semánticos embebidos en HTML vistos anteriormente. 
+Utilizan estándares como GRDDL\cite{Connolly2007} parseando todo el documento HTML y buscan sentencias para traducir a RDF y generar un nuevo documento 
 que contiene sólo las tripletas de información semántica. 
 Muchas veces (sobre todo con microformatos) los extractores tienen que tomar decisiones sobre cómo traducir a RDF, por lo que 
 un mismo documento HTML puede ser extraído de distintas maneras según el extractor. Esto no ocurre con RDFa, ya que la equivalencia a RDF es mucho 
@@ -205,8 +220,8 @@ más clara.
 
 \subsection{Dublin core}
 
-\cite{Dublin} Es un vocabulario ampliamente utilizado para describir tanto recursos web como recursos físicos creado en 2012. Comenzó siento un conjunto de 15 
-propiedades 
+Dublin core \cite{DublinCore} es un vocabulario ampliamente utilizado para describir tanto recursos web como recursos físicos creado en 2012. Comenzó siento un conjunto de 15 
+propiedades: 
 
 \begin{lstlisting}
     Title		Publisher	Format
@@ -223,83 +238,84 @@ En la actualidad, se ha extendido a 55 propiedades y 22 clases.
 
 
 
-\section{Aplicaciones en la Web Semantica}
+\section{Aplicaciones en la Web Semántica}
 
 \subsection{DBpedia}
 
-La aplicación más importante de la Web Semántica, que tiene como objetivo extraer información de wikipedia, y crear una versión semántica 
-de la información. Para ello creó una serie de ontologías, donde modelan y relacionan la información extraída de wikipedia.
+DBpedia es la aplicación más importante de la Web Semántica, que tiene como objetivo extraer información de wikipedia, y crear una versión semántica 
+de la información. Para ello creó una serie de ontologías, donde modelan y relacionan la información extraída de wikipedia \cite{dbpedia-swj}.
 
-Dbpedia \cite{dbpedia-swj} en la actualidad es reconocido como el sitio autoritativo de recursos de la web semántica, siendo las URIs de estos recursos 
+Dbpedia en la actualidad es reconocido como el sitio autoritativo de recursos de la web semántica, siendo las URIs de estos recursos 
 la mejor forma de identificarlos.
 Es por eso que la gran mayoría de las aplicaciones de la web semántica utilizan la información de dbpedia para enriquecer sus datasets.
 En Septiembre de 2013, se contaron mas de 45 millones de links entre DBpedia y datasets externos como  Freebase, OpenCyc, UMBEL, GeoNames,
-Musicbrainz, etc.
+Musicbrainz, etc como muestra la figura \ref{figure:dbpedia}.
 
 \begin{figure}
     \centering
     \includegraphics[width=0.8\textwidth,natwidth=610,natheight=642]{dbpedia}
     \caption{La utilización de DBpedia como fuente de datos}
+    \label{figure:dbpedia}
 \end{figure}
 
 \subsection{Revyu}
 
-\cite{Heath} Es una aplicación que se utiliza para publicar reviews de cualquier tipo en RDF. Alentando al usuario a generar reviews en la Web Semántica 
+Revyu es una aplicación que se utiliza para publicar reviews de cualquier tipo en RDF. Alentando al usuario a generar reviews en la Web Semántica 
 sin la necesidad de conocimiento sobre la misma.
 
-Tiene el objetivo de proveer información reusable para otras aplicaciones, y generar datos de confianza y recomendación en las redes sociales.
+Tiene el objetivo de proveer información reusable para otras aplicaciones, y generar datos de confianza y recomendación en las redes sociales \cite{Heath}.
 
 La información es publicada tanto en documentos HTML como RDF además de su SPARQL Endpoint, siendo así de utilidad para los distintos tipos de usuarios.
 También alienta el uso de links a distintos dataset semánticos, como el de DBpedia, RDF Book Mashup, etc.
 
 \subsection{Sindice} 
 
-\cite{Oren2008} Es una herramienta creada en conjunto por la Universidad de Deri,  Fondazione Bruno Kessler y Openlink Software que propociona 
-múltiples tipos de API ofreciendo acceso a su dataset de la web de datos. 
+Sindice es una herramienta creada en conjunto por la Universidad de Deri,  Fondazione Bruno Kessler y Openlink Software que propociona 
+múltiples tipos de API ofreciendo acceso a su dataset de la web de datos \cite{Oren2008}. 
 
-Este dataset contiene información recolectada de la web en múltiples formatos de la web semántica y puede ser accedido a travez 
+Este dataset contiene información recolectada de la web en múltiples formatos de la web semántica y puede ser accedido a través 
 de un search engine, una API restful o un SPARQL endpoint. 
 
-En la actualidad posee indexados 708.26 millones de documentos.
+En la actualidad poseé indexados 708.26 millones de documentos.
 
 \subsection{Link Open Data Cloud Cache (LOD)} 
 
-Al igual que sindice proporciona acceso a un dataset recolectado de la web de datos pero de una manera mucho más restringida. 
+LOD al igual que Sindice proporciona acceso a un dataset recolectado de la web de datos pero de una manera mucho más restringida. 
 
 Se dispone de un text search (funciona como un search engine) o de un SPARQL Endpoint muy poco flexible y limitado en cuanto a 
 la cantidad de información ofrecida comparada con la que podría ofrecer. Sólo se puede acceder al dataset entero mediante federated
 queries, en caso de querer buscar sobre todo el dataset, el endpoint limita la consulta sólo a una parte del mismo. 
 
-Tambien posee muchas restricciones respecto a los time outs, por lo que las consultas no pueden ser muy flexibles.
+También posee muchas restricciones respecto a los time-outs, por lo que las consultas no pueden ser muy flexibles.
 Para poder disponer de la funcionalidad completa del endpoint y así poder aprovechar tanto el dataset como las consultas SPARQL 
-deberá comprarse una licencia.
+será necesario adquirir una licencia.
 
 
 \section{Tecnologías}
 
 \subsection{Apache Jena}
 
-Es un framework de Open Source para Java que permite crear aplicaciones de Web Semántica y Linked Data. \\
+Jena es un framework de Open Source para Java que permite crear aplicaciones de Web Semántica y Linked Data. \\
 Proveé todas las funcionalidades necesarias para extraer, crear y publicar documentos RDF. Tiene soporte además para múltiples otros 
 formatos de la web semántica. \\
-También proporciona la posibilidad de crear dataset semánticos y utilizarlos mediante código en Java o a travez de un procesador SPARQL 
+También proporciona la posibilidad de crear dataset semánticos y utilizarlos mediante código en Java o a través de un procesador SPARQL 
 llamado ARQ.\\
 Incluye además, opciones de serialización de grafos RDF a bases de datos relacionales.
 
 \subsection{JSON Simple}
 
-Es una pequeña librería para Java que permite una fácil y rápida serialización de objetos a 
+JSON simple es una pequeña librería para Java que permite una fácil y rápida serialización de objetos a 
 Strings de JSON.
 
 \subsection{Jersey}
 
-Framework para Java que proveé una API que extiende las herramientas JAX-RS que simplifican el 
+Jersey es un framework para Java que provee una API que extiende las herramientas JAX-RS que simplifican el 
 desarrollo de una API Restful. 
 
 \subsection{RDFUnit}
 
-RDFUnit \cite{Kontokostas2014} es un framework creado con el objetivo de presentar una metodología para realizar una evaluación 
-de calidad sobre un dataset semántico.
+RDFUnit es un framework creado con el objetivo de presentar una metodología para realizar una evaluación 
+de calidad sobre un dataset semántico \cite{Kontokostas2014}.
 
 Dicho framework proveé una serie de patrones que ayudarán a testear posibles errores comunes en los dataset, brindando la posibilidad 
-al usuario de crear los propios. También poseé un mecanismo para detectar posibles test en un dataset.
+al usuario de crear los propios. También posee un mecanismo para detectar posibles test en un dataset.

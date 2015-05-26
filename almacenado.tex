@@ -33,7 +33,7 @@ Y por último se determinó utilizar una base de datos TDB, por múltiples razon
 \item Es gratuita y opensource. 
 \item Es muy eficiente, ya que no trabaja sobre una base de datos MySQL.
 \item Se encuentra incorporado a jena por lo que se dispone de su utilización en Java.
-\item Para levantar la base de datos, a partir de ese documento nq se utilizó la operación bulkloader2 que la manera más rapida. Con lo que se obtuvo la base de datos TDB.
+\item Para levantar la base de datos, a partir de ese documento nq se utilizó la operación bulkloader2 que la manera más rápida. Con lo que se obtuvo la base de datos TDB.
 \end{itemize}
 
 \section{Resultados}
@@ -41,7 +41,9 @@ Y por último se determinó utilizar una base de datos TDB, por múltiples razon
 \textbf{Any23}
 \\\\
 En el cuadro \ref{table:Extractors} puede observarse una lista de los principales extractores utilizados por Any23 para realizar el 
-procedimiento.
+procedimiento. En la columna Extractor se describe el nombre del extractor que fue utilizado, el nombre del extractor identifica también qué formato de 
+información extrae, la columna Documentos indica la cantidad de documentos que el extractor procesó (esto implica que el documento contenía el tipo de formato descripto en el nombre del extractor), y 
+Porcentaje se refiere al porcentaje de documentos procesados con respecto al total.
 \begin{table}[h]
 \begin{tabular}{| l | c | r | }\hline
 Extractor & Documentos & Porcentaje \\\hline
@@ -78,23 +80,23 @@ Tripletas totales & 16.614.727\\
 Tripletas promedio por documento & 71.66\\
 Tripletas promedio en documentos con tripletas & 72.56\\
 Tripletas promedio sobre documentos con review & 84.02\\
-Tripletas totales de documentos con review & 15719392\\
+Tripletas totales de documentos con review & 15.719.392\\
 Tripletas promedio sobre documentos sin review & 20.01\\\hline
-Total Documentos & 236640\\\hline
+Total Documentos & 236.640\\\hline
 \end{tabular}
 \caption{Estadística del contenido semántico en los documentos}
 \label{table:SemanticaEnDocumentows}
 \end{table}
 
-Cabe destacar que, ese procentaje de documentos con review 79\% implica que el 21\% restante fueron documentos que sindice tiene indexados como contenedores de 
-alguna de las clases de review mencionadas y ya no los tiene en la actualidad. Ya sea porque:
+Cabe destacar que el porcentaje de documentos con Review es 79\% e implica que el 21\% restante fueron documentos que Sindice tiene indexados como contenedores de 
+alguna de las clases de review mencionadas lo cual ya no es cierto. Ya sea porque:
 \begin{itemize}
 \item El documento no existe más
 \item El documento cambió y no habla sobre reviews
 \item El documento dejó de utilizar la web semántica para publicar reviews
 \end{itemize}
-Pero ese porcentaje no refleja una estadística sobre un muestreo válido de sindice ya que, com ose mencionó anteriormente, los dominios fueron seleccionados 
-dependiendo de si aún existen y además aún tenían publicados documentos de reviews en la web semántica.
+Pero ese porcentaje no refleja una estadística sobre un muestreo aleatorio válido de Sindice ya que, como se mencionó anteriormente, los dominios fueron seleccionados 
+con un previo checkeo superficial de la información de Sindice sobre cada dominio.
 \\
 \\
 \textbf{Riot:}
@@ -105,7 +107,7 @@ mal confeccionado.
 El cuadro \ref{table:BulkLoadErrors} muestra los errores detectados en el proceso de bulk load que no fueron advertidos por any23.\\
 \begin{table}[h]
 \begin{tabular}{| l | l | }\hline
-Error & Razon \\\hline
+Error & Razón \\\hline
 PORT\_SHOULD\_NOT\_BE\_& Ports under 1024 should be accessed \\ WELL\_KNOWN  in PORT  & using the appropieate scheme name. \\\hline
 ILLEGAL\_CHARACTER & The character violates the \\  in FRAGMENT & grammar rules for URIs/IRIs.\\\hline
 DEFAULT\_PORT\_SHOULD\_& If the port is the default one \\ BE\_OMITTED in PORT  & for the scheme it should be omitted. \\\hline
@@ -129,12 +131,12 @@ La base de datos resultante contiene:
 \\\\
 Cantidad de grafos: 182153
 
-\noindent Cantidad de grafos con schema/review: 50955 
+\noindent Cantidad de grafos que contienen la clase schema:Review: 50955 
 
-\noindent Cantidad de grafos con schema/aggregate rating: 52022
+\noindent Cantidad de grafos que contienen la clase schema:Aggregate rating: 52022
 
-\noindent Cantidad de grafos con purl/review: 104316 
+\noindent Cantidad de grafos que contienen la clase purl:Review: 104316 
 
-\noindent Cantidad de grafos con purl/aggregate review: 43991
+\noindent Cantidad de grafos que contienen la clase purl:ReviewAggregate: 43991
 \\\\
-La búsqueda en sindice se realizó para schema/review y purl/review. Sin embargo, como se puede apreciar se obtuvieron muchos resultados con reviews agregados.
+La búsqueda en sindice se realizó para schema:Review y purl:Review. Sin embargo, como se puede apreciar se obtuvieron muchos resultados con reviews agregados.

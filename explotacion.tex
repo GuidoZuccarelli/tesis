@@ -31,13 +31,13 @@ La figura \ref{figure:explotacion} muestra un diagrama de la arquitectura de la 
 \end{figure}
 
 \begin{enumerate}
- \item API Restful: Que proveé una API mediante la utilización del framework Jersey. Esto evitó 
+ \item API Restful: Que provee una API mediante la utilización del framework Jersey. Esto evitó 
  que se requiera utilizar una interfaz gráfica que no cumple ningún aporte a los objetivos de esta tesis.
  \item Service: Que proporciona la funcionalidad de la aplicación, generando la estructura de los 
  rankings en el sistema de recomendación, para luego utilizar el framework Jena que modela y proveé la información 
  solicitada por el sistema. 
  
- También poseé una librería que mapea la información otorgada pro Jena a Strings JSON que pueden ser 
+ También posee una librería que mapea la información otorgada pro Jena a Strings JSON que pueden ser 
  devueltos por la API.
  \item Queries: Por último se encuentra la capa queries, que se encarga de obtener los datos del dataset 
  mediante consultas SPARQL generadas por la librería ARQ del framework Jena. Dicha capa será la encargada 

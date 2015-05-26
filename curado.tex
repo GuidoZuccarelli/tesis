@@ -10,6 +10,8 @@ Corregir todos los problemas viables encontrados en el paso anterior que se pued
 \subsection*{Estrategia}
 Con una consulta SPARQL, se eliminó la propiedad incorrecta y se agregó la misma en la forma que corresponde.
 Todo se realizó con una simple consulta SPARQL
+
+\newpage
 \begin{lstlisting}[frame=single]  
 DELETE{
   GRAPH ?g {
@@ -46,13 +48,13 @@ schema.
 
 Se recorrieron todos los grupos de duplicados y se procedió a realizar la siguiente operación:
 Se le asignó a cada grupo un id único, al cual llamaremos groupId.
-Lueog por cada grupo de duplicados se seleccionó de manera arbitraria un representante con un criterio que se describirá a continuación:
+Luego por cada grupo de duplicados se seleccionó de manera arbitraria un representante con un criterio que se describirá a continuación:
 Si dentro del conjunto de documentos entre los cuales se encuentran todos los integrantes del grupo de duplicados no existe ninguno 
 que contenga un recurso ya elegido anteriormente como representante, se selecciona cualquier recurso de la lista de duplicados al azar.
 Caso contrario, se selecciona el primer recurso encontrado en la lista, que pertenezca al documento que ya contiene algún recurso escogido 
 como representante.
-Esto se realizó de esa forma, para que todos los representantes se concentren en los mismos documentos y no suceda que dados 2 
-documentos idénticos con 2 reviews cada uno, no terminen con un representante cada uno. De esta forma se minimizan la cantidad de 
+Esto se realizó de esa forma, para que todos los representantes se concentren en los mismos documentos y no suceda que dos 
+documentos idénticos con dos reviews cada uno, no concluyan cada uno con un documento. De esta forma se minimiza la cantidad de 
 documentos con reviews en el dataset.
 Luego de elegir un representante para el grupo de duplicados, a ese recurso se le asignó una propiedad http://local.org/representantOf y 
 como objeto de la propiedad el groupId.
@@ -72,7 +74,7 @@ falta el tipo al recurso objeto, pero no necesariamente significa que esté mal,
 y será verificado en la consulta manual, en este caso por ejemplo, lo importante es que la fecha tenga el formato apropiado.
 Se decidió entonces atacar los problemas más específicos:
 
-http://schema.org/ratingValue has rdfs:domain different from: \\\noindent http://schema.org/Rating
+\textbf{http://schema.org/ratingValue has rdfs:domain different from: \\\noindent http://schema.org/Rating}
 
 \subsection*{Estrategia}
 Primero hubo que investigar, cuáles son todos los dominios para esa propiedad que aparecen en el dataset, para ver si se pueden 
@@ -87,20 +89,21 @@ where{
 \end{lstlisting}
 
 \begin{table}[h]
-\begin{tabular}{| l | c |}
- <http://schema.org/Rating> & 120165\\
- <http://schema.org/AggregateRating> & 54815 \\
- <http://schema.org/Review> & 5867 \\
- <http://schema.org/Product> & 331 \\
+\begin{tabular}{| l | c |}\hline
+ Dominio & Cantidad de recursos \\\hline
+ schema:Rating & 120165\\
+ schema:AggregateRating & 54815 \\
+ schema:Review & 5867 \\
+ schema:Product & 331 \\\hline
 \end{tabular}
-\caption{Dominio de los recursos con propiedad schema:ratingValue}
+\caption{Dominios encontrados en los recursos con propiedad schema:ratingValue}
 \label{table:ratingValueDomains}
 \end{table}
 
 En el cuadro \ref{table:ratingValueDomains} se puede apreciar que en la mayor parte de los casos de error, se dieron porque se incluyó la propiedad ratingValue directamente en 
 el Review. Ahora surge la necesidad de saber si esos casos donde el Review tiene la propiedad ratingValue, existe una propiedad reviewRating 
 con su respectivo Rating.
-Se relizó la consulta:
+Se realizó la consulta:
 
 \begin{lstlisting}[frame=single]  
 select (count (?s) as ?cantidad) 
@@ -136,32 +139,31 @@ GRAPH ?g {
 }
 \end{lstlisting}
 
-schema:worstRating and schema:bestRating has rdfs:domain different from: http://schema.org/Rating
-Estrategia:
-El proceso es igual al anterior y los dominios disintos de rating eran Review, la misma cantidad que en el anterior 5867
+~\\\\
 
-\subsection*{Resultados}
-Idem los anteriores.
 
-http://schema.org/itemReviewed is missing proper range
+\textbf{\noindent schema:worstRating and schema:bestRating has rdfs:domain different from: http://schema.org/Rating}
 
-Estrategia:
-Esta evaluación se refiere a que existen recursos objeto de dicha propeidad, que no tienen un tipo específico. Para ver si 
+El proceso es igual al anterior y los dominios distintos de rating eran Review, la misma cantidad que en el anterior 5867
+\\\\
+
+\textbf{http://schema.org/itemReviewed is missing proper range}
+
+Esta evaluación se refiere a que existen recursos objeto de dicha propiedad, que no tienen un tipo específico. Para ver si 
 puede ser resuelto, primer hubo que evaluar qué clase de recursos contienen como objeto, esas propiedades que presentaron problemas.
 
-Resultado:
 La evaluación encontró que, todos esos recursos eran URIs de un dominio web 411ca.com para ser derreferenciados. La solución podría haber sido 
 descargar dichos recursos y anexarlos a la propiedad, pero lamentablemente dichos recursos no se encontraban disponibles de forma online.
 \\\\
-http://purl.org/stuff/rev\#hasReview has different range from:\\\noindent http://purl.org/stuff/rev\#Review 
+\textbf{http://purl.org/stuff/rev\#hasReview has different range from:\\\noindent http://purl.org/stuff/rev\#Review }
 En este caso no hay error, el inconvieniente surge porque los recursos de tipo purl:ReviewAggregate utilizan también la propiedad hasReview
 que no esta contemplado en la ontología de purl.
 \\\\
-http://purl.org/stuff/rev\#reviewer is missing proper range
-Este caso se da \\\noindent porque se genera un recurso vació, específicamente el reviewer. El reviewer no fue provisto en lso documentos orginales donde 
+\textbf{http://purl.org/stuff/rev\#reviewer is missing proper range}
+Este caso se da \\\noindent porque se genera un recurso vació, específicamente el reviewer. El reviewer no fue provisto en los documentos originales donde 
 se derivó este problema, simplemente establecían el metadato reviewer dejándolo vacío.
 \\\\
-http://purl.org/stuff/rev\#reviewer has different range from:\\\noindent http://xmlns.com/foaf/0.1/Person
+\textbf{http://purl.org/stuff/rev\#reviewer has different range from:\\\noindent http://xmlns.com/foaf/0.1/Person}
 En estos casos analizando qué clase contenian si no era foaf:Person, se observó que la clase era \\\noindent http://www.w3.org/2006/vcard/ns\#VCard.
 En todos los casos donde el reviewer no se encontraba vacío, se utilizó un v:card en lugar de un foaf:Person, y esto tiene una explicación, 
 y es que al haberse utilizado hreview con microformatos es imposible crear un recurso de esa clase, dado que no se posee un namespace, para que 
@@ -185,7 +187,7 @@ La idea en esta evaluación entonces, es encontrar qué formatos distintos conti
 \textbf{Estrategia}\\
 Comenzando con la siguiente consulta:
 
-
+\newpage
 \begin{lstlisting}[frame=single]  
 SELECT distinct ?date 
 WHERE{
@@ -203,8 +205,8 @@ FILTER NOT EXISTS{
 
 Esta consulta retorna la fecha de todos los reviews que no estén duplicados y que además dicha fecha no tenga el formato YYYY-MM-DD
 
-Luego observando los resultados manualmente, se prsta atención also primeros resultados y se trata de encontrar con qué patrón están formados 
-para luego anotarlo y realizar la misma consulta esta vez filtrando los reusltados ocn dicho patrón. Iterando este proceso hasta que 
+Luego observando los resultados manualmente, se presta atención a los primeros resultados y se trata de encontrar con qué patrón están formados 
+para luego anotarlo y realizar la misma consulta esta vez filtrando los resultados con dicho patrón. Iterando este proceso hasta que 
 queden 0 resultados.
 
 ~\\\\\textbf{Resultados}\\
@@ -276,8 +278,8 @@ Expresión regular & Cantidad de reviews\\\hline
 \label{table:RegExpressionsDtreviewed}
 \end{table}
 
-Una vez encontrados los patrones, sólo fue cuestion de correr un algoritmo en Java dónde se contemplan todo los patrones y se 
-le aplica la correción apropiada al String y se vuelve a almacenar en el review.
+Una vez encontrados los patrones, sólo fue cuestión de correr un algoritmo en Java dónde se contemplan todo los patrones y se 
+le aplica la corrección apropiada al String y se vuelve a almacenar en el review.
 También en varios casos hubo que verificar dónde se encontraba el día y dónde el mes como por ejemplo para casos como éste 
 \verb|^[0-9]{2}\\.[0-9]{2}\\.[0-9]{4}\$|
 Manualmente se observan los resultados de ese patrón y se puede observar si los primeros 2 números son mes o día.
@@ -295,7 +297,7 @@ Para encontrar la respuesta, se necesita la información de todos los reviews de
 ~\\\\\textbf{Estrategia}\\
 Para resolver el problema de rango en los ratings de los reviews entonces, lo primero que hay que hacer es una evaluación, en la cual 
 se pueda observar qué valores tomaron los ratings de otros reviews correspondientes al mismo sitio web hosting del review. 
-Esto sólo se aplicó par ala ontología purl, dado que apra schema los valores erróneos eran muy pocos y no se jsutificaba.
+Esto sólo se aplicó par ala ontología purl, dado que apra schema los valores erróneos eran muy pocos y no se justificaba.
 Para implementarlo, lo primero que se realizó fue la siguiente consulta
 
 \begin{lstlisting}[frame=single]
@@ -330,6 +332,120 @@ guarde los valores de los ratings encontrados, y la cantidad de veces que se enc
 Los cuadros \ref{table:Chip}, \ref{table:Chronic}, \ref{table:Gamezbo}, \ref{table:Gogobot}, \ref{table:Kollermedia}, \ref{table:Ormigo}, \ref{table:YellowBot} muestran 
 los valores incorrectos de rango de reviews encontrados para cada domino y la cantidad de reviews del mismo. Y en base a esos datos 
 se pudo inferir el rango correcto para cada uno de los dominios como muestra el cuadro \ref{table:DetectedRanges}
+
+
+
+
+Luego estos resultados se corroboraron manualmente revisando todos los valores que poseía el dominio tanto dentro del rango 1-5 como fuera .
+Desde ya que no se puede asegurar la veracidad de los rangos encontrados, dado que por ejemplo, podría suceder que para el dominio 
+www.kollermedia.at por mas absurdo que parezca el rango real es 1-11 pero no existe ningún review con el valor 11 en su rating.
+Nota: Manualmente se verificó que ormigo poseía simplemente reviews mal generados.
+
+Una vez con estos resultados se puede proceder a corregir los valores de los reviews del dataset.
+
+~\\\\\textbf{Estrategia}\\
+Disponiendo de los rango correctos para cada dominio se recorrieron todos los reviews de cada dominio resultante, y se les adicionaron 
+las propiedades rev:minRating y rev:maxRating con los valores correspondientes.
+Esto no sólo para los reviews con ratings erróneos encontrados en la etapa de evaluación (fuera del rango 1-5) dado que, para los reviews de 
+cada dominio con rango encontrado, por más que el rating se encuentre dentro del rango 1-5 y aparente ser correcto,  ya se sabe que dicho dominio se 
+maneja con rangos diferentes y el valor real del rating cambiaría (no es lo mismo el valor 3 en un rango 1-100 que en un rango 1-5)
+
+~\\\\\textbf{Resultados}\\
+El cuadro \ref{table:DomainRangeCorrections} muestra la cantidad de reviews corregidos de cada dominio habiéndose agregado las 
+propiedades necesarias según los rangos inferidos anteriormente.
+
+\section{Curado nº 5 - Análisis experto}
+\label{section:curado-analisis}
+Propiedades inexistentes o semánticamente incorrectas\\
+Son los casos de itemreviewed, dtreviewed, publishDate y reviewBody, ya analizados en la evaluación.
+Estrategia: En este caso para todas el procedimiento es exactamente el mismo, y es bastante sencillo, crear una nueva propiedad con 
+el mismo sujeto y objeto, pero la propiedad indicada para cada caso y luego borrar la tripleta incorrecta.\\
+
+\begin{table}[h]
+\begin{tabular}{| l | c |}\hline
+ Propiedad Inexistente & Propiedad correcta \\\hline
+ itemreviewed & itemReviewed\\
+ dtreviewed, publishDate & datePublished\\
+ description & reviewBody\\\hline
+\end{tabular}
+\caption{Propiedades inexistentes}
+\label{table:UndefinedProps}
+\end{table}
+
+El Cuadro \ref{table:UndefinedProps} lista las propiedades incorrectas encontradas con su correspondiente indicado.
+\\
+Comentarios en forma de reviews\\
+\subsection*{Objetivo}
+Corregir la clase de los recursos que son de tipo schema:UserComments pero fueron clasificados como schema:Review
+
+\subsection*{Estrategia}
+Lo que se intentará es cambiar la clase Review del recurso, y transferir todas las propiedades a una equivalente en la clase UserComments.
+Por lo que primero se debe inspeccionar qué propiedades contienen dichos recursos.
+
+\begin{lstlisting}[frame=single]
+ SELECT distinct ?p
+ WHERE{
+ ?s a <http://schema.org/Review> .
+ ?s <http://schema.org/review> ?review .
+ ?review ?p ?o .
+ }
+\end{lstlisting}
+
+\begin{table}[h]
+\begin{tabular}{| l | c |} \hline
+Propiedad encontrada & Equivalente en Comment\\\hline
+http://schema.org/description & http://schema.org/commentText \\
+http://schema.org/reviewBody & http://schema.org/commentText \\
+http://schema.org/datePublished & http://schema.org/commentTime \\
+http://schema.org/author & http://schema.org/creator \\\hline
+\end{tabular}
+\caption{Equivalencia de propiedades de la clase Review con UserComments}
+\label{table:PropertyEqRevCom}
+\end{table}
+
+En el cuadro \ref{table:PropertyEqRevCom} se muestran las propiedades encontradas junto con su equivalente en la clase requerida. 
+Entonces simplemente para solucionar el problema alcanza con la siguiente consulta SPARQL:
+\newpage
+\begin{lstlisting}[frame=single]
+ DELETE { 
+ GRAPH ?g{ 
+ ?s <http://schema.org/review> ?review .
+ ?review <http://schema.org/description> ?description .
+ ?review <http://schema.org/reviewBody> ?body .
+ ?review a <http://schema.org/Review> .
+ ?review <http://schema.org/author> ?author . 
+ ?review <http://schema.org/datePublished> ?date .
+ } 
+ } 
+ INSERT{ 
+ GRAPH ?g{ 
+ ?s <http://schema.org/comment> ?review .
+ ?review <http://schema.org/commentText> ?description .
+ ?review <http://schema.org/commentText> ?body .
+ ?review <http://schema.org/commentTime> ?date .
+ ?review <http://schema.org/creator> ?author .
+ ?review a <http://schema.org/UserComments> .
+ }
+ }
+ WHERE{
+ GRAPH ?g {
+ ?s a <http://schema.org/Review> .
+ ?s <http://schema.org/review> ?review .
+ OPTIONAL {
+  ?review <http://schema.org/description> ?description . }
+ OPTIONAL {
+  ?review <http://schema.org/reviewBody> ?body . }
+ OPTIONAL {
+  ?review <http://schema.org/datePublished> ?date . }
+ OPTIONAL {
+  ?review <http://schema.org/author> ?author . }
+ }
+ }
+\end{lstlisting}
+
+Por último, el problema encontrado con los objetos de la propiedad author, que deberían ser recursos de tipo schema:Person o schema:Organization, 
+necesitan un arreglo.
+
 
 \begin{table}[h]
 \begin{tabular}{| l | c |}\hline
@@ -441,26 +557,10 @@ se pudo inferir el rango correcto para cada uno de los dominios como muestra el 
 \label{table:DetectedRanges}
 \end{table}
 
-Luego estos resultados se corroboraron manualmente revisando todos los valores que poseía el dominio tanto dentro del rango 1-5 como fuera .
-Desde ya que no se puede asegurar la veracidad de los rangos encontrados, dado que por ejemplo, podría suceder que para el dominio 
-www.kollermedia.at por mas absurdo que parezca el rango real es 1-11 pero no existe ningún review con el valor 11 en su rating.
-Nota: Manualmente se verificó que ormigo poseía simplemente reviews mal generados.
-
-Una vez con estos resultados se puede proceder a corregir los valores de los reviews del dataset.
-
-~\\\\\textbf{Estrategia}\\
-Disponiendo de los rango correctos para cada dominio se recorrieron todos los reviews de cada dominio resultante, y se les adicionaron 
-las propiedades rev:minRating y rev:maxRating con los valores correspondientes.
-Esto no sólo para los reviews con ratings erróneos encontrados en la etapa de evaluación (fuera del rango 1-5) dado que, para los reviews de 
-cada dominio con rango encontrado, por más que el rating se encuentre dentro del rango 1-5 y aparente ser correcto,  ya se sabe que dicho dominio se 
-maneja con rangos diferentes y el valor real del rating cambiaría (no es lo mismo el valor 3 en un rango 1-100 que en un rango 1-5)
-
-~\\\\\textbf{Resultados}\\
-El cuadro \ref{table:DomainRangeCorrections} muestra la cantidad de reviews corregidos de cada dominio habiéndose agregado las 
-propiedades necesarias según los rangos inferidos anteriormente.
 \begin{table}[h]
 \begin{tabular}{| l | c |}\hline
- www.gamezebo.com & 3905\\\hline
+ Dominio & Cantidad de documentos \\\hline
+ www.gamezebo.com & 3905\\
  www.yellowbot.com & 8955\\
  www.chroniclesofchaos.como & 4966\\
  www.kollermedia.at & 9968\\
@@ -469,98 +569,8 @@ propiedades necesarias según los rangos inferidos anteriormente.
 \end{tabular}
 \caption{Cantidad de correcciones de rango de ratings por dominio}
 \label{table:DomainRangeCorrections}
-\end{table}\\
-\\
-\section{Curado nº 5 - Análisis experto}
-\label{section:curado-analisis}
-Propiedades inexistentes o semánticamente incorrectas\\
-Son los casos de itemreviewed, dtreviewed, publishDate y reviewBody, ya analizados en la evaluación.
-Estrategia: En este caso para todas el procedimiento es exactamente el mismo, y es bastante sencillo, crear una nueva propiedad con 
-el mismo sujeto y objeto, pero la propiedad indicada para cada caso y luego borrar la tripleta incorrecta.\\
-
-\begin{table}[h]
-\begin{tabular}{| l | c |}\hline
- Propiedad Inexistente & Propiedad correcta \\\hline
- itemreviewed & itemReviewed\\
- dtreviewed, publishDate & datePublished\\
- description & reviewBody\\\hline
-\end{tabular}
-\caption{Propiedades inexistentes}
-\label{table:UndefinedProps}
 \end{table}
 
-El Cuadro \ref{table:UndefinedProps} lista las propiedades incorrectas encontradas con su correspondiente indicado.
-\\
-Comentarios en forma de reviews\\
-\subsection*{Objetivo}
-Corregir la clase de los recursos que son de tipo schema:UserComments pero fueron clasificados como schema:Review
-
-\subsection*{Estrategia}
-Lo que se intentará es cambiar la clase Review del recurso, y transferir todas las propiedades a una equivalente en la clase UserComments.
-Por lo que primero se debe inspeccionar qué propiedades continen dichos recursos.
-
-\begin{lstlisting}[frame=single]
- SELECT distinct ?p
- WHERE{
- ?s a <http://schema.org/Review> .
- ?s <http://schema.org/review> ?review .
- ?review ?p ?o .
- }
-\end{lstlisting}
-
-\begin{table}[h]
-\begin{tabular}{| l | c |} \hline
-Propiedad encontrada & Equivalente en Comment\\\hline
-http://schema.org/description & http://schema.org/commentText \\
-http://schema.org/reviewBody & http://schema.org/commentText \\
-http://schema.org/datePublished & http://schema.org/commentTime \\
-http://schema.org/author & http://schema.org/creator \\\hline
-\end{tabular}
-\caption{Equivalencia de propiedades de la clase Review con UserComments}
-\label{table:PropertyEqRevCom}
-\end{table}
-
-En el cuadro \ref{table:PropertyEqRevCom} se muestran las propiedades encontradas junto con su equivalente en la clase requerida. 
-Entonces simplemente para solucionar el problema alcanza con la siguiente consulta SPARQL:\\
-\begin{lstlisting}[frame=single]
- DELETE { 
- GRAPH ?g{ 
- ?s <http://schema.org/review> ?review .
- ?review <http://schema.org/description> ?description .
- ?review <http://schema.org/reviewBody> ?body .
- ?review a <http://schema.org/Review> .
- ?review <http://schema.org/author> ?author . 
- ?review <http://schema.org/datePublished> ?date .
- } 
- } 
- INSERT{ 
- GRAPH ?g{ 
- ?s <http://schema.org/comment> ?review .
- ?review <http://schema.org/commentText> ?description .
- ?review <http://schema.org/commentText> ?body .
- ?review <http://schema.org/commentTime> ?date .
- ?review <http://schema.org/creator> ?author .
- ?review a <http://schema.org/UserComments> .
- }
- }
- WHERE{
- GRAPH ?g {
- ?s a <http://schema.org/Review> .
- ?s <http://schema.org/review> ?review .
- OPTIONAL {
-  ?review <http://schema.org/description> ?description . }
- OPTIONAL {
-  ?review <http://schema.org/reviewBody> ?body . }
- OPTIONAL {
-  ?review <http://schema.org/datePublished> ?date . }
- OPTIONAL {
-  ?review <http://schema.org/author> ?author . }
- }
- }
-\end{lstlisting}
-
-Por último, el problema encontrado con los objetos de la propiedad author, que deberían ser recursos de tipo schema:Person o schema:Organization, 
-necesitan un arreglo.
 \subsection*{Estrategia}
 Primero es necesario saber qué representan esos textos utilizados como objeto de author, una observación de esos valores mostró que 
 en su gran mayoría representan usernames dentro de la página publicadora, y el resto nombre y apellido.
@@ -571,7 +581,7 @@ Pero cómo saber automáticamente cuando es un username, y cuando es un nombre c
 cuál es el apellido?.
 Esto no puede ser automáticamente resuelto, por lo que se optó por incluir a todos (tanto usernames como nombres completos) dentro de la propiedad name, heredada de 
 schema:Thing.
-Entonces como procedimiento final, se cambio el objeto de la spropiedades author, por un recurso de tipo Person, con una propiedad name conteniendo 
+Entonces como procedimiento final, se cambio el objeto de las propiedades author, por un recurso de tipo Person, con una propiedad name conteniendo 
 como objeto el antiguo valor de author. Realizado con la siguiente consulta SPARQL:\\
 \begin{lstlisting}[frame=single]
  DELETE { 

@@ -12,13 +12,13 @@ A continuación se describe la implementación seleccionada y utilizada para est
 \noindent Como se indicó anteriormente la información semántica que va a ser necesaria para construir se encuentra en la web en forma de documentos 
 HTML que tienen la particularidad de ser muy efímeros, de manera tal que un documento que poseía datos relevantes a la fecha,
 puede al día siguiente, o dejar de estar disponible on-line, o haber cambiado de forma tal que la información de éste ya no es 
-relevante, o ya no la posee. 
+relevante, o ya no poseerla. 
 \\\\
 En la sección 4.2 de \cite{Mendoza2014} se generó una estadística de este caso, donde se estableció que 
-en promedio 62\% de los documentos entoncontrados, continuaban on-line luego de un año, y de estos, sólo un 56\% aún poseían 
+en promedio 62\% de los documentos encontrados, continuaban on-line luego de un año, y de estos, sólo un 56\% aún poseían 
 datos relevantes. 
 \\\\
-Si bien armar un dataset con sólo información extraída de los documentos sin descargar estos últimos es posible, la situación anterior 
+Si bien armar un dataset con sólo información extraída de los documentos sin descargarlos es posible, la situación anterior 
 genera la necesidad de mantenerlos en una copia local para evitar una posible pérdida de los mismos. 
 \\\\
 El objetivo entonces será armar un repositorio local con los documentos on-line descargados que se cree que tienen la información 
@@ -32,7 +32,7 @@ Se optó por la utilización de Sindice como fuente de datos. Dado que contiene 
 ontologías a utilizar para hacer una prueba del caso.
 \\\\
 La consulta arrojó: 10.216.632 documentos que contenían la clase purl:Review y 394.533 que contenían la clase schema:Review
-Luego en base a que a comienzos del año sindice limitó la paginación de sus consulas a 100. De manera que sólo se puede acceder a 5000 
+Luego en base a que a comienzos del año sindice limitó la paginación de sus consultas a 100, de manera que sólo es posible acceder a 5000 
 resultados se planificó la siguiente estrategia:
 \begin{enumerate}
  \item Se realizó una consulta de los documentos para cada ontología con los resultados agrupados por dominio (el sitio dueño del documento) ordenada en orden descendiente por cantidad de documentos 
@@ -48,7 +48,7 @@ resultados se planificó la siguiente estrategia:
 \noindent Se obtuvieron de las consultas a Sindice 254950 urls de documentos potencialmente contenedores de reviews.
 \begin{itemize}
  \item De las 254950 existían 236697 accesibles.
- \item De los 236697 51 documentos tenían una url de más de 255 caracteres por lo que no se pudo almacenar en el disco utilizando la url como nombre del archivo. Y 6 documentos malformados.
+ \item De los 236697 51 documentos tenían una url de más de 255 caracteres por lo que no se pudo almacenar en el disco utilizando la url como nombre del archivo. Y 6 documentos mal formados.
 \end{itemize}
 
 \noindent El cuadro \ref{table:ObtencionResults} muestra la estadística resultante de la implementación de este proceso.

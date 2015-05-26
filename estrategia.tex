@@ -1,3 +1,10 @@
+\part{Propuesta}
+\label{part:propuesta}
+En esta parte se presenta la propuesta de una estrategia posible para resolver los requerimientos de la aplicación planteada
+con anterioridad.
+Esta parte describirá de una forma genérica, todos los pasos que forman parte de dicha estrategia detallando los puntos a tener en cuenta 
+para cualquier aplicación de este dominio que se requiera construir.
+
 \chapter{Enfoque General}
 \label{chapter:estrategia}
 
@@ -19,15 +26,14 @@ El procedimiento debería incluir los siguientes pasos
 \item[Explotación del Dataset] Se construye una aplicación que en base a los requerimientos utilice el dataset. 
 \end{description}
 
+La figura \ref{figure:procflujo} muestra el panorama completo de los pasos mencionados.
 \begin{figure}
     \centering
     \includegraphics[width=0.8\textwidth,natwidth=610,natheight=642]{proceso}
     \caption{Flujo completo del procedimiento}
+    \label{figure:procflujo}
 \end{figure}
 
-\begin{framed}
-\textcolor{red}{acá sería bueno incluir un diagrama que muestre el pipeline. En la lista de arriba con un párrafo se explica cada paso. Luego, en las secciones que sigue se analiza mas cada paso, pero se lo plantea como un problema.. se analizan los retos; entonces los capítulos 4 a 9, explican como los resolviste. Alternativamente, se puede hablar menos acá, solo lo suficiente para que se entienda la estrategia general, y luego en los capítulos 4 a 9 se analiza el problema en detalle y se propone la solución. Con esta ultima forma, todo lo que se refiere a los vocabularios quedaría en el capitulo 4 y no acá. Puede ser mejor.}
-\end{framed}
 
 \section{Selección de vocabularios}
 
@@ -46,13 +52,6 @@ la cantidad de puntajes que le fueron otorgados, pero la propiedad minRating pod
 alguien podría suponer que se trata del valor mínimo que fue adquirido por un usuario, o el valor mínimo que un usuario puede 
 otorgar. Y muchas veces la documentación de la ontología (si es que existe) no es suficiente.
 \\\\
-\begin{framed}
-\textcolor{red}{Explicar que en realidad uno no elige ``un'' vocabulario sino que la información podría expresarse combinando términos de varios vocabularios. Dejar claro que no es lo mismo elegir el/los vocabulario/s en el que uno va a publicar que decidir cuales son todos los vocabularios que uno va a considerar al buscar información publicada por otros - dar un ejemplo}
-\end{framed}
-
-\begin{framed}
-\textcolor{red}{Este párrafo que sigue no se entiende; aclarar que sería cubrir las necesidades mínimas de los casos de uso.}
-\end{framed}
 
 \noindent Luego se deberá analizar si existen las propiedades para cubrir las necesidades mínimas de los casos de uso. Esto significa que pueda modelar 
 toda la información que más adelante será requerida. Por ejemplo, si se quiere construir una aplicación que compare autos, al momento 
@@ -64,9 +63,9 @@ Es posible que ante una aplicación muy extensa, con casos de uso muy complejos,
 que puedan cubrir todos los casos de uso. 
 
 Para esto, se puede aprovechar que las propiedades de un vocabulario, no necesariamente tienen que ser utilizadas estrictamente dentro del mismo.
-Lo único que debe respetarse es el dominio y rango de cada una, si no se explicita, puede utilizarse en otros vocabularios.
+Lo único que debe respetarse es el dominio y rango de cada una, si no se explicita, puede utilizarse en conjunto con otros vocabularios.
 
-Goodrelations\cite{Hepp2008} es un ejemplo del uso de propiedades de múltiples vocabulairos para crear uno nuevo.
+Goodrelations\cite{Hepp2008} es un ejemplo del uso de propiedades de múltiples vocabularios para crear uno nuevo.
 \\\\
 Y por último se debería intentar buscar ejemplos reales que muestren el uso que le dieron los usuarios a la ontología, para 
 determinar qué propiedades están incorrectamente interpretadas o también para los casos donde las propiedades que se encuentren 
@@ -77,14 +76,14 @@ Existen dos buscadores específicos para esta tarea:
 
 \subsection{Linked Open Vocabulary (LOV)}
 
-\cite{Vandenbussche2012} Proporciona una plataforma técnica de búsqueda y evaluación de calidad sobre un dataset extraído de linked data cloud que contiene descripciones de vocabularios RDFS 
-y ontologías OWL. Esas descripciones están en forma de metadatos y pueden ser generados tanto por los autores de los vocabularios como por curadores de LOV.
+LOV proporciona una plataforma técnica de búsqueda y evaluación de calidad sobre un dataset extraído de linked data cloud que contiene descripciones de vocabularios RDFS 
+y ontologías OWL \cite{Vandenbussche2012}. Esas descripciones están en forma de metadatos y pueden ser generados tanto por los autores de los vocabularios como por curadores de LOV.
 Posee además de la búsqueda las funciones de estadística o sugerencia.
 
 Actualmente el dataset está integrado por 475 namespaces distintos que contienen una media de 10 clases y 20 propiedades, siendo schema.org el más grande de ellos.
 
 \subsection{Vocab.cc}
-Vocabcc es un proyecto opensource que permite a los desarolladores de RDF realizar búsquedas de vocabularios de Linked Data.
+Vocabcc es un proyecto opensource que permite a los desarrolladores de RDF realizar búsquedas de vocabularios de Linked Data.
 
 Para facilitar la decisión de seleccionar un vocabulario deseado, proporciona además información estadística de cada uno sobre el dataset Billon Triple Challenge (BTCD)\cite{btc-2012}. 
  Esta información incluye el número de apariciones globales de la URI dada en el BTCD, así como el número de documentos dentro de la BTCD, que contiene el URI dado. Estos números permiten una clasificación de propiedades y clases, respectivamente, con respecto a su uso. También se proporciona información acerca de la posición de una URI dada en estos rankings.
@@ -92,10 +91,6 @@ Para facilitar la decisión de seleccionar un vocabulario deseado, proporciona a
 Los desarrolladores pueden buscar las URIs con queries arbitrarias o búsquedas de URIs específicos (prefijos comunes se resuelven automáticamente con datos de prefix.cc).
 
 Para permitir una fácil integración de la funcionalidad vocab.cc, toda la información está disponible como RDF y se puede acceder como Servicio Vinculado.
-
-\begin{framed}
-\textcolor{red}{Una vez definidos el/los vocabularios a utilizar, se debe proceder a recuperar información disponible en la web; a eso llamamos ``Recolección''}
-\end{framed}
 
 \section{Recolección}
 \label{section:recoleccion}
@@ -117,14 +112,12 @@ Estos son los cuatro pasos necesarios para lograr tener el dataset semántico co
 posee distintas alternativas para su realización, algunas se describirán a continuación 
 
 
-%\input{opcionesReco} vacio
+%\input{opcionesReco} vacío
 
 \subsection{Búsqueda}
 %\input{opcionesBusqueda}
-\textcolor{red}{OJO: ESTO ESTABA EN EL ARCHIVO busqueda.tex no en el opcionesBusqueda}
 
-
-La forma de ejecución de esta tarea dependerá de algunos aspectos:
+\noindent La forma de ejecución de esta tarea dependerá de algunos aspectos:
 \begin{itemize}
 \item Recursos de hardware disponibles
 
@@ -141,9 +134,9 @@ Una vez seleccionados los vocabularios, se necesitará obtener fuentes de datos 
 Para lograrlo se podrá utilizar como punto de partida:
 \begin{description}
 \item[Sitios indexadores:] Son algunos sitios que disponen de un dataset muy grande procesado con documentos indexados, que ofrecen consultar dicho 
-dataset a travez servicios web. Generalmente proveen una API donde se pueden consutlar los datos mediante distintos grados de flexibilidad.
+dataset a través servicios web. Generalmente proveen una API donde se pueden consultar los datos mediante distintos grados de flexibilidad.
 
-Sindice, LOD cloud cache y UriBurner son algunos ejemplos de estos sitios. Se puede utilizar entocnes, dichos servicios web a fin
+Sindice, LOD cloud cache y UriBurner son algunos ejemplos de estos sitios. Se puede utilizar entonces, dichos servicios web a fin
 de obtener una lista de URLs en las cuales se cree que contendrán la información necesaria.
 
 \item[Sitios autoritativos:] Son sitios conocidos que generan información relevante y la publican en las ontologías y vocabularios 
@@ -152,64 +145,64 @@ seleccionados. Ejemplos aplicados al caso de estudio podrían ser IMDB (que publ
 
 \item[Catálogos de enpoints:] Son catálogos provistos por algunos sitios que \\\noindent mantienen una lista actualizada de SPARQL endpoints 
 junto con el estado de disponibilidad en el que se encuentran. Por ejemplo los sitios \\\noindent http://labs.mondeca.com/sparqlendpointsstatus/ y 
-\\\noindent http://www.w3.org/wiki/SparqlEndpoints que este último además provee detalles sobre la información de los mismos.
+\\\noindent http://www.w3.org/wiki/SparqlEndpoints . Este último además provee detalles sobre la información de los mismos.
 
 Consultar estos sitios entonces generará una lista de endpoints SPARQL los cuales se podrían utilizar para pedir la información necesaria.
 
 \item[Volcados de datos:] Son datasets muy grandes que fueron el resultado de un web crawling, los cuales están disponibles para su descarga 
-y se pueden utilizar para procesarlos y obtener los datos requeridos. El más importante es http://challenge.semanticweb.org/2014/ .
+y se pueden utilizar para procesarlos y obtener los datos requeridos. El más importante puede ser descargado de http://challenge.semanticweb.org/2014/ .
 \end{description}
 \subsection{Obtención}
 
-Este paso está directamente relacionado con el anterior, dado que la estrategia de obtención fue planeada con anterioridad, según 
-cuál sea la seleccionada, habrá sido la opción ejecutada en el paso anterior.
+Este paso depende directamente de la fuente de datos seleccionada, a causa de que el formato de la información difiere entre las distintas fuentes de datos.
 \\\\
-Para este paso se tienen las siguientes estrategias:
+Para este paso se dispone de las siguientes estrategias:
 \begin{description}
-\item[Web Crawling:] Realizar un crawling partiendo de unas pocas URLs seleccionadas en el paso anteiror. Obtenidas de sitios autoritativos.
-Existen formas distintas de hacer web craling, dependiendo del nivel de profundidad en el cuál se recorrerá la web, podría también utilizarse los 
+\item[Web Crawling:] Realizar un crawling partiendo de unas pocas URLs seleccionadas en el paso anteiror obtenidas de sitios autoritativos.
+Existen formas distintas de hacer web craling, dependiendo del nivel de profundidad en el cuál se recorrerá la web podría también utilizarse los 
 sitios indexadores, SPARQL queries, o motores de búsqueda para obtener una lista de URLs que contienen la información deseada, y luego realizar un crawling de profundidad uno sobre cada url.
 Hacer crawling con profundidades muy grandes requiere de una algoritmia mucho más compleja para evitar loops, y también de muchos más recursos de hardware, pero se podrá obtener mucha más información.
 
 \item[De-referenciamiento de URIs:] Igual al web crawling, pero exclusivo de documentos semanticos NO embebidos, ya escritos en un formato nativo de la web semántica como RDF, turtle, n-Triples, etc.
-Luego la profundidad puede continuarse realizando lo que se llama un ''follow your nose'', que se realiza de-referenciando los documentos que son objeto de la propiedad owl:sameAs, o rdf:seeAlso.
+Luego se puede recorrer la hipermedia realizando lo que se denomina un ''follow your nose'' (equivalente al crawling de documentos HTML, pero para documentos RDF), que se realiza de-referenciando los documentos que son objeto de la propiedad owl:sameAs, o rdf:seeAlso.
 
-\item[Descarga de las respuestas de las APIs:] Este es otro caso del uso de lso sitios indexadores, SPARQL queries, o motores de búsqueda. Pero en lugar de 
-que la información  utilizada sean simpelmente las URL de los documentos, se utilizará también la ifnromación cacheada de dichos documentos y evitarse un crawling.
-Como desventaja se puede tener información desactualizada, pero como ventaja se podrá obtener información que ya no esté disponible. Todo dependerá de lo que se busque obtener.
-La información obtenida de estas APIs ya debería encontrarse en un formato de la web semántica por l oque no requerirá tampoco una futura extracción.
+\item[Descarga de las respuestas de las APIs:] Este es otro caso del uso de los sitios indexadores, SPARQL queries, o motores de búsqueda pero en lugar de 
+que la información pero en lugar de utilizar como dato solamente la URL, se utilizará también la información cacheada de dichos documentos y para evitar el crawling.
 
-\item[Procesamiento de grandes volcados:] Este paso requiere de la utilización de recursos minímos de hardware, ya que estos volcados suelen tener volúmenes de varios teras de información, y para procesarlos se requerirá 
+Como desventaja la información podría encontrarse desactualizada, pero como ventaja se podrá obtener información que ya no esté disponible. Todo dependerá de las necesidades de la aplicación.
+La información obtenida de estas APIs ya debería encontrarse en un formato de la web semántica por lo que no requerirá tampoco una futura extracción.
+
+\item[Procesamiento de grandes volcados:] Este paso requiere de la utilización de recursos más complejos de hardware, ya que estos volcados suelen tener volúmenes de varios teras de información y para procesarlos se requerirá 
 de mucha RAM, memoria secundaria y microprocesador.
-La idea de este paso es inspeccionar el volcado o bienpara obtener la URL de los documentos con la información deseada, para luego realizar un crawling de profundidad 1, 
+La idea de optar por este paso es o bien para utilizar directamente los datos inmediatamente disponibles o bien para conocer las URL de los documentos con la información deseada (luego de inspeccionar el volcado determinando los documentos relevantes) para luego realizar un crawling de profundidad 1, 
 o directamente utilizar la información contenida en el volcado.
-Esta opción enrealidad es una suma de un paso intermedio con las demás opciones de este paso ya que se estaría realizando el trabajo que hacen los indexadores, que es procesar grandes volúmenes de datos.
+Esta estrategia podría concluir siendo similar a alguno de los pasos anteriormente vistos, con el agregado de realizar el trabajo que realizan los sitios indexadores, que es procesar grandes volúmenes de datos.
 \end{description}
 
 \section{Extracción y almacenaje}
 \label{section:extraccion}
 Una vez que se logró encontrar la información requerida en la web y contener una copia local, se necesita darle un mínimo procesamiento a determinados datos.
-Específicamente a aquellos que estén en un formato de información semántica embebida, que requeriran un proceso de extracción para luego ser almacenados en un triplestore.
+Específicamente a aquellos que estén en un formato de información semántica embebida, que requerirán un proceso de extracción para luego ser almacenados en un triplestore.
 
 
 \subsection{Extracción}
 
-Esto significa, parsear el documento HTML, que como mensionamos anteriormente puede contener información semántica en formato RDF-a, microformatos o microdatos, buscando 
-la información semántica para luego generar un documento RDF (o de otro lenguaje de tripletas puro) que represente esa información semántica encontrada en tripletas que puedan ser almacenadas bajo un triplestore.
+Extracción significa, parsear el documento HTML, que como mencionamos anteriormente puede contener información semántica en formato RDF-a, microformatos o microdatos, buscando 
+la información semántica para luego generar un documento RDF (u otro lenguaje de tripletas puro) que represente esa información encontrada en tripletas que puedan ser almacenadas bajo un triplestore.
 \\\\
-Si bien podría escribirse manualmente un algoritmo que realice esta tarea, existen muchas herramientas que lo hacen, por lo que es recomendable la utilización de alguna de ellas.
+Si bien podría escribirse manualmente un algoritmo que realice esta tarea existen muchas herramientas que lo hacen, por lo que es recomendable la utilización de alguna de ellas.
 \\\\
 Los extractores más utilizados son los siguientes:
 \begin{itemize}
-\item getSchema: Es una herramienta online que se utiliza a travez de una API Restful para extraer documentos con microdatos. Como respuesta se obtendrán documentos semánticos 
+\item getSchema: Es una herramienta online que se utiliza a través de una API Restful para extraer documentos con microdatos. Como respuesta se obtendrán documentos semánticos 
 con la información extraída en formatos N-Triples, JSON, o N3. 
 Es una herramienta rápida y eficaz pero sólo sirve para microdatos.
 
-\item RDF Translator: Funciona también a travez de una API restful, y además de soportar también docuemntos con formato RDF-a, proveé la funcionalidad de transformar los documentos en sentido inverso, 
+\item RDF Translator: Funciona también a través de una API Restful, y además de soportar también documentos con formato RDF-a, provee la funcionalidad de transformar los documentos en sentido inverso 
 (de tripletas a información semántica embebida en HTML). 
 También está la posibilidad de descargarse la librería y correr el algoritmo localmente.
 
-\item Any23: Una herramienta muy potente y completa que cuenta con una comunidad que lo actualiza constantemente. Al igual que las anteriores se puede utilizar de forma online a travez 
+\item Any23: Una herramienta muy potente y completa que cuenta con una comunidad que lo actualiza constantemente. Al igual que las anteriores se puede utilizar de forma online a través 
 de una API restful. Tiene como ventaja que soporta también microformatos. Es el extractor utilizado por Sindice. 
 También está disponible en forma de librería para utilizar localmente.
 
@@ -234,11 +227,11 @@ Muchos son librerías que forman parte de un framework, además algunos mapean t
 \\\\
 Algunos posibles triplestores pueden ser
 \begin{itemize}
-\item TDB: Componente del framework Jena, que puede ser accedido mediante linea de comandos o a travez de la API de jena. Almacena tanto tripletas como cuadrupletas, y las almacena en varios archivos donde cada uno indexa los datos de distintas formas. Tiene una muy aceptable performance pero pequeños errores en su uso pueden corromper la información facilmente.
+\item TDB: Componente del framework Jena, que puede ser accedido mediante linea de comandos o a travez de la API de jena. Almacena tanto tripletas como cuadrupletas, y las almacena en varios archivos donde cada uno indexa los datos de distintas formas. Tiene una muy aceptable performance pero pequeños errores en su uso pueden corromper la información fácilmente.
 
 \item SDB: Al igual que TDB es un componente de Jena, pero que no almacena la información como archivos en el disco, sino que mapea los datos a un motor de bases de datos subyacente como MYSQL y POSGRE. Su performance está atada a dicho motor de bbdd subyacente pero por lo general no suele dar buenos resultados. 
 
-\item Sesame triplestore: Componente del framework Sesame, que tiene la opción de almacenar la información en disco o en memoria. Lo que puede significar un improtante beneficio para quienes requieran performance elevada en queries. Soporta no solo SPARQL sino también SeRQL. Tiene además la ventaja de poder integrar Alibaba, que es un mapeador de calses de Java a ontologías RDF.
+\item Sesame triplestore: Componente del framework Sesame, que tiene la opción de almacenar la información en disco o en memoria. Lo que puede significar un improtante beneficio para quienes requieran performance elevada en queries. Soporta no solo SPARQL sino también SeRQL. Tiene además la ventaja de poder integrar Alibaba, que es un mapeador de clases de Java a ontologías RDF.
 \end{itemize}
 
 \noindent En el capítulo 6 de \cite{Bizer2001} se observan los siguientes resultados comparativos entre las distintas bases de 
@@ -352,9 +345,6 @@ una mejora puede conllevar a la detección de nuevos problemas.
 
 \section{Integración de los datos}
 \label{section:integracion}
-\begin{framed}
-\textcolor{red}{Esto va acá o es parte de Explotación?}
-\end{framed}
 
 Los datos recolectados fueron generados por distintos usuarios, en múltiples sitios y bajo distintas ontologías y estándares.
 Estos aún curados, necesitan un último paso para poder realizar una explotación, y es la integración.
@@ -375,19 +365,16 @@ Una posible solución muy barata y simple es generar un volcado de la base de da
 Tendría el problema en ese caso de no serle útil a usuarios con pocos conocimientos sobre esta tecnología, o que no posean demasiados recursos de hardware, o tiempo.
 
 Una solución un poco más costosa es utilizar un servidor (ya sea propio, pago, o simplemente una pc), y crear un SPARQL Endpoint accesible mediante la web.
-Esta última opción puede implementarse utilizando algúnas herramientas:
+Esta última opción puede implementarse utilizando algunas herramientas:
 \begin{description}
-\item [Fuseki:] SPARQL endpoint que utiliza el protocolo SPARQL mediante HTTP con estilo REST. Tiene una performance aceptable y la ventaja de ser muy sensilla su instalación y puesta en marcha. Se puede directamente utilizar un volcado de TDB.
+\item [Fuseki:] SPARQL endpoint que utiliza el protocolo SPARQL mediante HTTP con estilo REST. Tiene una performance aceptable y la ventaja de ser muy sencilla su instalación y puesta en marcha. Se puede directamente utilizar un volcado de TDB.
 
 \item [Virtuoso Server:] Middleware que incluye no solo un endpoint, sino también un motor de base de datos, un server, una aplicación web y todo lo necesario para publicar los datos en la web. Puede ser muy útil pero su instalación y puesta en marcha no es trivial. Y requiere la adquisición de una licencia para su uso.
 
-\item [ARQ:] Componente de Jena que funciona como query engine, y puede ser utilizado para armar el endpoint manualmente, eso singifica realizar a mano la aplicación web.
+\item [ARQ:] Componente de Jena que funciona como query engine, y puede ser utilizado para armar el endpoint manualmente, eso significa realizar a mano la aplicación web.
 \end{description}
 \section{Explotación del Dataset}
 \label{section:explotacion}
-\begin{framed}
-\textcolor{red}{Acá es donde efectivamente se discute que implica cubrir los requerimientos de la aplicación . Puede ser que acá tambien te refieras a como la forma en la que querés explotar los datos impacta en las fases anteriores. Incluso, habría que pensarlo, en este capitulo tal vez conviene primero hablar de explotación y luego de las otras fases - porque explotación determina mucho que es lo que vas a mirar en las fases anteriores, ¿no?}
-\end{framed}
 
 \noindent Por último se llega al paso de explotación. 
 \\\\
@@ -407,5 +394,4 @@ escoger un enfoque colaborativo para aprovechar de la mejor manera el dataset.
 \\
 \\
 Teniendo eso en consideración, las herramientas/tecnologías/lenguajes/etc utilizados para su 
-construcción y desarrollo.
-
+construcción y desarrollo serán independientemente escogidas por el desarrollador de la aplicación.

@@ -1,16 +1,22 @@
+\part{Implementación}
+\label{part:implementacion}
+Esta parte describe la implementación de todos los pasos de la estrategia propuesta de una forma genérica en la parte \ref{part:propuesta}
+incluyendo todos los aspectos y elecciones que se tuvieron en cuenta al efectuarse cada implementación, los problemas encontrados 
+en cada punto y los resultados obtenidos.
+El objetivo de esta parte consiste en mostrar al lector, cómo aplicar los pasos de la estrategia al caso de estudio.
+
 \chapter{Selección de Vocabularios}
 \label{chapter:seleccion}
-La selección de vocabularios es el primer paso en la estrategia propuesta en el capítulo \ref{chapter:estrategia} para explotar la web semántica. En esté capitulo, mostramos como fue aplicada a nuestro caso de estudio.
+La selección de vocabularios es el primer paso en la estrategia propuesta en el capítulo \ref{chapter:estrategia} para explotar la web semántica. En este capítulo mostramos cómo fue aplicada a nuestro caso de estudio.
 \\\\
 Como se dijo anteriormente, seleccionar vocabularios implica reconocer qué \\\noindent propiedades mínimamente se requerirán para así poder comprobar 
 si un vocabulario/ontología es suficiente en cuanto a su covertura de las mismas.\\\\
-
 En la actualidad existen cuatro vocabularios que cumplen los requerimientos mínimos para modelar el dominio de problema planteado.
 
 \section{RDF Review Vocabulary}
 \label{section:review-ontology}
 
-También conocido como Review Ontology, es una de las ontologías más antiguas de review, que fue pensada para uso del lenguaje 
+También conocido como Review Ontology, RDF Review Vocabulary es una de las ontologías más antiguas de review, que fue pensada para uso del lenguaje 
 RDF y está definido bajo el namespace http://purl.org/stuff/rev\# .
 
 Fue utilizado para la construcción Revyu , y sirvió como guía para otras ontologías.
@@ -40,7 +46,7 @@ Consta de tres clases y trece propiedades.
   \item [hasFeedback:] Idem anterior pero con feedback en lugar de comentario. 
   
   Se encuentra actualmente en desuso.
-  \item [maxRating:] Establece el puntaje máximo que es posible otorgar por un usuario a travez de la propiedad rating. 
+  \item [maxRating:] Establece el puntaje máximo que es posible otorgar por un usuario a través de la propiedad rating. 
   
   Tiene como dominio Review y como rango Literal siendo este último un número positivo. 
   
@@ -59,7 +65,7 @@ Consta de tres clases y trece propiedades.
   \item [reviewer:] Especifica el usuario que realizó el review. 
   
   Tiene dominio Review y rango foaf:Person. 
-  \item [text:] Otra de las propiedades principales, define el texto que describe el sentimento del usuario hacia el ítem. 
+  \item [text:] Otra de las propiedades principales, define el texto que describe el sentimiento del usuario hacia el ítem. 
   
   Tiene como domino Review y como rango Literal.
   \item [totalVotes:] Exactamente igual a positiveVotes.
@@ -76,6 +82,9 @@ Consta de tres clases y trece propiedades.
   \item [date:] Si bien no está definida dentro del vocabulario, es correcto utilizar \\\noindent http://purl.org/dc/terms/date, implica la fecha
   en la que se realizó el review.
 \end{description}
+
+De aquí en adelante, para referirse a una propiedad de esta ontología se utilizará el prefijo purl:, de manera que por ejemplo
+la propiedad text bajo el namespace http://purl.org/stuff/rev\#text se escribirá como purl:text.
 
 \section{hReview}
 \label{section:hreview}
@@ -130,7 +139,7 @@ propiedad que no está marcada como opcional no podrá ser considerado un hRevie
 Cabe destacar que muchas de las propiedades opcionales, podrían ser necesarias para el caso de estudio.
 \\\\
 El problema con este vocabulario surge a la hora de trabajar con la información obtenida, que no puede ser representada por ningún otro 
-lenguaje de la web semántica, por lo que se vió la necesidad de mapear las propiedades de hReview, a otro vocabulario que sí pueda.
+lenguaje de la web semántica, por lo que se vio la necesidad de mapear las propiedades de hReview, a otro vocabulario que sí pueda.
 
 Esto llevó a que en la web donde definen hReview lo consideren compatible con RDF Review Vocabulary, por lo que en Noviembre de 2007 
 se creó una herramienta que transforma de uno al otro hreview2rdfxml.xsl,  pero existe un problema con el rango de algunas 
@@ -139,7 +148,7 @@ propiedades, por ejemplo reviewer (propiedad homónima en ambos vocabularios, pe
 En general si bien este vocabulario bien utilizado puede ser efectivo, resulta poco flexible y complciado de manejar por parte 
 de quien quiera explotarlos, el motivo por el cual se ha vuelto muy popular es su facilidad para generarlos, dado que 
 microformatos es un lenguaje muy sencillo y cualquier persona con un relativamente mínimo ocnocimiento de HTML puede generar 
-sin problemas un hReview, teniendo además herramientas online como opción, que generan el código a travez de un formulario. 
+sin problemas un hReview, teniendo además herramientas online como opción, que generan el código a través de un formulario. 
 Como es el caso de \\\noindent http://microformats.org/code/hreview/creator. 
 
 
@@ -148,7 +157,7 @@ Como es el caso de \\\noindent http://microformats.org/code/hreview/creator.
 
 En Mayo de 2009 Google anuncia la introdución de los llamados ``Google Rich Snippets'', estos fragmentos enriquecidos son una convención 
 de etiquetas (con soporte para RDFa-lite y microdata) que permitían agregar información útil a los SERP del buscador de Google. De manera tal 
-que los datos que contenían estos fragmentos, recibían un tratamento especial.
+que los datos que contenían estos fragmentos, recibían un tratamiento especial.
 %Explicar lo que SERP significa
 \\\\
 Sin embargo en el anuncio, Google revela que el soporte se limitó al uso de las clases y propiedades del vocabulario definido en una página 
@@ -176,8 +185,8 @@ Se puede notar la excesiva similitud de este vocabulario con hReview, queda clar
 sino de representar el hReview en microdatos, probablemente por el apuro en la que data vocabulary fue creado.
 \\\\
 Vale aclarar que limitar las clases y propiedades posibles en RDFa es básicamente hacerle perder el sentido al lenguaje 
-(la decentralización de los vocabularios sobre los términos) haciendo que el lenguaje se utilice como si fuese microformatos, 
-pero perdiendo su valor más improtante (la simplicidad) de manera tal que tomó la inflexibilidad de microformatos y la complejidad 
+(la descentralización de los vocabularios sobre los términos) haciendo que el lenguaje se utilice como si fuese microformatos, 
+pero perdiendo su valor más importante (la simplicidad) de manera tal que tomó la inflexibilidad de microformatos y la complejidad 
 de RDFa.
 \\\\
 Más adelante los Google Rich Snippets incluyeron también soporte para microformatos (lo que incluía hReview). 
@@ -238,18 +247,24 @@ que a su vez es subclase de schema:Thing.\\\\
   \item url: URL del ítem. Rango schema:URL
  \end{itemize}
 
-\noindent Unas 60 propiedades de CreativeWork fueron omitidas por no iban al caso ya que sólo tienen razón de ser para otras clases que 
+\noindent De aquí en adelante, para referirse a una propiedad de esta ontología se utilizará el prefijo schema:, de manera que por ejemplo
+la propiedad reviewBody bajo el namespace http://schema.org/reviewBody se escribirá como schema:reviewBody .
+
+La misma lógica será aplicada también a las clases, de manera que la clase Review con namespace http://schema.org/Review será
+referida como schema:Review.
+\\\\
+Unas 60 propiedades de CreativeWork fueron omitidas por no iban al caso ya que sólo tienen razón de ser para otras clases que 
 también heredan de CreativeWork. Lo importante aquí es remarcar un par de situaciones interesantes:
 
 \begin{itemize}
- \item Las propiedades Review:reviewBody, CreativeWork:text y \\\noindent Thing:description podrían contener el valor textual de la evaluación del review semánticamente correcta por la definición de cada una.
+ \item Las propiedades Review:reviewBody, CreativeWork:text y \\\noindent Thing:description podrían contener el valor textual del review en forma semánticamente correcta por la definición de cada una.
 
  \item Las propiedades CreativeWork:author y CreativeWork:creator son exactamente iguales. 
 
  \item Los valores CreativeWork:dateCreated CreativeWork:dateModified y CreativeWork:datePublished podrían generar confusión. 
 
- \item Sería sintácticamente correcto que un Review utilice la propiedad Review .
+ \item Sería sintácticamente correcto que un Review utilice la propiedad \textit{review} de manera tal que se genere un review de otro review.
 \end{itemize}
 
 Más adelante se mostrarán y enumerarán los problemas que estas cuestiones (causadas por el afán de hacer uso de la herencia
-lo más posible)  generan. 
+lo más posible) generan. 
