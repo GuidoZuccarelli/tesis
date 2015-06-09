@@ -98,8 +98,8 @@ No hubo problemas con el algoritmo que realizaba el procedimiento.
 \subsection*{Objetivo} Disponer de todos los ratings de los reviews, con el mismo formato. Un número sin decimales, para facilitar la implementación 
 de operaciones como: ``Listar los reviews más populares de determinada fecha'' o ``Hacer un promedio de puntaje para un ítem determinado''
 
-\subsection*{Estrategia} Exactamente el mismo principio que para corregir los formatos de las fechas, sólo que un poco más simple porque sólo se realizará 
-para una propiedad en lugar de 4.
+\subsection*{Estrategia} Exactamente el mismo principio utilizado para corregir los formatos de fechas en \ref{section:curado-manual}, sólo que un poco más simple porque sólo se realizará 
+para una propiedad en lugar de cuatro.
 \\
 Primero se realizó una consulta SPARQL buscando los valores de ratings que no estén dentro de los correctos. \\
 
@@ -134,9 +134,10 @@ Primero se realizó una consulta SPARQL buscando los valores de ratings que no e
  según su expresión regular.\\
  
  \subsection*{Resultados}
- \begin{tabular}{| l | c |}
- Expresión regular & Cantidad de ratings \\
- \verb|^[0-9]{1}½$| & 3722\\
+ \begin{table}[h]
+ \begin{tabular}{| l | c |}\hline
+ Expresión regular & Cantidad de ratings \\\hline
+ \verb|^[0-9]{1}1/2$| & 3722\\
  \verb|^[0-9]{2}\\.[0-9]{1}$| & 250\\
  \verb|^[0-9]{1}\\.[0-9]{1}$| & 63695\\
  \verb|^[0-9]{1},[0-9]{1}$| & 45927\\
@@ -145,5 +146,18 @@ Primero se realizó una consulta SPARQL buscando los valores de ratings que no e
  \verb|^About.com Rating  [0-9]{1}| & 2613\\
  \verb|^[0-9]{1}\\.[0-9]{1} | & 5603\\
  \verb|Rating [0-9]{1}| & 3300\\
- \verb|\\([0-9]{1} | & 4176 
+ \verb|\\([0-9]{1} | & 4176 \\\hline
  \end{tabular}
+ \caption{Cantidad de reviews corregidos para cada expresión regular}
+\label{table:RegExpressionsRatingCorrected}
+\end{table}
+ El cuadro \ref{table:RegExpressionsRatingCorrected} muestra las expresiones regulares encontradas en la estrategia de esta sección con 
+ la cantidad de reviews que contenían un rating con dicha expresión regular.
+ \\\\
+ Luego de haber concluído con este paso de integración, se volvieron a correr algunos tests del capítulo \ref{chapter:evaluacion} y 
+ específicamente los de la sección \ref{section:evaluacion-manual}. Dicho test volvió a dar un error para 
+ \verb |http://purl.org/stuff/rev#rating| is not in the expected range (1-5).
+ 
+ Esto se debe a que los tests por algún motivo no contemplaban los datos con formatos no numéricos, y luego al cambiar el formato 
+ se encontró con la situación.\\
+ Esta situación se normalizó volvieron a implementar la correspondiente estrategia de curado de la sección \ref{section:curado-manual}.
