@@ -84,7 +84,7 @@ Indentation Mode=normal
 Mode=LaTeX
 
 [document-settings,item:integracion.tex]
-Bookmarks=
+Bookmarks=0,149
 Encoding=UTF-8
 FoldedColumns=
 FoldedLines=
@@ -171,7 +171,7 @@ highlight=LaTeX
 line=141
 mode=LaTeX
 open=true
-order=5
+order=3
 
 [item:bibliografia.bib]
 archive=true
@@ -181,27 +181,27 @@ highlight=BibTeX
 line=235
 mode=BibTeX
 open=true
-order=4
+order=2
 
 [item:conclusiones.tex]
 archive=true
-column=6
+column=0
 encoding=UTF-8
 highlight=LaTeX
-line=0
+line=5
 mode=LaTeX
 open=true
-order=9
+order=7
 
 [item:curado.tex]
 archive=true
 column=0
 encoding=UTF-8
 highlight=LaTeX
-line=186
+line=0
 mode=LaTeX
 open=true
-order=11
+order=9
 
 [item:estrategia.tex]
 archive=true
@@ -211,7 +211,7 @@ highlight=LaTeX
 line=0
 mode=LaTeX
 open=true
-order=3
+order=1
 
 [item:evaluacion.tex]
 archive=true
@@ -221,7 +221,7 @@ highlight=LaTeX
 line=390
 mode=LaTeX
 open=true
-order=7
+order=5
 
 [item:explotacion.tex]
 archive=true
@@ -235,13 +235,13 @@ order=5
 
 [item:integracion.tex]
 archive=true
-column=14
+column=10
 encoding=UTF-8
 highlight=LaTeX
-line=148
+line=35
 mode=LaTeX
-open=false
-order=3
+open=true
+order=10
 
 [item:introduccion.aux]
 archive=true
@@ -255,23 +255,23 @@ order=-1
 
 [item:introduccion.tex]
 archive=true
-column=18
+column=543
 encoding=UTF-8
 highlight=LaTeX
-line=0
+line=181
 mode=LaTeX
-open=true
+open=false
 order=1
 
 [item:main.tex]
 archive=true
-column=7
+column=28
 encoding=UTF-8
 highlight=LaTeX
-line=63
+line=65
 mode=LaTeX
 open=true
-order=10
+order=8
 
 [item:publicacion.tex]
 archive=true
@@ -281,17 +281,17 @@ highlight=LaTeX
 line=18
 mode=LaTeX
 open=true
-order=8
+order=6
 
 [item:recoleccion.tex]
 archive=true
-column=11
+column=0
 encoding=UTF-8
 highlight=LaTeX
-line=71
+line=1
 mode=LaTeX
 open=true
-order=6
+order=4
 
 [item:seleccion.tex]
 archive=true
@@ -300,7 +300,7 @@ encoding=UTF-8
 highlight=LaTeX
 line=0
 mode=LaTeX
-open=true
+open=false
 order=0
 
 [item:tesis.kilepr]
@@ -321,7 +321,7 @@ highlight=LaTeX
 line=222
 mode=LaTeX
 open=true
-order=2
+order=0
 
 [view-settings,view=0,item:almacenado.tex]
 CursorColumn=158
@@ -336,14 +336,14 @@ JumpList=
 ViMarks=.,139,0,[,138,21,],139,0
 
 [view-settings,view=0,item:conclusiones.tex]
-CursorColumn=6
-CursorLine=0
+CursorColumn=0
+CursorLine=5
 JumpList=
 ViMarks=.,1,0,[,1,0,],1,0
 
 [view-settings,view=0,item:curado.tex]
 CursorColumn=0
-CursorLine=186
+CursorLine=0
 JumpList=
 ViMarks=.,185,0,[,186,0,],-1,-1
 
@@ -366,10 +366,10 @@ JumpList=
 ViMarks=.,44,0,[,0,0,],44,14
 
 [view-settings,view=0,item:integracion.tex]
-CursorColumn=14
-CursorLine=148
+CursorColumn=10
+CursorLine=35
 JumpList=
-ViMarks=.,148,0,[,0,0,],148,13
+ViMarks=.,149,0,[,0,0,],149,13
 
 [view-settings,view=0,item:introduccion.aux]
 CursorColumn=41
@@ -378,14 +378,14 @@ JumpList=
 ViMarks=
 
 [view-settings,view=0,item:introduccion.tex]
-CursorColumn=18
-CursorLine=0
+CursorColumn=543
+CursorLine=181
 JumpList=
 ViMarks=.,0,17,[,0,6,],0,17
 
 [view-settings,view=0,item:main.tex]
-CursorColumn=7
-CursorLine=63
+CursorColumn=28
+CursorLine=65
 JumpList=
 ViMarks=.,58,132,[,58,132,],58,132
 
@@ -396,8 +396,8 @@ JumpList=
 ViMarks=.,18,0,[,0,0,],18,138
 
 [view-settings,view=0,item:recoleccion.tex]
-CursorColumn=11
-CursorLine=71
+CursorColumn=0
+CursorLine=1
 JumpList=
 ViMarks=.,71,0,[,0,0,],71,10
 

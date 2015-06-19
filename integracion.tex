@@ -10,29 +10,30 @@ En base a los requerimientos establecidos, se pueden pensar en distintos procedi
 correctamente:
 \\
 \\
-Unificación de vocabularios: En el primer paso del proceso se realizó una selección de los vocabularios con los que se trabajará, 
+\begin{enumerate}
+ \item \label{item:vocUnif} Unificación de vocabularios: En el primer paso del proceso se realizó una selección de los vocabularios con los que se trabajará, 
 estos vocabularios modelan el mismo dominio de información pero muchas veces de forma distinta. Explotar información modelada de 
 diferentes maneras puede resultar innecesariamente engorroso, y también para quienes en un futuro quieran hacer uso del dataset (ya que
-deberán consutlar la información previamente conociendo todas las ontologías de review existentes).\\
-Unificación de autores: Es muy importante para lograr cumplir el objetivo de los requerimientos que si dos reviews distintos fueron 
-generados por el mismo autor, esto quede explícitamente asentado, para poder realizar los algoritmos de recomendación.\\
-Unificación de ítems: El paso más difícil y más importante, si un ítem está modelado dos veces de forma distinta debería saberse que 
-se trata del mismo.\\
-Unificación de formato de ratings: Si bien este paso sería válido también en la etapa de curación, se decidió que encajaba mejor acá.
+deberán consutlar la información previamente conociendo todas las ontologías de review existentes).
+\item \label{item:autUnif} Unificación de autores: Es muy importante para lograr cumplir el objetivo de los requerimientos que si dos reviews distintos fueron 
+generados por el mismo autor, esto quede explícitamente asentado, para poder realizar los algoritmos de recomendación.
+\item \label{item:itUnif} Unificación de ítems: El paso más difícil y más importante, si un ítem está modelado dos veces de forma distinta debería saberse que 
+se trata del mismo.
+\item \label{item:forUnif} Unificación de formato de ratings: Si bien este paso sería válido también en la etapa de curación, se decidió que encajaba mejor acá.
 Se trata de llevar todos los ratings a un formato único numérico. Hay sitios que establecen los ratings de distintas formas como 
 por ejemplo ``4 out of 5''. En sí no es un problema sintáctico dado que no hay un rango establecido para las propiedades de rating, 
 pero va a presentar problemas a la hora de utilizar la información en conjunto, ya que se requerirá tener en cuenta todos los casos 
 distintos de formatos de ratings. Puede verse como un problema semántico, tomando en cuenta el ejemplo 4 out of 5, no es más que una sobrecarga de 
 propiedades, ya que como valor de la propiedad rating, se especifica no sólo el valor de dicha propìedad, sino que además el valor de la 
-propiedad maxRating. \\
-Unificación de tipos de ítems: Esto es muy útil para darle más posibilidades a la aplicación, y es agrupar los ítems según su tipo 
+propiedad maxRating.
+\item \label{item:tipUnif} Unificación de tipos de ítems: Esto es muy útil para darle más posibilidades a la aplicación, y es agrupar los ítems según su tipo 
 (Libro, película, Hotel, Auto, etc), de manera que por ejemplo si un usuario quiere que le recomienden un libro, la aplicación sólo 
 le ofrezca libros. Para la ontología schema, esto puede ser más sencillo dado que los ítems ya se encuentran con su tipo identificado con 
 la clase, en el caso de libro, sería cuestión de buscar ítems con la clase schema:Book. El problema es que esto puede no ocurrir siempre, 
-Un libro, puede estar clasificado como schema:Product, por lo que necesitaría que también lo clasifiquen como Book.\\
-\\
-\\
-Por razones de que la tesis ya cubrió el desarrollo suficiente, sólo se intentarán implementar los puntos 1, 3 y 4 de la integración. Ya que 
+Un libro, puede estar clasificado como schema:Product, por lo que necesitaría que también lo clasifiquen como Book.
+\end{enumerate}
+
+\noindent Por razones de que la tesis ya cubrió el desarrollo suficiente, sólo se intentarán implementar los ítems \ref{item:vocUnif} \ref{item:forUnif} y \ref{item:tipUnif} de la integración. Ya que 
 los otros dos poseen una complejidad muy alta y su implementación llevaría mucho tiempo.\\
 
 \section{Unificación de vocabularios}
@@ -161,3 +162,8 @@ Primero se realizó una consulta SPARQL buscando los valores de ratings que no e
  Esto se debe a que los tests por algún motivo no contemplaban los datos con formatos no numéricos, y luego al cambiar el formato 
  se encontró con la situación.\\
  Esta situación se normalizó volvieron a implementar la correspondiente estrategia de curado de la sección \ref{section:curado-manual}.
+ 
+ \section{Unificación de tipos de ítems}
+\label{section:unificacion-items}
+
+El desarrollo de este procedimiento fue descripto en la publicación  “Instancias de ontologías de la Web Semántica mejoradas a través de Minería de Texto” contenida en el anexo \ref{chapter:publications} 
