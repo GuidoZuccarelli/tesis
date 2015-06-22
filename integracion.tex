@@ -1,7 +1,7 @@
 \chapter{Integración de los Datos}
 \label{chapter:integracion}
 
-Como quedó explicado en la sección \ref{section:integracion}, integración comprende los procedimientos que se realizan con el objetivo de obtener una
+Como quedó explicado en la Sección \ref{section:integracion}, integración comprende los procedimientos que se realizan con el objetivo de obtener una
 visión más unificada del dataset.
 Esto puede significar, modificar los datos y ontologías y también agregar información faltante en los ítems/reviews.
 Este es el paso más importante de todo el proceso y la posibilidad de conseguir realizar una aplicación correcta que satisfaga los requerimientos
@@ -43,30 +43,38 @@ los otros dos poseen una complejidad muy alta y su implementación llevaría muc
 Además de contener datos semánticamente más parecidos. Y también facilitará la comprensión del dataset a quienes quieran hacer uso del mismo
 en un futuro (ya que sólo deberán concentrarse en una sola ontología)
 
-\subsection*{Estrategia} Deberá como primer paso realizarse una selección de vocabulario, en la cual se escoja uno para que quede como el único en el dataset.
+\subsection*{Estrategia} Deberá como primer paso realizarse una selección de un vocabulario entre los utilizados, en la cual se escoja uno para que quede como el único en el dataset.
+
 En este caso de estudio el vocabulario elegido es Review Ontology, ya que todas sus propiedades son suficientes para cumplir los requerimientos y 
 este es mucho más simple, lo que facilitará su utilización. El vocabulario de schema posee demasiadas propiedades que son irrelevantes para este caso de estudio. 
+
 Además vale la pena recordar los problemas encontrados en el capítulo evaluación causados por la ontología.
-Como segundo paso, buscar para cada propiedad de schema:Review utilizada en el dataset su contraparte en la ontología purl.\\
-La equivalencia entre las propiedades ya fueron realizadas en el capítulo de selección de vocabularios. Pero sólo fue realizado con las propiedades 
-relevantes al caso de estudio. Las siguientes propiedades (que valga la redundancia son irrelevantes al caso de estudio) fueron utilizadas dentro del dataset, y 
-no se estableció su equivalente en el otro vocabulario:
-schema:about y schema:keywords. 
-Si bien, la falta de estas propiedades no impactará sobre la aplicación final, es conveniente no perder datos para la publicación del dataset, ya que 
+\\\\Como segundo paso, buscar para cada propiedad de schema:Review utilizada en el dataset su contraparte en la ontología purl.\\
+La equivalencia entre las propiedades ya fue realizada en el Capítulo \ref{chapter:seleccion}. Pero sólo se tuvieron en cuenta aquellas propiedades 
+relevantes al caso de estudio.
+
+Las siguientes propiedades (que valga la redundancia son irrelevantes al caso de estudio) fueron utilizadas dentro del dataset, y 
+no se estableció su equivalente en el otro vocabulario: schema:about y schema:keywords. 
+
+Si bien, la falta de estas últimas no impactará sobre la aplicación final, es conveniente no perder datos para la publicación del dataset, ya que 
 a alguien podría resultarle útil. 
-En la etapa de evaluación se observó que la propiedad about, se utilizó en el dataset sólo para poner contener el valor ``This is required'' en todos los casos. 
-Por lo que no incluir esta propiedad en el dataset no producirá una pérdida de información.
+
+En la etapa de evaluación se observó que la propiedad schema:about tomaba siempre el mismo valor: \textit{``This is required''}, 
+por lo que no incluir esta propiedad en el dataset no producirá una pérdida de información.
 Y la propiedad keywords puede ser reemplazada por http://purl.org/dc/terms/subject. Ya que en la documentación de dublin core, proponen la utilización de esta propiedad 
 utilizando keywords.
-El caso de reviewRating, que tiene como objeto un schema:Rating, no puede ser explícitamente reemplazado, ya que esa propiedad 
+El caso de schema:reviewRating, que tiene como rango la clase schema:Rating, no puede ser explícitamente reemplazado, ya que esa propiedad 
 sólo es utilizada para desacoplar el rating del review, situación que no se da en la otra ontología. Pero las propiedades dentro del rating se encuentran todas 
-con su equivalente en purl, por lo tanto no causará ningún problema.
+con un equivalente en purl, por lo tanto no causará ningún problema.
+\\\\
 Por último, schema:Person que es rango de la propiedad author, debería ser mapeado a foaf:Person que es rango de la propiedad reviewer. 
-El problema se encuentra en lo analizado en la etapa de curado, que se observó que los nombres de los autores podía ser nomrbes completos o usernames. 
-Y no existe una propiedad dentro del vocabulario de foaf:Person que sea tan genérico como para contemplar todos los casos posibles, como sí existe en vCard.
+
+En el Capítulo \ref{chapter:curado} se observó que los nombres de los autores podían ser nombres completos o usernames situación que producida por la genérica definición de la propiedad schema:name, 
+y no existe una propiedad dentro del vocabulario de foaf:Person que sea tan genérico como para contemplar todos los casos posibles, como sí existe en vCard.
 Además de que todos los previos valores de reviewer están conformados por un vCard, como también ya se analizó en la etapa de curado.
-Por estos motivos se determinó continuar utilizando vCards en lugar de recursos de tipo foaf, y dichos vCards utilizarán la propiedad
-fn (que contempla todos los casos mencionados).En el cuadro \ref{table:PropertyEquiv} pueden analizarse las equivalencias encontradas entre 
+
+Por estos motivos se determinó continuar utilizando vCards en lugar de isntancias del vocabulario foaf, y dichos vCards utilizarán la propiedad
+fn (que contempla todos los casos mencionados).En el Cuadro \ref{table:PropertyEquiv} pueden analizarse las equivalencias encontradas entre 
 las clases de Review de las ontologías de Schema y Purl.
 
 \begin{table}[h]
@@ -152,18 +160,18 @@ Primero se realizó una consulta SPARQL buscando los valores de ratings que no e
  \caption{Cantidad de reviews corregidos para cada expresión regular}
 \label{table:RegExpressionsRatingCorrected}
 \end{table}
- El cuadro \ref{table:RegExpressionsRatingCorrected} muestra las expresiones regulares encontradas en la estrategia de esta sección con 
+ El Cuadro \ref{table:RegExpressionsRatingCorrected} muestra las expresiones regulares encontradas en la estrategia de esta sección con 
  la cantidad de reviews que contenían un rating con dicha expresión regular.
  \\\\
- Luego de haber concluído con este paso de integración, se volvieron a correr algunos tests del capítulo \ref{chapter:evaluacion} y 
- específicamente los de la sección \ref{section:evaluacion-manual}. Dicho test volvió a dar un error para 
+ Luego de haber concluído con este paso de integración, se volvieron a correr algunos tests del Capítulo \ref{chapter:evaluacion} y 
+ específicamente los de la Sección \ref{section:evaluacion-manual}. Dicho test volvió a dar un error para 
  \verb |http://purl.org/stuff/rev#rating| is not in the expected range (1-5).
  
  Esto se debe a que los tests por algún motivo no contemplaban los datos con formatos no numéricos, y luego al cambiar el formato 
  se encontró con la situación.\\
- Esta situación se normalizó volvieron a implementar la correspondiente estrategia de curado de la sección \ref{section:curado-manual}.
+ Esta situación se normalizó volvieron a implementar la correspondiente estrategia de curado de la Sección \ref{section:curado-manual}.
  
  \section{Unificación de tipos de ítems}
 \label{section:unificacion-items}
 
-El desarrollo de este procedimiento fue descripto en la publicación  “Instancias de ontologías de la Web Semántica mejoradas a través de Minería de Texto” contenida en el anexo \ref{chapter:publications} 
+El desarrollo de este procedimiento fue descripto en la publicación  “Instancias de ontologías de la Web Semántica mejoradas a través de Minería de Texto” contenida en el Anexo \ref{chapter:publications} 

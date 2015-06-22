@@ -1,7 +1,7 @@
 \chapter{Evaluación de Calidad de los Datos}
 \label{chapter:evaluacion}
 
-Aquí se realizarán las evaluaciones derivadas de la descripción de la sección \ref{section:evaluacion}, 
+Aquí se realizarán las evaluaciones derivadas de la descripción de la Sección \ref{section:evaluacion}, 
 donde se describen los análisis de errores sintácticos y semánticos.
 
 \section{Evaluación nº 1 - Vocabularios}
@@ -105,11 +105,10 @@ como valor un array con todos los reviews que contiene ese objeto para dicha pro
 En otras palabras se separaron por cada propiedad, los reviews según su valor para esa propiedad.
 Luego se buscaron qué grupos de reviews se encontraban juntos para más de una propiedad mendiante obtener la intersección de ambos conjuntos. Por ejemplo:
 
-Para el valor 4 de la propiedad rev:rating se encuentran {review1, review2, review3}
-Y para el valor ``buena película'' de la propiedad rev:text se encuentran {review2, review3, review4}
-Entonces la intersección entre el conjunto de reviews para el primer conjunto con el segundo conjunto es {review2, review3}.
-Ahora para marcar ese conjunto como posible grupo de duplicados deben cumplir la condición de que, el ítem sobre el cuál el review habla
-tiene el mismo nombre en cada uno de los elementos.
+Sea los reviews \{review1, review2, review3\} el conjunto perteneciente al valor 4 de la propiedad rev:rating 
+Y sean los reviews \{review2, review3, review4\} el conjunto perteneciente al valor ``buena película'' de la propiedad rev:text 
+La intersección entre ambos conjuntos es \{review2, review3\}. Si además todos los reviews cumplen que el ítem al cual evalúan 
+tiene el mismo nombre en cada uno de los elementos, entonces serán marcados como potenciales duplicados.
 
 Esta comparación se realiza entre todos los conjuntos de reviews de los valores de una propiedad con el resto de los conjuntos de los valores de las restantes propiedades de esa ontología.
 
@@ -127,7 +126,7 @@ Se encontraron en total 17343 reviews replicados en un total de 78705 reviews de
 
 \noindent 12709 estaban duplicados en documentos pertenecientes a distintos dominios
 \\\\
-En el cuadro \ref{table:DominioDup} se observa una lista con los dominios a los cuales se le encontraron más cantidad de reviews duplicados:
+En el Cuadro \ref{table:DominioDup} se observa una lista con los dominios a los cuales se le encontraron más cantidad de reviews duplicados:
 \begin{table}[h]
 \begin{tabular}{| l | c | }\hline
 Dominio & Cantidad de reviews duplicados \\\hline
@@ -179,7 +178,7 @@ Test & Fallos & Casos \\\hline
 \label{table:RDFUnitSchemaAutomatic}
 \end{table}
 
-El cuadro \ref{table:RDFUnitPurlAutomatic} muestra el resultado de correr el framework RDFUnit automático sobre la ontología de PURL.
+El Cuadro \ref{table:RDFUnitPurlAutomatic} muestra el resultado de correr el framework RDFUnit automático sobre la ontología de PURL.
 \begin{table}[h]
 \begin{tabular}{| l | c | r | }\hline
 Test & Fallos & Casos \\\hline
@@ -271,19 +270,22 @@ La clase Review de la ontología schema utilizaba 15 propiedades.
 \label{table:PropertiesStatisticsSchema}
 \end{table}
 
- \noindent Mirando el cuadro \ref{table:PropertiesStatisticsSchema}, el primer error semántico que salta a la vista son las 2292 propiedades schema:review dentro un individuo de clase schema:Review. 
+ \noindent Mirando el Cuadro \ref{table:PropertiesStatisticsSchema}, el primer error semántico que salta a la vista son las 2292 propiedades schema:review dentro un individuo de clase schema:Review. 
  Es claramente un error en la producción del documento. 
- Una rápida búsqueda de los documentos con este problema mostró que son 2 los dominios que repiten el error a lo largo de sus documentos
- http://www.ilgiardinodeilibri.it/ y http://www.iplaysoft.com/
+ 
+ Una rápida búsqueda de los documentos con este problema mostró que son dos los dominios que repiten el error a lo largo de sus documentos
+ \\\noindent\textit{http://www.ilgiardinodeilibri.it/} y \textit{http://www.iplaysoft.com/}.
  Más en detalle la intención de los autores del documento fue realizar comentarios para los reviews (situación que tiene una solución específica 
  y es el uso de la propiedad schema:comments). 
+ 
  La causa principal de que existan errores de este tipo es la ontología schema que aunque no tenga sentido, propone que sea sintácticamente válido
  escribir un review de un review. Dado que la clase Review es subclase de Creative Work, y esta última contiene la propiedad review.
- 
+ \\\\
  Por otro lado otra propiedad en el listado que llama la atención es description. Analizando la propiedad semánticamente, significaría describir 
  el review en sí mismo, y no el ítem, dado que si ese fuese el objetivo, dicha propiedad estaría en el ítem y no en el review.
  Observando varios de los valores otorgados a esa propiedad en el contexto del review, muestran que se trata de la opinión textual del ítem, 
  para lo cual al igual que en la situación anterior existe una propiedad específica para eso: schema:reviewBody. 
+ 
  La causa de que se utilice schema:description en lugar de schema:reviewBody (incluso con mayor frecuencia) proviene de la ontología de data vocabulary, en la cuál 
  como se explicó al principio de la tesis utiliza la propiedad description como propiedad específica para realizar el review textual.
  Puede suceder que sean dominios que migraron sus reviews desde data vocabulary hacia schema y usaron como propiedad equivalente la que 
@@ -291,46 +293,52 @@ La clase Review de la ontología schema utilizaba 15 propiedades.
  preste atención a este detalle, o simplemente que hayan visto que es también sintácticamente correcto realizar una descripción de un review 
  y creyeron que era correcto utilizarlo para plantear el review textual.
  De cualquier manera la ontología vuelve a generar inconvenientes debido a la jerarquía propuesta (Review hereda description de la clase Thing).
+ 
  Vale la pena aclarar que también existe otra propiedad proveniente de Creative Work que es schema:text cuya descripción de la ontología es `
  ``El contenido textual de este trabajo creativo'' la cuál sería sintáctica y semánticamente correcto utilizarla en lugar de reviewBody, aunque 
  no sería la más específica.
- 
+ \\\\
  La propiedad name, es ampliamente utilizada en los reviews, la descripción de la propiedad en la ontología declara que se refiere al nombre del objeto en cuestión. 
- Claramente no está pensada para un review (Al igual que la anterior se hereda de schema). Esta propiedad tiene sentido para algún objeto con un nombre real, como Teclado Genius L3, o Batman Begins.
+ 
+ Claramente no está pensada para un review (Al igual que la anterior se hereda de schema). Esta propiedad tiene sentido para algún objeto con un nombre real, como ``Teclado Genius L3'', o ``Batman Begins''.
  Un análisis en el uso de la propiedad bajo este contexto, demuestra que la intención fue utilizar esta propiedad para proveer un título al review.
  Y al no haber una propiedad provista por parte de la ontología para titular un review el uso de la propiedad name en su lugar si bien 
  es semánticamente incorrecto, no es una mala idea implementarlo.
- 
+ \\\\
  Puede observarse también que se utiliza la propiedad itemreviewed, la cual no existe en la ontología schema, pero claramente es un 
  error de tipeo en un intento de utilizar la propiedad itemReviewed. Éste al parecer es un error sintáctico no cubierto en las evaluaciones 
  anteriores.
- 
+ \\\\
  Una propiedad curiosa que aparece en el listado es schema:about. Esta propiedad debería describir el tema en el cual 
  se está tratando en el review. Pero un simple vistazo a los valores que toma la propiedad mediante una consulta SPARQL muestran que 
- el único valor es ``This is required''
- 
+ el único valor es ``This is required''.
+ \\\\
  Otra propiedad que vale la pena analizar es schema:keywords. Es una propiedad que debería contener palabras que describan al recurso, 
  el recurso en cuestión es el review y no el ítem, por lo que nuevamente nos encontramos con un error semántico en el uso de la propiedad (ya que es sintácticamente 
  correcto utilizarla en un review porque forma parte de la clase CreativeWork), pero no tiene sentido utilizar palabras para describir un review, claramente 
  son palabras que utilizaron para describir al ítem.
+ 
  Una observación de los valores verifican lo descripto anteriormente y además muestran que esta propiedad es sólo utilizada en los reviews por el dominio 
  \\\noindent http://www.kennstdueinen.de/ que además utiliza el idioma danés.
- 
+ \\\\
  También hay que mencionar la superpoblación de propiedades que establecen la fecha del review: datePublished, publishDate y dtreviewed.
  El motivo por el cual aparecen tres propiedades distintas para referirse a lo mismo es básicamente porque publishDate y dtreviewed no existen bajo la 
  ontología schema. Es el mismo caso que itemreviewed. 
+ 
  Es interesante también mencionar que tanto itemreviewed como dtreviewed son propiedades existentes bajo la ontología data vocabulary, 
  por lo que la causa es muy probable que sea a un intento erróneo de migrar el vocabulario de una a otra ontología, o de venir acostumbrado a la 
  ontología anterior y no prestar atención a este detalle.
  En cambio el motivo por el cual muchos dominios optaron por utilizar publishDate en lugar de datePublished, es que hasta fines de 2014, 
  era una propiedad válida que además se encontraba como ejemplo de un correcto uso de la clase Review provisto por parte de la documentación 
  de la ontología. 
+ 
  También la misma ontología en su documentación aclaraba que tanto datePublished como publishDate eran indistintas.
  Exactamente esto mismo sucede con la propiedad reviewer, la cual ya no está disponible.
- 
+ \\\\
  Por último, un vistazo a la propiedad más popular de la clase schema:Review, schema:author, mostró que todos los valores de dicha propiedad están compuestos 
  por un string o más específicamente un Literal. Esto contradice la definición de la ontología schema, tanto la documentación como la implementación, que
  establecen que le rango de la propiedad author es Organization o Person. 
+ 
  El asunto más relevante en este caso es entender porqué este error sintáctico de rango de propiedades no fue contemplado en los test 
  automáticos generados por el framework RDFUnit.
  Y la respuesta parece estar en la complejidad con la que establecieron el rango en la definición de la ontología. El extracto de las 
@@ -348,7 +356,7 @@ La clase Review de la ontología schema utilizaba 15 propiedades.
  
  Al parecer la definición del rango de la propiedad author utiliza estructuras de lista y conjuntos que parecen requerir más inferencia de la 
  que el framework RDFUnit puede realizar.
- 
+ \\\\
  Conclusión: La mayoría de los problemas son ocasionados por la inconsistencia, inestabilidad e incoherencia de la ontología. Principalmente 
  en el afán de hacerla elegante, crearon a Review como subclase de CreativeWork que normalmente suele ser superclase de clases que son ítems de reviews
  lo que concluye en una ontología demasiado larga y redundante.
@@ -374,7 +382,7 @@ La clase Review de la ontología schema utilizaba 15 propiedades.
 \end{table}
 \\ 
 
-Los resultados más llamativos son la aparición de propiedades que normalmente se encuentran en el ítem, como puede observarse en el cuadro \ref{table:PropertiesStatisticsPurl},
+Los resultados más llamativos son la aparición de propiedades que normalmente se encuentran en el ítem, como puede observarse en el Cuadro \ref{table:PropertiesStatisticsPurl},
 dado que no tienen sentido para un review que son hasReview (un review dentro de un review), n (nombre para un review), fn (idem n),
 geo (posición geográfica de un review). El hecho de que todas se encuentren en cantidades similares es el gran indicador de que es 
 un dominio repitiendo algún problema a lo largo de sus documentos. Una inspección de los dominios donde se encuentra cada uan muestra

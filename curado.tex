@@ -2,7 +2,7 @@
 \label{chapter:curado}
 
 \noindent En este capítulo se mostrarán los procedimientos implementados para resolver los problemas encontrados derivados de la evaluación 
-del capítulo anterior \ref{chapter:evaluacion}.
+del Capítulo \ref{chapter:evaluacion}.
 
 \subsection*{Objetivo}
 Corregir todos los problemas viables encontrados en el paso anterior que se pueda.
@@ -10,7 +10,7 @@ Corregir todos los problemas viables encontrados en el paso anterior que se pued
 \section{Curado nº 1 - Vocabularios}
 \label{section:curado-vocabularios}
 
-\noindent Esta es la implementación del paso de curado del dataset correspondiente a los resultados adquiridos de la sección \ref{section:evaluacion-vocabularios}.
+\noindent Esta es la implementación del paso de curado del dataset correspondiente a los resultados adquiridos de la Sección \ref{section:evaluacion-vocabularios}.
 
 \subsection*{Estrategia}
 Con una consulta SPARQL, se eliminó la propiedad incorrecta y se agregó la misma en la forma que corresponde.
@@ -49,7 +49,7 @@ schema.
 \section{Curado nº 2 - Duplicados}
 \label{section:curado-duplicados}
 
-\noindent Aquí se resolverá mediante una estrategia manual el problema de los reviews duplicados encontrados en la sección \ref{section:evaluacion-duplicados}.
+\noindent Aquí se resolverá mediante una estrategia manual el problema de los reviews duplicados encontrados en la Sección \ref{section:evaluacion-duplicados}.
 
 \subsection*{Estrategia}
 
@@ -75,7 +75,7 @@ Se asignaron 78705 propiedades duplicatedOf y 17343 representantOf
 \section{Curado nº 3 - RDFUnit-Automatizado}
 \label{section:curado-automatizado}
 
-\noindent En la sección \ref{section:evaluacion-automatizado} se presentaron mediante una tabla, los resultados de la evaluación realizada
+\noindent En la Sección \ref{section:evaluacion-automatizado} se presentaron mediante una tabla, los resultados de la evaluación realizada
 utilizando el framework RDFUnit de forma automática. 
 
 En esta sección entonces se citará cada problema resuelto de la tabla incluyendo la estrategia utilizada y los reusltados obtenidos.
@@ -115,7 +115,7 @@ where{
 \label{table:ratingValueDomains}
 \end{table}
 
-En el cuadro \ref{table:ratingValueDomains} se puede apreciar que en la mayor parte de los casos de error, se dieron porque se incluyó la propiedad ratingValue directamente en 
+En el Cuadro \ref{table:ratingValueDomains} se puede apreciar que en la mayor parte de los casos de error, se dieron porque se incluyó la propiedad ratingValue directamente en 
 el Review. Ahora surge la necesidad de saber si esos casos donde el Review tiene la propiedad ratingValue, existe una propiedad reviewRating 
 con su respectivo Rating.
 Se realizó la consulta:
@@ -194,7 +194,7 @@ En este caso al no haber alternativa por parte del creador del review, se consid
 \label{section:curado-manual}
 
 \noindent En esta iteración de corrección del dataset, se atacarán los problemas encontrados utilizando el framework RDFUnit de forma manual 
-en la sección \ref{section:evaluacion-manual}, nuevamente citando las filas que indican los problemas resueltos correspondiente al
+en la Sección \ref{section:evaluacion-manual}, nuevamente citando las filas que indican los problemas resueltos correspondiente al
 Cuadro \ref{table:RDFUnitManual}, incluyendo también la estrategia utilizada y los resultados obtenidos.
 
 \subsection*{\textit{DateProperty} has a format different to YYYY-MM-DD}
@@ -380,7 +380,7 @@ propiedades necesarias según los rangos inferidos anteriormente.
 
 \section{Curado nº 5 - Análisis experto}
 \label{section:curado-analisis}
-\noindent Por último se realizó el curado correspondiente a la evaluación resultante de la sección \ref{section:evaluacion-analisis}.
+\noindent Por último se realizó el curado correspondiente a la evaluación resultante de la Sección \ref{section:evaluacion-analisis}.
 \\\\
 \textbf{Propiedades inexistentes o semánticamente incorrectas}\\
 Son los casos de itemreviewed, dtreviewed, publishDate y reviewBody, ya analizados en la evaluación.
